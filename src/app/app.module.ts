@@ -16,6 +16,9 @@ import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 import { MaterialModule } from './shared/material.module';
 import { MensagensService } from './services/mensagens.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 registerLocaleData(ptBr);
 // ***
@@ -31,7 +34,11 @@ registerLocaleData(ptBr);
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    NgxSpinnerModule,
+    FormsModule
   ],
   providers: [
     {
