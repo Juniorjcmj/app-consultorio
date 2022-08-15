@@ -1,9 +1,66 @@
 import { Injectable } from '@angular/core';
-
+import { environment } from 'src/environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+import jwt_decode from "jwt-decode";
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
+  apiUrlResourceServe= environment.apiUrlResourceServer + "oauth/token";
+  constructor(private httpClient: HttpClient,
+              private router: Router) { }
 
-  constructor() { }
+              genereteToken(username: string, password:string){
+                let params = new URLSearchParams();
+                params.append('grant_type','password');
+                params.append('client_id', "jcmj");
+                params.append('client_secret', '@Clti!2019');
+                params.append('username', username);
+                params.append('password', password);
+
+
+                let headers =
+                  new HttpHeaders({'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'});
+
+                return this.httpClient.post(`${this.apiUrlResourceServe}`,params.toString(),{ headers: headers })
+              }
+
+              loginUser(token: any){
+
+                localStorage.setItem("token", token)
+                 return true;
+
+               }
+                isLoggedIn(){
+                  let token = localStorage.getItem("token");
+                  if(token== undefined || token ==="" || token == null){
+                    return false;
+                  }else{
+                    return true;
+                  }
+                }
+                logout(){
+                  localStorage.removeItem('token');
+                  return true;
+                }
+
+                getToken(): string{
+                  return  localStorage.getItem('token')!;
+                }
+                getUser(){
+                  return  localStorage.getItem('usuarioId');
+                }
+                getGrupos(): string{
+                  return localStorage.getItem('grupos')!;
+                }
+
+                decodeJwt(){
+                  try {
+                    return jwt_decode(this.getToken());
+                  } catch (Error) {
+                    return null;
+                  }
+                }
 }
+
