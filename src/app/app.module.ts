@@ -20,6 +20,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NavBarComponent } from './shared/componente/nav-bar/nav-bar.component';
+import { HeaderComponent } from './shared/componente/header/header.component';
+import { DashboardComponent } from './shared/componente/dashboard/dashboard.component';
+import { SidnavComponent } from './shared/componente/sidnav/sidnav.component';
 
 registerLocaleData(ptBr);
 // ***
@@ -29,7 +32,10 @@ registerLocaleData(ptBr);
     AppComponent,
     LoginComponent,
     HomeComponent,
-    NavBarComponent
+    NavBarComponent,
+    HeaderComponent,
+    DashboardComponent,
+    SidnavComponent
   ],
   imports: [
     BrowserModule,
