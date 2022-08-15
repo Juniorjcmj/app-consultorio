@@ -54,6 +54,9 @@ export class LoginService {
                 getGrupos(): string{
                   return localStorage.getItem('grupos')!;
                 }
+                getNome(){
+                  return localStorage.getItem('nome');
+                }
 
                 decodeJwt(){
                   try {

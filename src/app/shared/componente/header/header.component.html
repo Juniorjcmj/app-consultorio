@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar *ngIf="isLogado">
   <mat-toolbar-row class="justify-content-between">
     <button mat-icon-button (click)="toggleSidebar()"><mat-icon>menu</mat-icon></button>
     <div class="row mr-2 ml-auto">
@@ -14,13 +14,13 @@
             alt=""
             class="user-image mr-1 p2"
             />
-            User name
+            {{nome}}
             <mat-icon class="user-image-icon ml-1">
                 keyboard_arrow_down
             </mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>
+          <button mat-menu-item (click)="logout()">
             <mat-icon>exit_to_app</mat-icon>
             Logout
           </button>

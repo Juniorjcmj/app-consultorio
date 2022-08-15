@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { UsuarioService } from '../usuario/usuario.service';
 import { LoginService } from './login.service';
 
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit {
            localStorage.setItem('nome', response.nome_completo);
            localStorage.setItem('refresh_token', response.refresh_token);
            localStorage.setItem('token_type', response.token_type);
+           localStorage.setItem('nome', response.nome_completo.split(' ')[0])
 
            if(this.loginService.getUser() != null || this.loginService.getUser() != undefined){
             localStorage.clear();
