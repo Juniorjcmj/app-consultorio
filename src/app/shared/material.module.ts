@@ -24,9 +24,10 @@ import { NavBarComponent } from './componente/nav-bar/nav-bar.component';
 
 
 
+
 @NgModule({
   declarations: [
-    NavBarComponent
+
   ],
   imports: [
     MatIconModule,
@@ -53,7 +54,28 @@ import { NavBarComponent } from './componente/nav-bar/nav-bar.component';
   ],
    exports:
    [
+    MatIconModule,
+    MatToolbarModule,
+    MatTableModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatGridListModule,
+    MatTabsModule,
+    MatSidenavModule,
+    MatListModule,
+    MatDividerModule,
+    MatMenuModule,
+    MatPaginatorModule,
+    MatRadioModule
+   ],
 
-   ]
 })
 export class MaterialModule { }

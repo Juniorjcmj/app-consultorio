@@ -19,6 +19,7 @@ import { MensagensService } from './services/mensagens.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NavBarComponent } from './shared/componente/nav-bar/nav-bar.component';
 
 registerLocaleData(ptBr);
 // ***
@@ -27,7 +28,8 @@ registerLocaleData(ptBr);
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +41,7 @@ registerLocaleData(ptBr);
     MatIconModule,
     NgxSpinnerModule,
     FormsModule
+
   ],
   providers: [
     {
@@ -55,7 +58,7 @@ registerLocaleData(ptBr);
     MensagensService
   ],
   exports:[
-    MaterialModule
+
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
