@@ -8,6 +8,7 @@ import { LoginComponent } from './modulos/login/login.component';
 import { HomeComponent } from './modulos/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginService } from './modulos/login/login.service';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { LoginService } from './modulos/login/login.service';
     HttpClientModule
   ],
   providers: [
-    LoginService
+    LoginService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
