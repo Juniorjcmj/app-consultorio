@@ -13,13 +13,16 @@ export class HeaderComponent implements OnInit {
 
   @Output() toggleSidebarForMe: EventEmitter<any> = new EventEmitter();
   constructor(private service: LoginService,
-              private router: Router) {
+              private router: Router,
+             ) {
                 this.nome = this.service.getNome();
 
                 this.isLogado = this.service.isLoggedIn();
                }
 
   ngOnInit(): void {
+
+
   }
 
   toggleSidebar(){
@@ -27,6 +30,7 @@ export class HeaderComponent implements OnInit {
   }
   logout(){
     this.service.logout();
-     this.router.navigate(["login"])
+    window.location.reload();
+
   }
 }
