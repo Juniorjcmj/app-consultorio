@@ -14,6 +14,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 // **************Para formatar moeda para real brasileiro************************************
 import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
+import { MaterialModule } from './shared/material.module';
 
 registerLocaleData(ptBr);
 // ***
@@ -28,7 +29,8 @@ registerLocaleData(ptBr);
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MaterialModule
   ],
   providers: [
     {
@@ -42,6 +44,9 @@ registerLocaleData(ptBr);
     // *
     LoginService,
     AuthGuard
+  ],
+  exports:[
+    MaterialModule
   ],
   bootstrap: [AppComponent]
 })
