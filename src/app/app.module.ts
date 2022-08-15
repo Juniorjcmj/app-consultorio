@@ -23,6 +23,7 @@ import { NavBarComponent } from './shared/componente/nav-bar/nav-bar.component';
 import { HeaderComponent } from './shared/componente/header/header.component';
 import { DashboardComponent } from './shared/componente/dashboard/dashboard.component';
 import { SidnavComponent } from './shared/componente/sidnav/sidnav.component';
+import { UsuarioModule } from './modulos/usuario/usuario.module';
 
 registerLocaleData(ptBr);
 // ***
@@ -46,7 +47,8 @@ registerLocaleData(ptBr);
     ReactiveFormsModule,
     MatIconModule,
     NgxSpinnerModule,
-    FormsModule
+    FormsModule,
+    UsuarioModule
 
   ],
   providers: [

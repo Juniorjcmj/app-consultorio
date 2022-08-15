@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { UsuarioService } from './usuario.service';
 import { UsuarioRoutingModule } from './usuario.routing.module';
 import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { MaterialModule } from 'src/app/shared/material.module';
 
 
 
@@ -10,7 +12,9 @@ import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
   declarations: [ UsuarioFormComponent],
   imports: [
     CommonModule,
-    UsuarioRoutingModule
+    UsuarioRoutingModule,
+    NgxSpinnerModule,
+    MaterialModule
 
   ],
   providers:[UsuarioService]

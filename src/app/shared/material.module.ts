@@ -21,6 +21,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatRadioModule} from '@angular/material/radio';
 import { NavBarComponent } from './componente/nav-bar/nav-bar.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -74,7 +75,9 @@ import { NavBarComponent } from './componente/nav-bar/nav-bar.component';
     MatDividerModule,
     MatMenuModule,
     MatPaginatorModule,
-    MatRadioModule
+    MatRadioModule,
+    FormsModule,
+    ReactiveFormsModule,
    ],
 
 })
