@@ -20,15 +20,15 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatRadioModule} from '@angular/material/radio';
+import { NavBarComponent } from './componente/nav-bar/nav-bar.component';
 
 
 
 @NgModule({
-  declarations: [],
-  imports: [
+  declarations: [
+    NavBarComponent
   ],
-   exports:
-   [
+  imports: [
     MatIconModule,
     MatToolbarModule,
     MatTableModule,
@@ -50,6 +50,10 @@ import {MatRadioModule} from '@angular/material/radio';
     MatMenuModule,
     MatPaginatorModule,
     MatRadioModule
+  ],
+   exports:
+   [
+
    ]
 })
 export class MaterialModule { }

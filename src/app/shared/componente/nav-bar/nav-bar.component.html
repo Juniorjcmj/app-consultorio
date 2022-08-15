@@ -1,0 +1,38 @@
+
+<mat-toolbar color="primary" *ngIf="isLogado">
+  <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button> -->
+  <button mat-button (click)="isHome()">HOME</button>
+
+  <button mat-button [matMenuTriggerFor]="menu">PACIENTES</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Administração</button>
+      <button mat-menu-item>Financeiro</button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="menu">AGENDA</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Nova consulta</button>
+      <button mat-menu-item>ver agenda</button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="menu">RELATÓRIOS</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Nova consulta</button>
+      <button mat-menu-item>ver agenda</button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="menu">DENTISTAS</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Nova consulta</button>
+      <button mat-menu-item>ver agenda</button>
+    </mat-menu>
+  <span class="example-spacer"></span>
+
+
+  <a (click)="isPageUser()" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <mat-icon>fingerprint</mat-icon>
+  </a>
+  <button (click)="logout()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    <mat-icon>power_settings_new</mat-icon>
+  </button>
+</mat-toolbar>
+
