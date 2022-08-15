@@ -1,1 +1,64 @@
-<p>usuario-list works!</p>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "timer" [fullScreen] = "true"><p style="color: white" > Carregando... </p></ngx-spinner>
+<mat-card>
+  <mat-card-title>Lista de usuários</mat-card-title>
+<div cols="4" rowHeight="2:1"   *ngIf="usuarios$ | async as triagem;  ">
+
+  <table mat-table [dataSource]="triagem" class="mat-elevation-z8"  class="yellow">
+
+    <ng-container matColumnDef="ID" >
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element" > {{element.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="NOME" >
+      <th mat-header-cell *matHeaderCellDef> NOME </th>
+      <td mat-cell *matCellDef="let element" > {{element.nome}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="LOGIN" >
+      <th mat-header-cell *matHeaderCellDef> LOGIN </th>
+      <td mat-cell *matCellDef="let element" > {{element.login}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="E-MAIL" >
+      <th mat-header-cell *matHeaderCellDef> E-MAIL </th>
+      <td mat-cell *matCellDef="let element" > {{element.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="CPF" >
+      <th mat-header-cell *matHeaderCellDef> CPF </th>
+      <td mat-cell *matCellDef="let element" > {{element.cpf}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="IDENTIDADE" >
+      <th mat-header-cell *matHeaderCellDef>IDENTIDADE</th>
+      <td mat-cell *matCellDef="let element" > {{element.identidade}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="IDADE" >
+      <th mat-header-cell *matHeaderCellDef>IDADE</th>
+      <td mat-cell *matCellDef="let element" > {{element.idade}} </td>
+    </ng-container>
+    <ng-container matColumnDef="CARGO" >
+      <th mat-header-cell *matHeaderCellDef>CARGO</th>
+      <td mat-cell *matCellDef="let element" > {{element.cargo}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="star" stickyEnd>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <!-- <mat-icon class="example-spacer" align="start" (click)="onDetail(element.id)">keyboard_tab</mat-icon> -->
+        <mat-icon class="example-spacer" align="center" (click)="openDialogEdit(element)">create</mat-icon>
+        <mat-icon class="example-spacer" color="primary" align="center" (click)="openDialogPermissao(element)">security</mat-icon>
+        <mat-icon class="example-spacer " color="warn" align="end" (click)="onDelete(element.id)">delete</mat-icon>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</div>
+</mat-card>
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+

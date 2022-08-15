@@ -5,11 +5,12 @@ import { UsuarioRoutingModule } from './usuario.routing.module';
 import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { MaterialModule } from 'src/app/shared/material.module';
+import { UsuarioListComponent } from './usuario-list/usuario-list.component';
 
 
 
 @NgModule({
-  declarations: [ UsuarioFormComponent],
+  declarations: [ UsuarioFormComponent, UsuarioListComponent],
   imports: [
     CommonModule,
     UsuarioRoutingModule,
