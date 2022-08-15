@@ -15,6 +15,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 import { MaterialModule } from './shared/material.module';
+import { MensagensService } from './services/mensagens.service';
 
 registerLocaleData(ptBr);
 // ***
@@ -43,7 +44,8 @@ registerLocaleData(ptBr);
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },
     // *
     LoginService,
-    AuthGuard
+    AuthGuard,
+    MensagensService
   ],
   exports:[
     MaterialModule
