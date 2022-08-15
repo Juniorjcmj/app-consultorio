@@ -9,19 +9,17 @@ import { LoginService } from '../../../modulos/login/login.service';
 })
 export class HeaderComponent implements OnInit {
  nome: any = '';
- isLogado: any;
 
   @Output() toggleSidebarForMe: EventEmitter<any> = new EventEmitter();
+
   constructor(private service: LoginService,
               private router: Router,
              ) {
                 this.nome = this.service.getNome();
-
-                this.isLogado = this.service.isLoggedIn();
                }
 
-  ngOnInit(): void {
 
+  ngOnInit(): void {
 
   }
 
@@ -29,8 +27,7 @@ export class HeaderComponent implements OnInit {
     this.toggleSidebarForMe.emit();
   }
   logout(){
-    this.service.logout();
-    window.location.reload();
-
+   this.service.logout();
+   window.location.reload();
   }
 }
