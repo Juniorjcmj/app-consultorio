@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -8,6 +8,9 @@ import jwt_decode from "jwt-decode";
 })
 export class LoginService {
   apiUrlResourceServe= environment.apiUrlResourceServer + "oauth/token";
+
+  verificarSeEstaLogado = new EventEmitter();
+
   constructor(private httpClient: HttpClient,
               private router: Router) { }
 
@@ -27,21 +30,21 @@ export class LoginService {
               }
 
               loginUser(token: any){
-
                 localStorage.setItem("token", token)
                  return true;
-
                }
                 isLoggedIn(){
                   let token = localStorage.getItem("token");
                   if(token== undefined || token ==="" || token == null){
                     return false;
                   }else{
+                    this.verificarSeEstaLogado.emit(true);
                     return true;
                   }
                 }
                 logout(){
                   localStorage.removeItem('token');
+                  this.verificarSeEstaLogado.emit(false);
                   return true;
                 }
 
