@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
 
              }
            )
-          console.log(localStorage)
+
            this.router.navigate(['home'])
 
           }, error =>{

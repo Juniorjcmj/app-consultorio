@@ -15,7 +15,7 @@ export class DashboardComponent implements OnInit {
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
-    }, 5000);
+    }, 2000);
   }
 
 }
