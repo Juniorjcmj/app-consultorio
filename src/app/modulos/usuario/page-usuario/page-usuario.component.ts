@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { map } from 'rxjs';
 import { GrupoFormComponent } from '../grupo-form/grupo-form.component';
 import { GrupoListComponent } from '../grupo-list/grupo-list.component';
+import { GrupoPermissaoFormComponent } from '../grupo-permissao-form/grupo-permissao-form.component';
 import { PermissaoFormComponent } from '../permissao-form/permissao-form.component';
 import { PermissaoListComponent } from '../permissao-list/permissao-list.component';
 import { UsuarioFormComponent } from '../usuario-form/usuario-form.component';
@@ -75,12 +76,12 @@ export class PageUsuarioComponent implements OnInit {
       },
     });
   }
-  // openFormPermissaoParaGrupo() {
-  //   const dialogRef = this.dialog.open(GrupoPermissaoFormComponent, {
-  //     data: {
+  openFormPermissaoParaGrupo() {
+    const dialogRef = this.dialog.open(GrupoPermissaoFormComponent, {
+      data: {
 
-  //     },
-  //   });
-  // }
+      },
+    });
+  }
 
 }

@@ -1,1 +1,34 @@
-<p>grupo-permissao-form works!</p>
+<mat-card>
+  <mat-card-title>Associar Permissão a Grupo</mat-card-title>
+  <mat-card-content>
+  <form [formGroup]="form" >
+        <mat-grid-list cols="4" rowHeight="4:4">
+              <mat-form-field class="full-width">
+                <mat-label>Selecione Grupo</mat-label>
+                <mat-select formControlName="grupoId" name="usuarioId">
+                  <mat-option *ngFor="let g of grupos" [value]="g.id"  required>
+                    {{g.nome}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <mat-label>Selecione Permissão</mat-label>
+                <mat-select formControlName="permissaoId" name="permissaoId">
+                  <mat-option *ngFor="let p of permissoes" [value]="p.id"  required>
+                    {{p.nome}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+      </mat-grid-list>
+  </form>
+</mat-card-content>
+    <mat-card-actions>
+      <button [disabled]="!form.valid"
+       mat-raised-button color="primary" (click)="onSubmit()"> <mat-icon>save</mat-icon> Salvar</button>
+      <button mat-raised-button (click)="onResetForm()" color="warn"  > <mat-icon>highlight_off</mat-icon> Cancelar</button>
+    </mat-card-actions>
+
+</mat-card>
+
+

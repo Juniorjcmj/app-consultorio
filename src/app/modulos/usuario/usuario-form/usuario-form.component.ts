@@ -24,11 +24,10 @@ export class UsuarioFormComponent implements OnInit {
               private snackBar: MatSnackBar,
               private mensagem: MensagensService,
               private service: UsuarioService,
-              // public dialogRef: MatDialogRef<UsuarioListComponent>,
-              // @Inject(MAT_DIALOG_DATA) public data: {user: UsuarioModel},) {
-  ){
+              public dialogRef: MatDialogRef<UsuarioListComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: {user: UsuarioModel},) {
 
-                // if(data.user == undefined){
+                 if(data.user == undefined){
                   this.form = this.formBuilder.group({
                     id:[null],
                     nome:[null, Validators.required],
@@ -39,21 +38,21 @@ export class UsuarioFormComponent implements OnInit {
                     idade:[null, Validators.required],
                     cargo:[null, Validators.required],
                     email:[null, Validators.required]
-                 // })
-                // }else{
-                //   this.form = this.formBuilder.group({
-                //     id:[data.user.id],
-                //     nome:[data.user.nome, Validators.required],
-                //     login:[data.user.login, Validators.required],
-                //     senha:[null, Validators.required],
-                //     cpf: [data.user.cpf,Validators.required],
-                //     identidade:[data.user.identidade,Validators.required],
-                //     idade:[data.user.idade, Validators.required],
-                //     cargo:[data.user.cargo, Validators.required],
-                //     email:[data.user.email, Validators.required]
-                //   })
-                // }
-                   } )
+                 })
+                }else{
+                  this.form = this.formBuilder.group({
+                    id:[data.user.id],
+                    nome:[data.user.nome, Validators.required],
+                    login:[data.user.login, Validators.required],
+                    senha:[null, Validators.required],
+                    cpf: [data.user.cpf,Validators.required],
+                    identidade:[data.user.identidade,Validators.required],
+                    idade:[data.user.idade, Validators.required],
+                    cargo:[data.user.cargo, Validators.required],
+                    email:[data.user.email, Validators.required]
+                  })
+                }
+
                }
 
   ngOnInit(): void {
