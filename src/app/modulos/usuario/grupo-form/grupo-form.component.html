@@ -1,1 +1,21 @@
-<p>grupo-form works!</p>
+<mat-card>
+  <mat-card-title>Cadastro de Grupos</mat-card-title>
+  <mat-card-content>
+  <form [formGroup]="form" >
+        <mat-grid-list cols="4" rowHeight="4:4">
+              <div class="input-list">
+                <mat-form-field class="full-width" >
+                  <input matInput placeholder="Nome" formControlName="nome" name="nome" required>
+                </mat-form-field>
+              </div>
+      </mat-grid-list>
+  </form>
+</mat-card-content>
+    <mat-card-actions>
+      <button [disabled]="!form.valid"
+       mat-raised-button color="primary" (click)="onSubmit()"> <mat-icon>save</mat-icon> Salvar</button>
+      <button mat-raised-button (click)="onResetForm()" color="warn"  > <mat-icon>highlight_off</mat-icon> Cancelar</button>
+    </mat-card-actions>
+</mat-card>
+
+

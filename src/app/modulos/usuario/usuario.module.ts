@@ -7,13 +7,17 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { MaterialModule } from 'src/app/shared/material.module';
 import { UsuarioListComponent } from './usuario-list/usuario-list.component';
 import { PageUsuarioComponent } from './page-usuario/page-usuario.component';
+import { GrupoFormComponent } from './grupo-form/grupo-form.component';
+import { GrupoListComponent } from './grupo-list/grupo-list.component';
 
 
 
 @NgModule({
   declarations: [ UsuarioFormComponent,
                   UsuarioListComponent,
-                  PageUsuarioComponent],
+                  PageUsuarioComponent,
+                  GrupoFormComponent,
+                  GrupoListComponent],
   imports: [
     CommonModule,
     UsuarioRoutingModule,

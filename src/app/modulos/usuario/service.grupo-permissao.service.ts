@@ -9,7 +9,7 @@ import { Permissao } from './model/permissao';
 @Injectable({
   providedIn: 'root'
 })
-export class PageGrupoPermissaoService {
+export class GrupoPermissaoService {
 
   apiUrlResourceServeGrupos= environment.apiUrlResourceServer+"v1/api-grupos" ;
   apiUrlPermissoes = environment.apiUrlResourceServer+"v1/api-permissao" ;
