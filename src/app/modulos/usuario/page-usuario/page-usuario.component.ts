@@ -3,6 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
+import { GrupoFormComponent } from '../grupo-form/grupo-form.component';
+import { GrupoListComponent } from '../grupo-list/grupo-list.component';
+import { PermissaoFormComponent } from '../permissao-form/permissao-form.component';
+import { PermissaoListComponent } from '../permissao-list/permissao-list.component';
 import { UsuarioFormComponent } from '../usuario-form/usuario-form.component';
 
 @Component({
@@ -43,34 +47,34 @@ export class PageUsuarioComponent implements OnInit {
       },
     });
   }
-  // openDialogNewGrupo() {
-  //   const dialogRef = this.dialog.open(GrupoFormComponent, {
-  //     data: {
+  openDialogNewGrupo() {
+    const dialogRef = this.dialog.open(GrupoFormComponent, {
+      data: {
 
-  //     },
-  //   });
-  // }
-  // openDialogListGrupos() {
-  //   const dialogRef = this.dialog.open(GrupoListComponent, {
-  //     data: {
+      },
+    });
+  }
+  openDialogListGrupos() {
+    const dialogRef = this.dialog.open(GrupoListComponent, {
+      data: {
 
-  //     },
-  //   });
-  // }
-  // openDialogNewPermissao() {
-  //   const dialogRef = this.dialog.open(PermissaoFormComponent, {
-  //     data: {
+      },
+    });
+  }
+  openDialogNewPermissao() {
+    const dialogRef = this.dialog.open(PermissaoFormComponent, {
+      data: {
 
-  //     },
-  //   });
-  // }
-  // openDialogListPermissoes() {
-  //   const dialogRef = this.dialog.open(PermissaoListComponent, {
-  //     data: {
+      },
+    });
+  }
+  openDialogListPermissoes() {
+    const dialogRef = this.dialog.open(PermissaoListComponent, {
+      data: {
 
-  //     },
-  //   });
-  // }
+      },
+    });
+  }
   // openFormPermissaoParaGrupo() {
   //   const dialogRef = this.dialog.open(GrupoPermissaoFormComponent, {
   //     data: {
