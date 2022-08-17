@@ -40,7 +40,6 @@ registerLocaleData(ptBr);
     SidnavComponent
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -49,8 +48,7 @@ registerLocaleData(ptBr);
     MatIconModule,
     NgxSpinnerModule,
     FormsModule,
-    UsuarioModule,
-    AgendaModule
+    UsuarioModule
 
   ],
   providers: [
