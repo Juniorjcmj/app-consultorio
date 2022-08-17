@@ -30,7 +30,13 @@ const routes: Routes =
        canActivate: [UserGuard],
        loadChildren: ()=> import('./modulos/usuario/usuario.module')
                      .then(m => m.UsuarioModule)
-      },
+    },
+    {
+       path: 'compromissos',
+       canActivate: [AuthGuard],
+       loadChildren: ()=> import('./modulos/agenda/agenda.module')
+                     .then(m => m.AgendaModule)
+    },
 
 
 ];
