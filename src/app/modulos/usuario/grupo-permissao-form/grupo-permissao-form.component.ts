@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MensagensService } from 'src/app/services/mensagens.service';
 import { Grupo } from '../model/grupo';
 import { Permissao } from '../model/permissao';
 import { GrupoPermissaoService } from '../service.grupo-permissao.service';
+import { UsuarioListComponent } from '../usuario-list/usuario-list.component';
 
 @Component({
   selector: 'app-grupo-permissao-form',
@@ -20,7 +22,8 @@ export class GrupoPermissaoFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
               private mensagem: MensagensService,
-              private service: GrupoPermissaoService) {
+              private service: GrupoPermissaoService,
+              public dialogRef: MatDialogRef<UsuarioListComponent>) {
 
               this.service.list().subscribe(
                 data=> {
@@ -58,6 +61,7 @@ export class GrupoPermissaoFormComponent implements OnInit {
       window.location.reload();
      }
    onResetForm(){
+    this.dialogRef.close();
     return this.form.reset();
    }
 

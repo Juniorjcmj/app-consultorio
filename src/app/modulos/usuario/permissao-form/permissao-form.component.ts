@@ -43,6 +43,7 @@ export class PermissaoFormComponent implements OnInit {
       });
    }
    onResetFormPermissao(){
+    this.dialogRef.close();
     return this.formPermissao.reset();
    }
    onReload(){

@@ -78,6 +78,7 @@ export class UserFormGroupComponent implements OnInit {
                   window.location.reload();
                  }
                onResetForm(){
+                this.dialogRef.close();
                 return this.form.reset();
                }
                onDelete(grupoId: any){

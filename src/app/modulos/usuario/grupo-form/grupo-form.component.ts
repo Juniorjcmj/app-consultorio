@@ -49,6 +49,7 @@ export class GrupoFormComponent implements OnInit {
       window.location.reload();
      }
    onResetForm(){
+    this.dialogRef.close();
     return this.form.reset();
    }
 
