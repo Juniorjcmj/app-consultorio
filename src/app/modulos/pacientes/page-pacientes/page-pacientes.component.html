@@ -1,1 +1,38 @@
-<p>page-pacientes works!</p>
+
+<div class="grid-container">
+
+  <mat-grid-list cols="2" rowHeight="350px">
+    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
+      <mat-card class="dashboard-card" >
+        <mat-card-header>
+          <mat-card-title>
+            <button mat-button  aria-label="Example icon button with a plus one icon" (click)="openDialogNovo()">
+              Novo Paciente<mat-icon>add_circle</mat-icon>
+            </button>
+<!--
+            <button mat-button aria-label="Example icon button with a plus one icon" (click)="openDialogNewGrupo()">
+             Novo Grupo <mat-icon>supervised_user_circle</mat-icon>
+            </button>
+            <button mat-button  aria-label="Example icon button with a plus one icon" (click)="openDialogListGrupos()">
+              Grupos <mat-icon>storage</mat-icon>
+             </button>
+           <button mat-button  aria-label="Example icon button with a plus one icon" (click)="openDialogNewPermissao()">
+              Nova Permissão <mat-icon>vpn_key</mat-icon>
+             </button>
+             <button mat-button  aria-label="Example icon button with a plus one icon" (click)="openDialogListPermissoes()">
+              Permissões <mat-icon>storage</mat-icon>
+             </button>
+              <button mat-button  aria-label="Example icon button with a plus one icon" (click)="openFormPermissaoParaGrupo()">
+              Associar Permissão  <mat-icon>vpn_key</mat-icon>
+             </button> -->
+
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+         <!-- <app-usuario-list></app-usuario-list> -->
+        </mat-card-content>
+      </mat-card>
+
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
