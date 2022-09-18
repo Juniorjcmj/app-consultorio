@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
 import { UsuarioFormComponent } from '../../usuario/usuario-form/usuario-form.component';
+import { PacienteFormComponent } from '../paciente-form/paciente-form.component';
 
 @Component({
   selector: 'app-page-pacientes',
@@ -37,7 +38,7 @@ export class PagePacientesComponent implements OnInit {
   }
 
   openDialogNovo() {
-    const dialogRef = this.dialog.open(UsuarioFormComponent, {
+    const dialogRef = this.dialog.open(PacienteFormComponent, {
       data: {
 
       },
