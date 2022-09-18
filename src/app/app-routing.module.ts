@@ -38,6 +38,13 @@ const routes: Routes =
                      .then(m => m.AgendaModule)
     },
 
+    {
+      path: 'pacientes',
+      canActivate: [AuthGuard],
+      loadChildren: ()=> import('./modulos/pacientes/pacientes.module')
+                    .then(m => m.PacientesModule)
+   },
+
 
 ];
 
