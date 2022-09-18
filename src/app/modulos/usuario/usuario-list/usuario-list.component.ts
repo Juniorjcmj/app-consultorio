@@ -18,7 +18,7 @@ import { UsuarioService } from '../usuario.service';
 export class UsuarioListComponent implements OnInit {
   usuarios$: Observable<UsuarioModel[]>;
 
-  displayedColumns: string[] = ['ID','NOME', 'LOGIN', 'E-MAIL', 'CPF', 'IDENTIDADE', 'IDADE','CARGO', 'star'];
+  displayedColumns: string[] = ['ID','NOME', 'LOGIN', 'E-MAIL', 'CPF', 'IDENTIDADE', 'IDADE','CARGO','WHATSAPP', 'star'];
   constructor(private service: UsuarioService,
     public dialog: MatDialog,
     private router: Router,
@@ -29,6 +29,7 @@ export class UsuarioListComponent implements OnInit {
       .pipe(
         tap(s => {
           this.spinner.hide();
+          console.log(s)
         }),
 
         catchError(erros => {
@@ -89,5 +90,11 @@ export class UsuarioListComponent implements OnInit {
       },
     });
   }
-
+  whatsApp(record: UsuarioModel): void {
+    const text =`Olá ${record.nome} tudo bem? está na hora de fazer uma revisão, estamos lhe aguardando no nosso consultório, abraços!`
+    window.open(
+      `https://wa.me/${record.telefone}?text=${text}`,
+      '_blank'
+    );
+  }
 }

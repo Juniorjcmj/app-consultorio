@@ -8,5 +8,6 @@ export interface UsuarioModel{
   idade: number;
   cargo: string;
   email:string;
+  telefone:string;
 
 }

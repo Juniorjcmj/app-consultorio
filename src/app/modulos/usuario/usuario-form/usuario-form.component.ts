@@ -37,7 +37,8 @@ export class UsuarioFormComponent implements OnInit {
                     identidade:[null,Validators.required],
                     idade:[null, Validators.required],
                     cargo:[null, Validators.required],
-                    email:[null, Validators.required]
+                    email:[null, Validators.required],
+                    telefone:[null, Validators.required]
                  })
                 }else{
                   this.form = this.formBuilder.group({
@@ -49,7 +50,9 @@ export class UsuarioFormComponent implements OnInit {
                     identidade:[data.user.identidade,Validators.required],
                     idade:[data.user.idade, Validators.required],
                     cargo:[data.user.cargo, Validators.required],
-                    email:[data.user.email, Validators.required]
+                    email:[data.user.email, Validators.required],
+                    telefone:[data.user.telefone, Validators.required],
+
                   })
                 }
 

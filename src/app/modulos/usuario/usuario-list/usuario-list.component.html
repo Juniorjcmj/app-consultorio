@@ -43,6 +43,12 @@
       <th mat-header-cell *matHeaderCellDef>CARGO</th>
       <td mat-cell *matCellDef="let element" > {{element.cargo}} </td>
     </ng-container>
+    <ng-container matColumnDef="WHATSAPP" >
+      <th mat-header-cell *matHeaderCellDef>WHATSAPP</th>
+      <td mat-cell *matCellDef="let element" > {{element.telefone}}
+        <img src="../../assets/zap.png" alt="whatsApp"  (click)="whatsApp(element)">
+      </td>
+    </ng-container>
 
     <ng-container matColumnDef="star" stickyEnd>
       <th mat-header-cell *matHeaderCellDef></th>
