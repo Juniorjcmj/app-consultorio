@@ -24,7 +24,7 @@ import { HeaderComponent } from './shared/componente/header/header.component';
 import { DashboardComponent } from './shared/componente/dashboard/dashboard.component';
 import { SidnavComponent } from './shared/componente/sidnav/sidnav.component';
 import { UsuarioModule } from './modulos/usuario/usuario.module';
-import { AgendaModule } from './modulos/agenda/agenda.module';
+import { PacientesModule } from './modulos/pacientes/pacientes.module';
 
 registerLocaleData(ptBr);
 // ***
@@ -37,7 +37,8 @@ registerLocaleData(ptBr);
     NavBarComponent,
     HeaderComponent,
     DashboardComponent,
-    SidnavComponent
+    SidnavComponent,
+
   ],
   imports: [
     AppRoutingModule,
@@ -48,7 +49,8 @@ registerLocaleData(ptBr);
     MatIconModule,
     NgxSpinnerModule,
     FormsModule,
-    UsuarioModule
+    UsuarioModule,
+    PacientesModule
 
   ],
   providers: [
