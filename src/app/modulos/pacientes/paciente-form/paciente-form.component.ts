@@ -26,18 +26,35 @@ export class PacienteFormComponent implements OnInit {
     public dialogRef: MatDialogRef<UsuarioListComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {user: UsuarioModel},) {
 
-      this.form = this.formBuilder.group({
-        id:[null],
-        nome:[null, Validators.required],
-        login:[null, Validators.required],
-        senha:[null, Validators.required],
-        cpf: [null,Validators.required],
-        identidade:[null,Validators.required],
-        idade:[null, Validators.required],
-        cargo:[null, Validators.required],
-        email:[null, Validators.required],
-        telefone:[null, Validators.required]
-     })
+      if(data.user == undefined){
+        this.form = this.formBuilder.group({
+          id:[null],
+          nome:[null, Validators.required],
+          login:[null, Validators.required],
+          senha:[null, Validators.required],
+          cpf: [null,Validators.required],
+          identidade:[null,Validators.required],
+          idade:[null, Validators.required],
+          cargo:[null, Validators.required],
+          email:[null, Validators.required],
+          telefone:[null, Validators.required]
+       })
+      }else{
+        this.form = this.formBuilder.group({
+          id:[data.user.id],
+          nome:[data.user.nome, Validators.required],
+          login:[data.user.login, Validators.required],
+          senha:[null, Validators.required],
+          cpf: [data.user.cpf,Validators.required],
+          identidade:[data.user.identidade,Validators.required],
+          idade:[data.user.idade, Validators.required],
+          cargo:[data.user.cargo, Validators.required],
+          email:[data.user.email, Validators.required],
+          telefone:[data.user.telefone, Validators.required],
+
+        })
+      }
+
      }
 
   ngOnInit(): void {

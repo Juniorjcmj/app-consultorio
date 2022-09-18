@@ -70,5 +70,12 @@ constructor(private httpClient: HttpClient,
 
    return  this.httpClient.get<Grupo[]>(`${url}`).pipe();
   }
+
+  obterPacientes(){
+    var url = this.apiUrlResourceServe+"/pacientes";
+    console.log(url);
+    return this.httpClient.get<UsuarioModel[]>(`${url}` )
+    .pipe( );
+  }
 }
 
