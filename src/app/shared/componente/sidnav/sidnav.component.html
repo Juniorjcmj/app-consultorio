@@ -12,6 +12,6 @@
     <mat-icon>dashboard</mat-icon>Dashboard
   </a>
   <a mat-list-item routerLink="/pacientes"><mat-icon>assignment_ind</mat-icon>Pacientes  </a>
-  <a mat-list-item routerLink="/usuarios"><mat-icon>supervisor_account</mat-icon>Usuários  </a>
+  <a mat-list-item routerLink="/usuarios"  *ngIf="isAdmin"><mat-icon>supervisor_account</mat-icon>Usuários  </a>
   <a mat-list-item routerLink="/compromissos"><mat-icon>date_range</mat-icon>Agenda  </a>
 
