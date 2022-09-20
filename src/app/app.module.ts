@@ -25,6 +25,7 @@ import { DashboardComponent } from './shared/componente/dashboard/dashboard.comp
 import { SidnavComponent } from './shared/componente/sidnav/sidnav.component';
 import { UsuarioModule } from './modulos/usuario/usuario.module';
 import { PacientesModule } from './modulos/pacientes/pacientes.module';
+import { ProcedimentoModule } from './modulos/procedimento/procedimento.module';
 
 registerLocaleData(ptBr);
 // ***
@@ -50,7 +51,8 @@ registerLocaleData(ptBr);
     NgxSpinnerModule,
     FormsModule,
     UsuarioModule,
-    PacientesModule
+    PacientesModule,
+    ProcedimentoModule
 
   ],
   providers: [

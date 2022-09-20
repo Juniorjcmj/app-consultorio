@@ -44,6 +44,12 @@ const routes: Routes =
       loadChildren: ()=> import('./modulos/pacientes/pacientes.module')
                     .then(m => m.PacientesModule)
    },
+   {
+    path: 'procedimentos',
+    canActivate: [AuthGuard],
+    loadChildren: ()=> import('./modulos/procedimento/procedimento.module')
+                  .then(m => m.ProcedimentoModule)
+ },
 
 
 ];
