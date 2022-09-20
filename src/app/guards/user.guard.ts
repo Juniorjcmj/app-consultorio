@@ -19,19 +19,6 @@ export class UserGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot):  Observable<boolean > | boolean   {
 
-    let user: any = this.loginService.decodeJwt();
-    let authorities: string[]  = user['authorities']
-    if(user['authorities'] != undefined){
-      var userAdministrador = authorities.find(x => x ===  "ADMINISTRADOR")
-
-      if(userAdministrador !== undefined){
-        if(userAdministrador){
-             return true;
-        }
-
-      }
-    }
-
-      return false;
+        return this.loginService.isAdmin();
   }
 }

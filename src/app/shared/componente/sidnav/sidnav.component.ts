@@ -11,20 +11,7 @@ export class SidnavComponent implements OnInit {
   isAdmin: boolean = false;
 
   constructor(private service: LoginService) {
-
-    let user: any = this.service.decodeJwt();
-    let authorities: string[]  = user['authorities']
-    if(user['authorities'] != undefined){
-      var userAdministrador = authorities.find(x => x ===  "ADMINISTRADOR")
-
-      if(userAdministrador !== undefined){
-        if(userAdministrador){
-          this.isAdmin = true;
-        }
-
-      }
-    }
-
+    this.isAdmin = this.service.isAdmin();
    }
 
   ngOnInit(): void {

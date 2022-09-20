@@ -68,5 +68,22 @@ export class LoginService {
                     return null;
                   }
                 }
+
+    isAdmin(){
+    let user: any = this.decodeJwt();
+    let authorities: string[]  = user['authorities']
+    if(user['authorities'] != undefined){
+      var userAdministrador = authorities.find(x => x ===  "ADMINISTRADOR")
+
+      if(userAdministrador !== undefined){
+        if(userAdministrador){
+             return true;
+        }
+
+      }
+    }
+
+      return false;
+                }
 }
 
