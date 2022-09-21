@@ -26,6 +26,8 @@ import { SidnavComponent } from './shared/componente/sidnav/sidnav.component';
 import { UsuarioModule } from './modulos/usuario/usuario.module';
 import { PacientesModule } from './modulos/pacientes/pacientes.module';
 import { ProcedimentoModule } from './modulos/procedimento/procedimento.module';
+import { ConsultaModule } from './modulos/consulta/consulta.module';
+
 
 registerLocaleData(ptBr);
 // ***
@@ -40,6 +42,7 @@ registerLocaleData(ptBr);
     DashboardComponent,
     SidnavComponent,
 
+
   ],
   imports: [
     AppRoutingModule,
@@ -52,7 +55,8 @@ registerLocaleData(ptBr);
     FormsModule,
     UsuarioModule,
     PacientesModule,
-    ProcedimentoModule
+    ProcedimentoModule,
+    ConsultaModule
 
   ],
   providers: [
