@@ -4,6 +4,7 @@ import { FormComponent } from './form/form.component';
 import { ListComponent } from './list/list.component';
 import { PageComponent } from './page/page.component';
 import { ConciliacaoCartaoRoutingModule } from './conciliacao-cartao-routing.module';
+import { PrimengModule } from '../../shared/primeng.module';
 
 
 
@@ -15,7 +16,8 @@ import { ConciliacaoCartaoRoutingModule } from './conciliacao-cartao-routing.mod
   ],
   imports: [
     CommonModule,
-    ConciliacaoCartaoRoutingModule
+    ConciliacaoCartaoRoutingModule,
+    PrimengModule
   ]
 })
 export class ConciliacaoCartaoModule { }

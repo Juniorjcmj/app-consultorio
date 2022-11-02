@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { ConciliacaoCartao } from '../model/conciliacaoCartao';
+import { ConciliacaoCartao, PageConciliacao } from '../model/conciliacaoCartao';
 
 
 
@@ -17,7 +17,7 @@ export class ConciliacaoCartaoService {
 
 
     getAll(){
-      return this.httpClient.get<any[]>(`${this.apiUrlResourceServe}`)
+      return this.httpClient.get<PageConciliacao>(`${this.apiUrlResourceServe}`)
     }
 
     manterAcompanhamento(record: ConciliacaoCartao){
@@ -34,7 +34,7 @@ export class ConciliacaoCartaoService {
 
       return  this.httpClient.put<ConciliacaoCartao>(`${this.apiUrlResourceServe}`, record).pipe();
     }
-    deleteAcompanhamento(record: string){
+    delete(record: any){
       return  this.httpClient.delete<ConciliacaoCartao>(`${this.apiUrlResourceServe}`+"?id="+record ).pipe();
     }
 
