@@ -26,32 +26,33 @@ export class LoginComponent implements OnInit {
     if((this.credentials.username != "" && this.credentials.password != "")&& (this.credentials.username != null && this.credentials.password != null))
     {
         this.loginService.genereteToken(this.credentials.username, this.credentials.password).subscribe(
-          (response:any) =>{
-                     //success
+          (response:any) =>{                    //success
 
+           console.log(JSON.stringify(response));
            localStorage.setItem('token', response.access_token);
            localStorage.setItem('expires_in', response.expires_in);
            localStorage.setItem('nome', response.nome_completo);
            localStorage.setItem('refresh_token', response.refresh_token);
            localStorage.setItem('token_type', response.token_type);
-           localStorage.setItem('nome', response.nome_completo.split(' ')[0])
+           localStorage.setItem('jti', response.jti);
+
 
            if(this.loginService.getUser() != null || this.loginService.getUser() != undefined){
             localStorage.clear();
            }
            localStorage.setItem('usuarioId', response.usuario_id);
-           this.userService.getGruposByUser(response.usuario_id).subscribe(
-             data => {
-                 let grupos = data;
-                 let nomes = [];
-                 for(let i =0; i < grupos.length; i++){
-                    nomes[i] = grupos[i].nome;
+          //  this.userService.getGruposByUser(response.usuario_id).subscribe(
+          //    data => {
+          //        let grupos = data;
+          //        let nomes = [];
+          //        for(let i =0; i < grupos.length; i++){
+          //           nomes[i] = grupos[i].nome;
 
-                 }
-                 localStorage.setItem('grupos', JSON.stringify(nomes))
+          //        }
+          //        localStorage.setItem('grupos', JSON.stringify(nomes))
 
-             }
-           )
+          //    }
+          //  )
            this.loginService.isLoggedIn();
            this.router.navigate(['home'])
 
@@ -60,6 +61,7 @@ export class LoginComponent implements OnInit {
             console.log(error);
           }
         )
+        console.log(localStorage)
 
     }else{
       console.log("Campos estao vazios")

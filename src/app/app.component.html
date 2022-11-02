@@ -1,13 +1,5 @@
 
-
-<mat-drawer-container>
-  <mat-drawer mode="side" [opened]="sideBarOpen" *ngIf="logado">
-    <app-sidnav></app-sidnav>
-  </mat-drawer>
-  <mat-drawer-container>
-    <div *ngIf="logado">
-    <app-header (toggleSidebarForMe)="sideBarToggler()" ></app-header>
-  </div>
-    <router-outlet ></router-outlet>
-  </mat-drawer-container>
-</mat-drawer-container>
+<app-menu></app-menu>
+<div class="main-content">
+  <router-outlet></router-outlet>
+</div>

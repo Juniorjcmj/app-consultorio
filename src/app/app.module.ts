@@ -27,6 +27,9 @@ import { UsuarioModule } from './modulos/usuario/usuario.module';
 import { PacientesModule } from './modulos/pacientes/pacientes.module';
 import { ProcedimentoModule } from './modulos/procedimento/procedimento.module';
 import { ConsultaModule } from './modulos/consulta/consulta.module';
+import { PrimengModule } from './shared/primeng.module';
+import { MenuComponent } from './shared/menu/menu.component';
+import { ConciliacaoCartaoModule } from './modulos/conciliacao-cartao/conciliacao-cartao.module';
 
 
 registerLocaleData(ptBr);
@@ -42,6 +45,9 @@ registerLocaleData(ptBr);
     DashboardComponent,
     SidnavComponent,
 
+    //novo sistemaServico
+    MenuComponent
+
 
   ],
   imports: [
@@ -56,7 +62,10 @@ registerLocaleData(ptBr);
     UsuarioModule,
     PacientesModule,
     ProcedimentoModule,
-    ConsultaModule
+    ConsultaModule,
+    PrimengModule,
+  // novo  sistema-servvico
+  ConciliacaoCartaoModule
 
   ],
   providers: [

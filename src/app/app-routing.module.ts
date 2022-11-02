@@ -12,6 +12,19 @@ const routes: Routes =
   {path: 'login', component: LoginComponent},
   {path: '',pathMatch:'full', redirectTo:'login' },
 
+  //Novo layout distema servico
+  {
+    path: 'cartao',
+     canActivate: [AuthGuard],
+     loadChildren: ()=> import('./modulos/conciliacao-cartao/conciliacao-cartao.module')
+                   .then(m => m.ConciliacaoCartaoModule)
+  },
+
+
+
+
+  //fim
+
   {
     path: 'home',
      component: HomeComponent,
