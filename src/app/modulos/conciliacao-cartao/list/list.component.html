@@ -1,1 +1,160 @@
-<p>list works!</p>
+<!-- <app-acompanhamento-form></app-acompanhamento-form> -->
+<p-toast></p-toast>
+<div id="htmlData">
+  <div class="card">
+    <p-toolbar styleClass="mb-4">
+      <ng-template pTemplate="left">
+        <button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success  p-button-sm"
+          (click)="openNew()"></button>
+        <!-- <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteacompanhamento()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
+      </ng-template>
+
+      <ng-template pTemplate="right">
+        <!--        <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block "></p-fileUpload>
+<button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>-->
+        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+          class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+        <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning mr-2"
+          pTooltip="PDF" tooltipPosition="bottom"></button>
+      </ng-template>
+    </p-toolbar>
+    <div class="mb-3">
+      <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" [disabled]="isFirstPage()"
+        styleClass="p-button-text"></p-button>
+      <p-button type="button" icon="pi pi-refresh" (click)="reset()" styleClass="p-button-text"></p-button>
+      <p-button type="button" icon="pi pi-chevron-right" (click)="next()" [disabled]="isLastPage()"
+        styleClass="p-button-text"></p-button>
+      <span>Página {{pagina.number}}</span><span> de{{pagina.totalPages}} Páginas</span>
+    </div>
+
+    <p-table #dt [value]="pagina.content" [rows]="50" [paginator]="true" [rowsPerPageOptions]="[10,25,50]"
+      [globalFilterFields]="['nomeOperadora','nomeEmpresa','data', 'numeroPedido','tipoOperacao','valorPedido','quemCadastrou','quemConferiu', 'aute']"
+      responsiveLayout="scroll" [(selection)]="selectedConciliacao" [rowHover]="true" dataKey="id"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+              placeholder="Pesquisar..." />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+
+          <th pSortableColumn="aute">ID <p-sortIcon field="aute"></p-sortIcon>
+          </th>
+          <th pSortableColumn="nomeEmpresa">EMPRESA <p-sortIcon field="nomeEmpresa"></p-sortIcon>
+          </th>
+          <th pSortableColumn="nomeOperadora">OPERADORA <p-sortIcon field="nomeOperadora"></p-sortIcon>
+          </th>
+          <th pSortableColumn="data">DATA <p-sortIcon field="data"></p-sortIcon>
+          </th>
+          <th pSortableColumn="numeroPedido">Nº PEDIDO <p-sortIcon field="numeroPedido"></p-sortIcon>
+          </th>
+          <th pSortableColumn="valorPedido">VALOR <p-sortIcon field="valorPedido"></p-sortIcon>
+          </th>
+          <th pSortableColumn="tipoOperacao">OPERAÇÃO <p-sortIcon field="tipoOperacao"></p-sortIcon>
+          </th>
+          <th pSortableColumn="valorReceber">A RECEBER <p-sortIcon field="valorReceber"></p-sortIcon>
+          </th>
+          <th pSortableColumn="previsaoRecebimento">PREVISÃO <p-sortIcon field="previsaoRecebimento"></p-sortIcon>
+          </th>
+          <th pSortableColumn="dataRecebimento">RESGATE <p-sortIcon field="dataRecebimento"></p-sortIcon>
+          </th>
+          <th pSortableColumn="isAntecipa">ANT <p-sortIcon field="isAntecipa"></p-sortIcon>
+          </th>
+          <th pSortableColumn="isRecebido">R$ REC <p-sortIcon field="isRecebido"></p-sortIcon>
+          </th>
+          <th pSortableColumn="foiConferido">CONF <p-sortIcon field="foiConferidofoiConferido"></p-sortIcon>
+          </th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-conciliacaoTable>
+        <tr>
+
+          <td>{{conciliacaoTable.aute}}</td>
+          <td>{{conciliacaoTable.nomeEmpresa}}</td>
+          <td>{{conciliacaoTable.nomeOperadora}}</td>
+          <td>{{conciliacaoTable.data | date : 'dd/MM/yyyy'}}</td>
+          <td>{{conciliacaoTable.numeroPedido}}</td>
+          <td>{{conciliacaoTable.valorPedido | currency }}</td>
+          <td>{{conciliacaoTable.tipoOperacao}}</td>
+          <td>{{conciliacaoTable.valorReceber | currency }}</td>
+          <td>{{conciliacaoTable.previsaoRecebimento | date : 'dd/MM/yyyy'}}</td>
+          <td>{{conciliacaoTable.dataRecebimento | date : 'dd/MM/yyyy'}}</td>
+          <td (click)="isAntecipa(conciliacaoTable)">{{conciliacaoTable.isAntecipa}}</td>
+          <td (click)="isRecebido(conciliacaoTable)">{{conciliacaoTable.isRecebido}}</td>
+          <td (click)="isConferido(conciliacaoTable)">{{conciliacaoTable.foiConferido}}</td>
+          <td>
+            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+              (click)="editacompanhamento(conciliacaoTable)"></button>
+            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+              (click)="deleteacompanhamento(conciliacaoTable)"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          Total de {{pagina.totalElements}} conciliações.
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-dialog [(visible)]="conciliacaoDialog" [style]="{width: '500px'}" header="Cadastro de Acompanhamento "
+  [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+
+    <div class="field">
+      <label for="empresa">EMPRESA</label>
+      <p-dropdown [(ngModel)]="conciliacao.idEmpresa" inputId="empresa" [options]="empresas" placeholder="Select"
+        optionValue="id" optionLabel="nome">
+      </p-dropdown>
+    </div>
+    <div class="field">
+      <label for="operadora">OPERADORA</label>
+      <p-dropdown [(ngModel)]="conciliacao.idOperadora" inputId="operadora" [options]="operadoras" placeholder="Select"
+        optionValue="id" optionLabel="nomeBandeira">
+      </p-dropdown>
+    </div>
+    <div class="field col">
+      <label for="data">DATA DO PEDIDO</label>
+      <p-calendar inputId="data" [(ngModel)]="conciliacao.data"></p-calendar>
+  </div>
+
+    <div class="formgrid grid">
+      </div>
+      <div class="field col">
+        <label for="valorPedido">VALOR PEDIDO</label>
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon">R$</span>
+          <input pInputText type="text" id="valorPedido" [(ngModel)]="conciliacao.valorPedido" />
+        </div>
+      </div>
+      <div class="field col">
+        <label for="aute">AUTENTICAÇÃO</label>
+        <p-inputNumber id="aute" [(ngModel)]="conciliacao.aute"></p-inputNumber>
+    </div>
+    <div class="field col">
+      <label for="numeroPedido">Nº PEDIDO</label>
+      <p-inputNumber id="numeroPedido" [(ngModel)]="conciliacao.numeroPedido"></p-inputNumber>
+  </div>
+
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+      (click)="saveacompanhamento()"></button>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+
+  <p style="font-size: 20px; color: white">Carregando...</p>
+</ngx-spinner>

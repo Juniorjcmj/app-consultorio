@@ -30,6 +30,7 @@ import { ConsultaModule } from './modulos/consulta/consulta.module';
 import { PrimengModule } from './shared/primeng.module';
 import { MenuComponent } from './shared/menu/menu.component';
 import { ConciliacaoCartaoModule } from './modulos/conciliacao-cartao/conciliacao-cartao.module';
+import { EmpresaModule } from './modulos/empresa/empresa.module';
 
 
 registerLocaleData(ptBr);
@@ -64,6 +65,7 @@ registerLocaleData(ptBr);
     ProcedimentoModule,
     ConsultaModule,
     PrimengModule,
+    EmpresaModule,
   // novo  sistema-servvico
   ConciliacaoCartaoModule
 

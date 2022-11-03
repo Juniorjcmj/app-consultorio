@@ -28,7 +28,7 @@ export class MenuComponent implements OnInit {
             items:[
                 {
                     label:'Cartão',
-                    icon:'pi pi-fw pi-thumbs-up',
+                    icon:'pi pi-fw pi-credit-card',
                     routerLink: '/cartao'
                 },
                 {

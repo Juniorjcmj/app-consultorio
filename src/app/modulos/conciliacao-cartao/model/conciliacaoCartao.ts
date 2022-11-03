@@ -8,9 +8,9 @@ export class ConciliacaoCartao{
   dataCriacao!: Date;
   dataAtualizacao!: Date;
   numeroPedido!: string;
-  isAntecipa!:boolean;
-  isRecebido!: boolean;
-  foiConferido!: boolean;
+  isAntecipa!:string;
+  isRecebido!: string;
+  foiConferido!: string;
   tipoOperacao!: string;
   valorPedido!: number;
   valorReceber!: number;
@@ -18,46 +18,60 @@ export class ConciliacaoCartao{
   valorTaxaPadrao!: number;
   quemCadastrou!: string;
   quemConferiu!: string;
+  idEmpresa!: string;
+  nomeEmpresa!:string;
+  idOperadora!:string;
+  nomeOperadora!:string;
+  aute!: string;
+
+}
+
+export class ConciliacaoCartaoInput{
+  id!: number;
+  data!: Date;
+  numeroPedido!: string;
+  tipoOperacao!: string;
+  valorPedido!: number;
   empresa!: Empresa;
-  operadora!: Operadora;
-
-
-
+  operadora!:Operadora;
+  aute!: string;
 }
 
-export interface Operadora{
+export class Operadora{
 
-  id: number
-  nome : string;
-	bandeira: string;
-  status: string;
-  antecipacaoAutomatica: string;
-  diasParaRecebimento: string;
-  taxaAntecipacaoCredito: string;
-  taxaPadraoCredito: string;
-  taxaAntecipacaoDebito: string;
-  taxaPadraoDebito: string;
-  inicio: string;
-  fim: string;
+  id!: number
+  nome! : string;
+	bandeira!: string;
+  status!: string;
+  antecipacaoAutomatica!: string;
+  diasParaRecebimento!: string;
+  taxaAntecipacaoCredito!: string;
+  taxaPadraoCredito!: string;
+  taxaAntecipacaoDebito!: string;
+  taxaPadraoDebito!: string;
+  inicio!: string;
+  fim!: string;
+  nomeBandeira!:string;
 
 }
-export interface Empresa{
-  id : number;
-	nome: string;
-	cnpj: string;
-	endereco: string;
-	telFixo: string;
-	telMovel: string;
-	email: string;
+export class Empresa{
+  id! : number;
+	nome!: string;
+	cnpj!: string;
+	endereco!: string;
+	telFixo!: string;
+	telMovel!: string;
+	email!: string;
 }
 
-export interface PageConciliacao{
-  content: ConciliacaoCartao[];
-  last: boolean;
-  totalPages: number;
-  totalElements: number;
-  size:number;
-  first:boolean;
-  numberOfElements:number;
-  empty:boolean;
+export class PageConciliacao{
+  content!: ConciliacaoCartao[];
+  empty!:boolean;
+  first!:boolean;
+  last!: boolean;
+  number!: number;
+  totalPages!: number;
+  totalElements!: number;
+  size!:number;
+  numberOfElements!:number;
 }

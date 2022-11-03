@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {ButtonModule} from 'primeng/button'
@@ -14,6 +14,8 @@ import {RadioButtonModule} from 'primeng/radiobutton';
 import {InputNumberModule} from 'primeng/inputnumber';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextModule } from 'primeng/inputtext';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { CalendarModule } from 'primeng/calendar';
 
 
 
@@ -41,10 +43,11 @@ import { InputTextModule } from 'primeng/inputtext';
     InputNumberModule,
     ConfirmDialogModule,
     InputTextModule,
-
     FormsModule,
     ReactiveFormsModule,
-   ],
+    NgxSpinnerModule,
+    CalendarModule
+   ]
 
 })
 export class PrimengModule { }
