@@ -1,10 +1,12 @@
+<p-card>
+
 <!-- <app-acompanhamento-form></app-acompanhamento-form> -->
 <p-toast></p-toast>
 <div id="htmlData">
   <div class="card">
     <p-toolbar styleClass="mb-4">
       <ng-template pTemplate="left">
-        <button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success  p-button-sm"
+        <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-success  p-button-sm"
           (click)="openNew()"></button>
         <!-- <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteacompanhamento()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
       </ng-template>
@@ -84,15 +86,16 @@
           <td>{{conciliacaoTable.tipoOperacao}}</td>
           <td>{{conciliacaoTable.valorReceber | currency }}</td>
           <td>{{conciliacaoTable.previsaoRecebimento | date : 'dd/MM/yyyy'}}</td>
-          <td>{{conciliacaoTable.dataRecebimento | date : 'dd/MM/yyyy'}}</td>
-          <td (click)="isAntecipa(conciliacaoTable)">{{conciliacaoTable.isAntecipa}}</td>
-          <td (click)="isRecebido(conciliacaoTable)">{{conciliacaoTable.isRecebido}}</td>
+          <td >{{conciliacaoTable.dataRecebimento | date : 'dd/MM/yyyy'}} <i (click)="showDialog(conciliacaoTable)"  class="pi pi-calendar" style="font-size: 2rem">
+          </i></td>
+          <td >{{conciliacaoTable.isAntecipa}}</td>
+          <td>{{conciliacaoTable.isRecebido}}</td>
           <td (click)="isConferido(conciliacaoTable)">{{conciliacaoTable.foiConferido}}</td>
           <td>
             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
-              (click)="editacompanhamento(conciliacaoTable)"></button>
+              (click)="editConciliacao(conciliacaoTable)"></button>
             <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-              (click)="deleteacompanhamento(conciliacaoTable)"></button>
+              (click)="deleteConciliacao(conciliacaoTable)"></button>
           </td>
         </tr>
       </ng-template>
@@ -105,52 +108,83 @@
   </div>
 </div>
 
-<p-dialog [(visible)]="conciliacaoDialog" [style]="{width: '500px'}" header="Cadastro de Acompanhamento "
+</p-card>
+
+
+
+<p-dialog [(visible)]="conciliacaoDialog" [style]="{width: '500px'}" header="Cadastro de Conciliação "
   [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
+  <form [formGroup]="form" >
 
     <div class="field">
-      <label for="empresa">EMPRESA</label>
-      <p-dropdown [(ngModel)]="conciliacao.idEmpresa" inputId="empresa" [options]="empresas" placeholder="Select"
-        optionValue="id" optionLabel="nome">
+
+      <p-dropdown formControlName ="idEmpresa"
+                  inputId="idEmpresa"
+                  [options]="empresas"
+                  placeholder="Empresa"
+                  optionValue="id"
+                  optionLabel="nome" >
+      </p-dropdown>
+    </div>
+
+    <div class="field">
+      <p-dropdown formControlName="idOperadora"
+                  inputId="IdOperadora"
+                  [options]="operadoras"
+                  placeholder="OPERADORA"
+                  optionValue="id"
+                  optionLabel="nomeBandeira"
+                  name="IdOperadora"
+                  >
       </p-dropdown>
     </div>
     <div class="field">
-      <label for="operadora">OPERADORA</label>
-      <p-dropdown [(ngModel)]="conciliacao.idOperadora" inputId="operadora" [options]="operadoras" placeholder="Select"
-        optionValue="id" optionLabel="nomeBandeira">
-      </p-dropdown>
+
+      <p-selectButton [options]="stateOptions"
+                      formControlName="tipoOperacao"
+                      id="tipoOperacao"
+                      placeholder="TIPO DE OPERAÇÃO"
+                      optionLabel="label"
+                      optionValue="value"
+                      name="tipoOperacao"
+                      ></p-selectButton>
     </div>
     <div class="field col">
-      <label for="data">DATA DO PEDIDO</label>
-      <p-calendar inputId="data" [(ngModel)]="conciliacao.data"></p-calendar>
+
+      <p-calendar inputId="data" formControlName="data" id="data" name="data" placeholder="DATA DO PEDIDO"  slotChar="dd/mm/yyyy" dateFormat="dd/mm/yy"
+     ></p-calendar>
   </div>
 
     <div class="formgrid grid">
       </div>
       <div class="field col">
-        <label for="valorPedido">VALOR PEDIDO</label>
+
         <div class="p-inputgroup">
           <span class="p-inputgroup-addon">R$</span>
-          <input pInputText type="text" id="valorPedido" [(ngModel)]="conciliacao.valorPedido" />
+          <input pInputText type="text" id="valorPedido" formControlName="valorPedido" name="valorPedido"
+          placeholder="VALOR"
+          />
         </div>
       </div>
       <div class="field col">
-        <label for="aute">AUTENTICAÇÃO</label>
-        <p-inputNumber id="aute" [(ngModel)]="conciliacao.aute"></p-inputNumber>
+
+        <p-inputNumber id="aute" formControlName="aute" name="aute" placeholder="AUTE"
+       ></p-inputNumber>
     </div>
     <div class="field col">
       <label for="numeroPedido">Nº PEDIDO</label>
-      <p-inputNumber id="numeroPedido" [(ngModel)]="conciliacao.numeroPedido"></p-inputNumber>
+      <p-inputNumber id="numeroPedido" formControlName="numeroPedido" placeholder="Nº PEDIDO"
+     ></p-inputNumber>
   </div>
-
+  </form>
   </ng-template>
-
   <ng-template pTemplate="footer">
     <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
-      (click)="saveacompanhamento()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"  [disabled]="!form.valid"
+      (click)="manterConciliacao()"></button>
   </ng-template>
+
 </p-dialog>
 
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
@@ -158,3 +192,21 @@
 
   <p style="font-size: 20px; color: white">Carregando...</p>
 </ngx-spinner>
+
+
+<p-dialog [(visible)]="display" [style]="{width: '500px', height:'550px'}"
+  [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+  <form [formGroup]="formDataRecebimento" >
+    <div class="field col">
+      <p-calendar  formControlName="dataRecebimento" placeholder="Selecionar data"   slotChar="dd/mm/yyyy" dateFormat="dd/mm/yy"></p-calendar>
+  </div>
+  </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"  [disabled]="!formDataRecebimento.valid"
+      (click)="manterDataRecebimentoConciliacao()"></button>
+  </ng-template>
+
+</p-dialog>

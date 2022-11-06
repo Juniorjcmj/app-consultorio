@@ -24,7 +24,7 @@ export class AppComponent {
    this.sideBarOpen = !this.sideBarOpen;
  }
  logout(evento: any){
-  console.log(evento);
+
   this.logado = evento;
   window.location.reload()
  }

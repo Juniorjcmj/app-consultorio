@@ -1,7 +1,7 @@
+
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ConciliacaoCartaoService } from '../service/conciliacao-service';
-import { Observable } from 'rxjs';
-import { ConciliacaoCartao, PageConciliacao, Empresa, Operadora } from '../model/conciliacaoCartao';
+import { ConciliacaoCartao, PageConciliacao, Empresa, Operadora, ConciliacaoCartaoInput } from '../model/conciliacaoCartao';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 
@@ -10,6 +10,8 @@ import jsPDF from 'jspdf';
 import * as FileSaver from 'file-saver';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { EmpresaService } from '../../empresa/service/empresa-service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list',
@@ -17,6 +19,7 @@ import { EmpresaService } from '../../empresa/service/empresa-service';
   styleUrls: ['./list.component.scss'],
   providers: [MessageService, ConfirmationService]
 })
+
 export class ListComponent implements OnInit {
   @ViewChild('htmlData') htmlData!: ElementRef;
   conciliacaoDialog!: boolean;
@@ -36,11 +39,24 @@ export class ListComponent implements OnInit {
   empresas!: Empresa[];
   operadoras!:Operadora[];
 
+  stateOptions!: any[];
+
+  form!: FormGroup;
+  formDataRecebimento!: FormGroup;
+
+  display: boolean = false;
+
   // conciliacaoCartoes$: Observable<ConciliacaoCartao[]>;
   pagina!: PageConciliacao;
 
+  @ViewChild('myDiv') myDiv!: ElementRef;
+
   constructor(private conciliacaoCartaoService: ConciliacaoCartaoService, private messageService: MessageService,
-    private confirmationService: ConfirmationService, private spinner: NgxSpinnerService, private empresaService: EmpresaService) {
+    private formBuilder: FormBuilder, private confirmationService: ConfirmationService, private spinner: NgxSpinnerService, private empresaService: EmpresaService) {
+
+      this.stateOptions = [{label: 'CRÉDITO', value: 'CRÉDITO'}, {label: 'DÉBITO', value: 'DÉBITO'}];
+
+
 
     this.conciliacaoCartaoService.getAll(0).subscribe(
       data => {
@@ -53,7 +69,7 @@ export class ListComponent implements OnInit {
     )
     this.conciliacaoCartaoService.getAllOperadora().subscribe(
       data => {
-        console.log(data);
+
         this.spinner.hide();
         this.operadoras = data;
 
@@ -79,8 +95,17 @@ export class ListComponent implements OnInit {
   }
 
   openNew() {
+    this.form = this.formBuilder.group({
+      id:[null],
+      data:[null, Validators.required],
+      idEmpresa:[null, Validators.required],
+      idOperadora:[null, Validators.required],
+      valorPedido:[null, Validators.required],
+      numeroPedido:[null, Validators.required],
+      aute:[null, Validators.required],
+      tipoOperacao:[null, Validators.required],
+    })
 
-    this.conciliacao = new ConciliacaoCartao();
     this.submitted = false;
     this.conciliacaoDialog = true;
   }
@@ -90,35 +115,46 @@ export class ListComponent implements OnInit {
   deleteSelectedacompanhamentos() {
 
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected acompanhamentos?',
-      header: 'Confirm',
+      message: 'Tem certeza que deseja excluir o lançamento?',
+      header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         //this.acompanhamentos$ = this.acompanhamentos$.filter(val => !this.selectedAcompanhamento.includes(val));
         this.selectedConciliacao = [];
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'acompanhamentos Deleted', life: 3000 });
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'exclusão realizada com sucesso', life: 3000 });
       }
     });
   }
 
-  editacompanhamento(conciliacao: ConciliacaoCartao) {
+  editConciliacao(conciliacao: ConciliacaoCartao) {
 
-    this.conciliacao = { ...conciliacao };
+    this.form = this.formBuilder.group({
+      id:[conciliacao.id],
+      data:[conciliacao.data, Validators.required],
+      idEmpresa:[conciliacao.idEmpresa, Validators.required],
+      idOperadora:[conciliacao.idOperadora, Validators.required],
+      valorPedido:[conciliacao.valorPedido, Validators.required],
+      numeroPedido:[conciliacao.numeroPedido, Validators.required],
+      aute:[conciliacao.aute, Validators.required],
+      tipoOperacao:[conciliacao.tipoOperacao, Validators.required],
+      dataRecebimento:[conciliacao.dataRecebimento],
+    })
+
+    //this.conciliacao = { ...conciliacao };
     this.conciliacaoDialog = true;
   }
-  deleteacompanhamento(record: ConciliacaoCartao) {
+  deleteConciliacao(record: ConciliacaoCartao) {
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja excluir ' + record.numeroPedido + '?',
-      header: 'Confirm',
+      header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         //codigo para excluir
         this.conciliacaoCartaoService.delete(record.id).subscribe(
           data => {
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'acompanhamento Excluido', life: 2000 });
-            setTimeout(() => {
-              // this.obterAcompanhamentos()
-            }, 2000);
+            this.messageService.add({ severity: 'success', summary: 'Successful', detail: ' Excluido com sucesso', life: 2000 });
+
+            return this.buscarPorNumeroPagina(this.pagina.number);
           },
           error => {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error', life: 3000 });
@@ -130,25 +166,28 @@ export class ListComponent implements OnInit {
   }
   hideDialog() {
     this.conciliacaoDialog = false;
+    this.display = false;
     this.submitted = false;
   }
-  saveacompanhamento() {
+  manterConciliacao() {
+    this.spinner.show();
     this.conciliacaoDialog = false;
+    this.display =false;
     this.submitted = true;
-
-    this.conciliacaoCartaoService.manterAcompanhamento(this.conciliacao).subscribe
+    this.conciliacaoCartaoService.manterConciliacao(this.form.value).subscribe
       (
         success => {
+          console.log(success)
+          this.spinner.hide();
           this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'acompanhamento Salvo', life: 2000 });
           setTimeout(() => {
-            // this.obterAcompanhamentos()
-          }, 2000);
-
-
+          }, 6000);
+          return this.buscarPorNumeroPagina(this.pagina.number);
         },
         error => {
 
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error', life: 3000 });
+          this.spinner.hide();
           return '';
         }
       )
@@ -259,33 +298,12 @@ export class ListComponent implements OnInit {
 
 //trabalhando com ações na rows
 
-isAntecipa(conciliacaoInput:ConciliacaoCartao){
-  let valor = conciliacaoInput.isAntecipa =="SIM" ? false : true;
-  this.conciliacaoCartaoService.alterarCamposGenericos("isAntecipa",valor,conciliacaoInput.id ).subscribe(
-    data => {
-      return  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Antecipação cadastrada com sucesso', life: 3000 });
-    },
-    error=>{
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error', life: 3000 });
-    }
-  )
-
-}
-isRecebido(conciliacaoInput:ConciliacaoCartao){
-  let valor = conciliacaoInput.isAntecipa =="SIM" ? false : true;
-  this.conciliacaoCartaoService.alterarRecebidoOuNao("isAntecipa",valor,conciliacaoInput.id ).subscribe(
-    data => {
-      return  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Recebimento cadastrada com sucesso', life: 3000 });
-    },
-    error=>{
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error', life: 3000 });
-    }
-  )
-}
 isConferido(conciliacaoInput:ConciliacaoCartao){
+  this.spinner.show();
   let valor = conciliacaoInput.foiConferido =="SIM" ? false : true;
   this.conciliacaoCartaoService.alterarConferidoOuNao("foiConferido",valor,conciliacaoInput.id ).subscribe(
     data => {
+      this.spinner.hide();
       this.messageService.add({ severity: 'success', summary: 'Successful', detail: ' Parabéns, bom trabalho! ', life: 4000 });
       return this.buscarPorNumeroPagina(this.pagina.number);
 
@@ -295,5 +313,45 @@ isConferido(conciliacaoInput:ConciliacaoCartao){
     }
   )
 }
+
+showDialog(conciliacao: ConciliacaoCartao) {
+
+  this.formDataRecebimento = this.formBuilder.group({
+    id:[conciliacao.id],
+    data:[conciliacao.data],
+    idEmpresa:[conciliacao.idEmpresa],
+    idOperadora:[conciliacao.idOperadora],
+    valorPedido:[conciliacao.valorPedido],
+    numeroPedido:[conciliacao.numeroPedido],
+    aute:[conciliacao.aute],
+    tipoOperacao:[conciliacao.tipoOperacao],
+    dataRecebimento:[conciliacao.dataRecebimento, Validators.required]
+  })
+  this.display = true;
+}
+
+manterDataRecebimentoConciliacao() {
+  this.spinner.show();
+  this.display =false;
+  this.submitted = true;
+  this.conciliacaoCartaoService.alterarDataRecebimento(this.formDataRecebimento.value).subscribe
+    (
+      success => {
+        console.log(success)
+        this.spinner.hide();
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'data cadastrada com sucesso!', life: 2000 });
+        setTimeout(() => {
+        }, 2000);
+        return this.buscarPorNumeroPagina(this.pagina.number);
+      },
+      error => {
+
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error', life: 3000 });
+        this.spinner.hide();
+        return '';
+      }
+    )
+}
+
 
 }

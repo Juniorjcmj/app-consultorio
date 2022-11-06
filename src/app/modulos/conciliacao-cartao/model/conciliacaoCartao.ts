@@ -29,12 +29,25 @@ export class ConciliacaoCartao{
 export class ConciliacaoCartaoInput{
   id!: number;
   data!: Date;
+  dataRecebimento!: Date;
   numeroPedido!: string;
   tipoOperacao!: string;
   valorPedido!: number;
-  empresa!: Empresa;
-  operadora!:Operadora;
+  idEmpresa!: string;
+  idOperadora!:string;
   aute!: string;
+
+  constructor(model:ConciliacaoCartao){
+    this.id = model.id;
+    this.aute = model.aute;
+    this.data = model.data;
+    this.idEmpresa = model.idEmpresa;
+    this.idOperadora = model.idOperadora;
+    this.numeroPedido = model.numeroPedido;
+    this.valorPedido = model.valorPedido;
+    this.tipoOperacao = model.tipoOperacao;
+
+  }
 }
 
 export class Operadora{
@@ -75,3 +88,4 @@ export class PageConciliacao{
   size!:number;
   numberOfElements!:number;
 }
+

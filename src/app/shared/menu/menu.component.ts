@@ -108,9 +108,12 @@ export class MenuComponent implements OnInit {
   }
 
   logout(){
-    console.log("saindo");
+
     localStorage.clear();
-   this.router.navigate(['home']);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+
   }
 
 }

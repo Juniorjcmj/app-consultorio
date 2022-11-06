@@ -16,6 +16,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CalendarModule } from 'primeng/calendar';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import {InputMaskModule} from 'primeng/inputmask';
 
 
 
@@ -46,7 +48,11 @@ import { CalendarModule } from 'primeng/calendar';
     FormsModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
-    CalendarModule
+    CalendarModule,
+    SelectButtonModule,
+    InputMaskModule
+
+
    ]
 
 })

@@ -31,6 +31,7 @@ import { PrimengModule } from './shared/primeng.module';
 import { MenuComponent } from './shared/menu/menu.component';
 import { ConciliacaoCartaoModule } from './modulos/conciliacao-cartao/conciliacao-cartao.module';
 import { EmpresaModule } from './modulos/empresa/empresa.module';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 
 registerLocaleData(ptBr);
@@ -67,7 +68,8 @@ registerLocaleData(ptBr);
     PrimengModule,
     EmpresaModule,
   // novo  sistema-servvico
-  ConciliacaoCartaoModule
+  ConciliacaoCartaoModule,
+  SweetAlert2Module
 
   ],
   providers: [
