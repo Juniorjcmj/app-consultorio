@@ -3,30 +3,28 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
+import { AuthUser } from '../usuario/model/authUser';
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  apiUrlResourceServe = environment.apiUrlResourceServer + 'oauth/token';
+  apiUrlResourceServe = environment.apiUrlResourceServer + 'token';
 
   verificarSeEstaLogado = new EventEmitter();
 
   constructor(private httpClient: HttpClient, private router: Router) {}
 
-  genereteToken(username: string, password: string) {
+  genereteToken(authUser: AuthUser) {
     let params = new URLSearchParams();
     params.append('grant_type', 'password');
-    params.append('client_id', 'jcmj');
-    params.append('client_secret', '@Clti!2019');
-    params.append('username', username);
-    params.append('password', password);
+     params.append('client_id', 'jcmj');
+     params.append('client_secret', '@Clti!2019');
+    params.append('username', authUser.username);
+    params.append('password', authUser.password);
 
-    let headers = new HttpHeaders({
-      'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
-    });
+    let headers = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'});
 
-    return this.httpClient.post(`${this.apiUrlResourceServe}`, params.toString(),{ headers: headers }
-    );
+    return this.httpClient.post(`${this.apiUrlResourceServe}`, params.toString(), {  headers: headers  });
   }
 
   loginUser(token: any) {

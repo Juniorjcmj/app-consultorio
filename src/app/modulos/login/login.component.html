@@ -20,7 +20,7 @@
                          <mat-form-field class="full-width" >
                               <mat-label>Username*</mat-label>
                               <input
-                              [(ngModel)] = "credentials.username"
+                              [(ngModel)] = "authUser.username"
                               name="username"
                               required
                                type="text"
@@ -30,7 +30,7 @@
                          <mat-form-field class="full-width">
                           <mat-label>Password*</mat-label>
                           <input
-                          [(ngModel)] = "credentials.password"
+                          [(ngModel)] = "authUser.password"
                           name="password"
                           required
                           type="password"

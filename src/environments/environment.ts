@@ -3,9 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  apiUrlAuthenticationServer: 'http://localhost:99/',
-  apiUrlResourceServer: 'http://localhost:99/'
+  production: true,
+ apiUrlAuthenticationServer: 'http://localhost:99/',
+ apiUrlResourceServer: 'http://localhost:99/'
+
+ //apiUrlAuthenticationServer: 'http://casanobre.masterdaweb.net:99/',
+  //apiUrlResourceServer: 'http://casanobre.masterdaweb.net:99/'
 };
 
 /*

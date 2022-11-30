@@ -11,6 +11,8 @@ import { ConciliacaoCartao, Operadora, PageConciliacao, ConciliacaoCartaoInput }
 })
 export class ConciliacaoCartaoService {
 
+
+
    apiUrlResourceServe= environment.apiUrlResourceServer+"V1/api-conciliacao/";
    apiUrlResourceServeOperadora= environment.apiUrlResourceServer+"V1/api-operadora-cartao/";
 
@@ -18,7 +20,7 @@ export class ConciliacaoCartaoService {
 
 
     getAll(numeroPagina: any){
-      console.log(numeroPagina)
+
       return this.httpClient.get<PageConciliacao>(`${this.apiUrlResourceServe}`+"?sort=data,desc&size=100&page="+numeroPagina)
     }
 
@@ -58,5 +60,14 @@ export class ConciliacaoCartaoService {
       return this.httpClient.get<Operadora[]>(`${this.apiUrlResourceServeOperadora}`)
     }
 
-
+    //FILTROS
+    obterNumeroPedido(filtro: any): any {
+      return this.httpClient.get<PageConciliacao>(`${this.apiUrlResourceServe}`+"filtro-por-numero-pedido?numeroPedido="+filtro)
+    }
+    obterNumeroAute(filtro: any): any {
+      return this.httpClient.get<PageConciliacao>(`${this.apiUrlResourceServe}`+"filtro-por-numero-autenticacao?numeroAute="+filtro)
+    }
+    obterPorData(filtro: any): any {
+      return this.httpClient.get<PageConciliacao>(`${this.apiUrlResourceServe}`+"filtro-por-periodo?data="+filtro)
+    }
   }

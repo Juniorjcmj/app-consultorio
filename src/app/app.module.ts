@@ -1,9 +1,9 @@
-import { CUSTOM_ELEMENTS_SCHEMA, DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { APP_INITIALIZER, CUSTOM_ELEMENTS_SCHEMA, DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
+
+
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { LoginComponent } from './modulos/login/login.component';
 import { HomeComponent } from './modulos/home/home.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -16,7 +16,7 @@ import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 import { MaterialModule } from './shared/material.module';
 import { MensagensService } from './services/mensagens.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { MatIconModule } from '@angular/material/icon';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NavBarComponent } from './shared/componente/nav-bar/nav-bar.component';
@@ -33,9 +33,29 @@ import { ConciliacaoCartaoModule } from './modulos/conciliacao-cartao/conciliaca
 import { EmpresaModule } from './modulos/empresa/empresa.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
+function initializeKeycloak(keycloak: KeycloakService) {
+  return () =>
+    keycloak.init({
+      config: {
+        url: 'http://localhost:8180/',
+        realm: 'auth-server',
+        clientId: 'api-gestao-client'
+      },
+      initOptions: {
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri:
+          window.location.origin + '/assets/silent-check-sso.html'
+      },
+      loadUserProfileAtStartUp:true
+    });
+}
+
 
 registerLocaleData(ptBr);
-// ***
 
 @NgModule({
   declarations: [
@@ -67,17 +87,25 @@ registerLocaleData(ptBr);
     ConsultaModule,
     PrimengModule,
     EmpresaModule,
-  // novo  sistema-servvico
+  //novo  sistema-servvico
   ConciliacaoCartaoModule,
-  SweetAlert2Module
+  SweetAlert2Module,
+
+  KeycloakAngularModule
 
   ],
   providers: [
     {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi:true
-     },
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService]
+    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthInterceptor,
+    //   multi:true
+    //  },
       // **********Para formatar moeda para real brasileiro**************************
     { provide: LOCALE_ID, useValue: 'pt' },
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },

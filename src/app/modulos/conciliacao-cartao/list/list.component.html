@@ -4,12 +4,47 @@
 <p-toast></p-toast>
 <div id="htmlData">
   <div class="card">
+    <p-accordion>
+      <p-accordionTab header="Filtros">
+
+
+        <div class="grid p-fluid">
+          <div class="col-12 md:col-3">
+            <div class="p-inputgroup">
+                <input type="text" pInputText placeholder="Nº Pedido" [formControl]="queryFields">
+                <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn" (click)="onSearchNumeroPedido()"></button>
+            </div>
+        </div>
+        <div class="col-12 md:col-3">
+          <div class="p-inputgroup">
+              <input type="text" pInputText placeholder="Nº Autenticação" [formControl]="queryFieldsAute">
+              <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn" (click)="onSearchAute()"></button>
+          </div>
+      </div>
+          <!-- <div class="col-12 md:col-3">
+              <div class="p-inputgroup">
+                  <input type="date" pInputText placeholder="Data" [formControl]="queryFieldsData">
+                  <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn" (click)="onSearchData()"></button>
+              </div>
+          </div>
+          <div class="col-12 md:col-3">
+            <div class="p-inputgroup">
+                <input type="text" pInputText placeholder="Empresa">
+                <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"></button>
+            </div>
+        </div> -->
+          </div>
+      </p-accordionTab>
+  </p-accordion>
+
     <p-toolbar styleClass="mb-4">
       <ng-template pTemplate="left">
         <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-success  p-button-sm"
           (click)="openNew()"></button>
+
         <!-- <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteacompanhamento()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
       </ng-template>
+
 
       <ng-template pTemplate="right">
         <!--        <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block "></p-fileUpload>
@@ -45,7 +80,7 @@
       <ng-template pTemplate="header">
         <tr>
 
-          <th pSortableColumn="aute">ID <p-sortIcon field="aute"></p-sortIcon>
+          <th pSortableColumn="aute">AUTE<p-sortIcon field="aute"></p-sortIcon>
           </th>
           <th pSortableColumn="nomeEmpresa">EMPRESA <p-sortIcon field="nomeEmpresa"></p-sortIcon>
           </th>

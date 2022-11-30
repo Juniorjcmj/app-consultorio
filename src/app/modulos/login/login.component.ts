@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthUser } from '../usuario/model/authUser';
 
 import { UsuarioService } from '../usuario/usuario.service';
 import { LoginService } from './login.service';
@@ -11,7 +12,7 @@ import { LoginService } from './login.service';
 })
 export class LoginComponent implements OnInit {
 
-  credentials = {
+  authUser: AuthUser = {
     username: "",
     password:""
   }
@@ -23,9 +24,9 @@ export class LoginComponent implements OnInit {
   }
   onSubmit(){
     localStorage.clear();
-    if((this.credentials.username != "" && this.credentials.password != "")&& (this.credentials.username != null && this.credentials.password != null))
+    if((this.authUser.username != "" && this.authUser.password != "")&& (this.authUser.username != null && this.authUser.password != null))
     {
-        this.loginService.genereteToken(this.credentials.username, this.credentials.password).subscribe(
+        this.loginService.genereteToken(this.authUser).subscribe(
           (response:any) =>{                    //success
 
            console.log(JSON.stringify(response));

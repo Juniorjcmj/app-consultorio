@@ -18,6 +18,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { CalendarModule } from 'primeng/calendar';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import {InputMaskModule} from 'primeng/inputmask';
+import {FieldsetModule} from 'primeng/fieldset';
+import {AccordionModule} from 'primeng/accordion';
 
 
 
@@ -50,7 +52,9 @@ import {InputMaskModule} from 'primeng/inputmask';
     NgxSpinnerModule,
     CalendarModule,
     SelectButtonModule,
-    InputMaskModule
+    InputMaskModule,
+    FieldsetModule,
+    AccordionModule
 
 
    ]
