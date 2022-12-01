@@ -4,8 +4,6 @@
     <div class="card">
       <p-accordion>
         <p-accordionTab header="Filtros">
-
-
           <div class="grid p-fluid">
             <div class="col-12 md:col-3">
               <div class="p-inputgroup">
@@ -52,18 +50,20 @@
 
         <ng-template pTemplate="right">
 
+          <div class="mb-3">
+            <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" styleClass="p-button-text"></p-button>
+            <p-button type="button" icon="pi pi-refresh" (click)="reset()" styleClass="p-button-text"></p-button>
+            <p-button type="button" icon="pi pi-chevron-right" (click)="next()" styleClass="p-button-text"></p-button>
+            <!-- <span>Página {{pagina.number}}</span><span> de{{pagina.totalPages}} Páginas</span> -->
+          </div>
+          <p-divider layout="vertical"></p-divider>
           <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
             class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
           <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
             class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
         </ng-template>
       </p-toolbar>
-      <div class="mb-3">
-        <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" styleClass="p-button-text"></p-button>
-        <p-button type="button" icon="pi pi-refresh" (click)="reset()" styleClass="p-button-text"></p-button>
-        <p-button type="button" icon="pi pi-chevron-right" (click)="next()" styleClass="p-button-text"></p-button>
-        <!-- <span>Página {{pagina.number}}</span><span> de{{pagina.totalPages}} Páginas</span> -->
-      </div>
+
 
       <p-table #dt [value]="pagina" [rows]="100" [paginator]="true" [rowsPerPageOptions]="[10,25,50,100,200]"
         [globalFilterFields]="['nomeOperadora','nomeEmpresa','data', 'numeroPedido','tipoOperacao','valorPedido','quemCadastrou','quemConferiu', 'aute']"

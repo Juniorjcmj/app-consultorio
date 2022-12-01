@@ -22,7 +22,7 @@ import {FieldsetModule} from 'primeng/fieldset';
 import {AccordionModule} from 'primeng/accordion';
 import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import {DividerModule} from 'primeng/divider';
 
 
 
@@ -57,7 +57,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     InputMaskModule,
     FieldsetModule,
     AccordionModule,
-    TooltipModule
+    TooltipModule,
+    DividerModule
 
 
    ]
