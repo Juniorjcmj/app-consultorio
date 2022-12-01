@@ -36,6 +36,8 @@ export class ConciliacaoCartaoInput{
   idEmpresa!: string;
   idOperadora!:string;
   aute!: string;
+  quemCadastrou!: string;
+  quemConferiu!:string;
 
   constructor(model:ConciliacaoCartao){
     this.id = model.id;
@@ -46,6 +48,8 @@ export class ConciliacaoCartaoInput{
     this.numeroPedido = model.numeroPedido;
     this.valorPedido = model.valorPedido;
     this.tipoOperacao = model.tipoOperacao;
+    this.quemCadastrou = model.quemCadastrou;
+    this.quemConferiu = model.quemConferiu;
 
   }
 }
@@ -64,7 +68,7 @@ export class Operadora{
   taxaPadraoDebito!: string;
   inicio!: string;
   fim!: string;
-  nomeBandeira!:string;
+  nomeBandeira!: string;
 
 }
 export class Empresa{

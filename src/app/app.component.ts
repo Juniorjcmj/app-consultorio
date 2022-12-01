@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoginService } from './modulos/login/login.service';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-root',
@@ -10,14 +10,10 @@ import { LoginService } from './modulos/login/login.service';
 export class AppComponent {
  sideBarOpen = true;
  logado: any;
- constructor(private service: LoginService){
+ constructor(private keycloakService: KeycloakService){
 
   //this.logado = this.service.isLoggedIn();
-  this.service.verificarSeEstaLogado.subscribe(
-    data =>{
-      this.logado = data;
-    }
-  )
+  this.logado = this.keycloakService.isLoggedIn();
  }
 
  sideBarToggler(){
@@ -25,7 +21,6 @@ export class AppComponent {
  }
  logout(evento: any){
 
-  this.logado = evento;
-  window.location.reload()
+  return this.keycloakService.logout("http://localhost:4200/");
  }
 }

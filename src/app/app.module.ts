@@ -4,12 +4,10 @@ import { APP_INITIALIZER, CUSTOM_ELEMENTS_SCHEMA, DEFAULT_CURRENCY_CODE, LOCALE_
 
 import { AppComponent } from './app.component';
 
-import { LoginComponent } from './modulos/login/login.component';
 import { HomeComponent } from './modulos/home/home.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { LoginService } from './modulos/login/login.service';
 import { AuthGuard } from './guards/auth.guard';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 // **************Para formatar moeda para real brasileiro************************************
 import ptBr from '@angular/common/locales/pt';
@@ -60,13 +58,11 @@ registerLocaleData(ptBr);
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     HomeComponent,
     NavBarComponent,
     HeaderComponent,
     DashboardComponent,
     SidnavComponent,
-
     //novo sistemaServico
     MenuComponent
 

@@ -14,9 +14,12 @@ import jsPDF from 'jspdf';
 import * as FileSaver from 'file-saver';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { EmpresaService } from '../../empresa/service/empresa-service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
 import Swal from 'sweetalert2';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { KeycloakService } from 'keycloak-angular';
+
 
 @Component({
   selector: 'app-list',
@@ -51,7 +54,7 @@ export class ListComponent implements OnInit {
   display: boolean = false;
 
   // conciliacaoCartoes$: Observable<ConciliacaoCartao[]>;
-  pagina!: PageConciliacao;
+  pagina!: ConciliacaoCartao[];
 
   @ViewChild('myDiv') myDiv!: ElementRef;
 
@@ -59,6 +62,7 @@ export class ListComponent implements OnInit {
   queryFields = new FormControl();
   queryFieldsAute = new FormControl();
   queryFieldsData = new FormControl();
+  queryFieldsIdEmpresa = new FormControl();
 
 
   constructor(
@@ -67,7 +71,8 @@ export class ListComponent implements OnInit {
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
-    private empresaService: EmpresaService
+    private empresaService: EmpresaService,
+    private keycloakService: KeycloakService
   ) {
     this.stateOptions = [
       { label: 'CRÉDITO', value: 'CRÉDITO' },
@@ -75,17 +80,18 @@ export class ListComponent implements OnInit {
     ];
 
     this.conciliacaoCartaoService.getAll(0).subscribe(
-      (data) => {
+      (data: any) => {
         this.spinner.hide();
         this.pagina = data;
-        this.conciliacaoXLS = this.pagina.content;
+        this.conciliacaoXLS = this.pagina;
       },
-      (error) => {}
+      (error) => { }
     );
     this.conciliacaoCartaoService.getAllOperadora().subscribe(
       (data) => {
         this.spinner.hide();
         this.operadoras = data;
+
       },
       (error) => {}
     );
@@ -111,26 +117,23 @@ export class ListComponent implements OnInit {
 
   }
   onSearchNumeroPedido(){
-
     this.conciliacaoCartaoService.obterNumeroPedido(this.queryFields.value).subscribe((res:any)  =>{this.pagina = res} );
-    // this.queryFields.valueChanges
-    // .pipe(
-    //  map(value => value.trim()), //remove todos os espaçoa
-    //  filter(value => value.length > 3),//filtra somente com mais de 3 caracteres
-    //  debounceTime(200),// espero 200 milissegundos para dar tempo de digitar
-    //  distinctUntilChanged(),//só faz a busca se o valor for diferente do anterior
-    //  switchMap(value => this.conciliacaoCartaoService.obterNumeroPedido(this.queryFields.value).subscribe(
-    //   (res:any) =>{this.pagina = res} ))
-    // )
   }
   onSearchAute(){
     this.conciliacaoCartaoService.obterNumeroAute(this.queryFieldsAute.value).subscribe((res:any)  =>{this.pagina = res} );
   }
   onSearchData(){
+
     this.conciliacaoCartaoService.obterPorData(this.queryFieldsData.value).subscribe((res:any)  =>{this.pagina = res} );
   }
+  onSearcEmpresa(){
+    console.log("chamando!! por data")
+    this.conciliacaoCartaoService.obterPorEmpresa(this.queryFieldsIdEmpresa.value).subscribe((res:any)  =>{this.pagina = res} );
+  }
+
 
   openNew() {
+
     this.form = this.formBuilder.group({
       id: [null],
       data: [null, Validators.required],
@@ -140,6 +143,7 @@ export class ListComponent implements OnInit {
       numeroPedido: [null, Validators.required],
       aute: [null, Validators.required],
       tipoOperacao: [null, Validators.required],
+      quemCadastrou:[this.keycloakService.getUsername()]
     });
 
     this.submitted = false;
@@ -176,6 +180,7 @@ export class ListComponent implements OnInit {
       aute: [conciliacao.aute, Validators.required],
       tipoOperacao: [conciliacao.tipoOperacao, Validators.required],
       dataRecebimento: [conciliacao.dataRecebimento],
+      quemConferiu:[this.keycloakService.getUsername()]
     });
 
     //this.conciliacao = { ...conciliacao };
@@ -197,9 +202,10 @@ export class ListComponent implements OnInit {
               life: 2000,
             });
 
-            return this.buscarPorNumeroPagina(this.pagina.number);
+            return this.buscarPorNumeroPagina(0);
           },
           (error) => {
+            this.spinner.hide();
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
@@ -222,8 +228,8 @@ export class ListComponent implements OnInit {
     this.display = false;
     this.submitted = true;
     this.conciliacaoCartaoService.manterConciliacao(this.form.value).subscribe(
-      (success) => {
-        console.log(success);
+      (success:any) => {
+        this.pagina = success;
         this.spinner.hide();
         this.messageService.add({
           severity: 'success',
@@ -232,16 +238,17 @@ export class ListComponent implements OnInit {
           life: 2000,
         });
         setTimeout(() => {}, 6000);
-        return this.buscarPorNumeroPagina(this.pagina.number);
+       // return this.buscarPorNumeroPagina(1);
       },
       (error) => {
+        this.spinner.hide();
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
           detail: 'Error',
           life: 3000,
         });
-        this.spinner.hide();
+
         return '';
       }
     );
@@ -312,34 +319,35 @@ export class ListComponent implements OnInit {
   //TRABALHANDO A PAGINAÇÃO DINAMICAMENTE
 
   buscarPorNumeroPagina(numeroPagina: number) {
+
     this.conciliacaoCartaoService.getAll(numeroPagina).subscribe(
-      (data) => {
+      (data: any) => {
         this.spinner.hide();
         this.pagina = data;
-        this.conciliacaoXLS = this.pagina.content;
+        this.conciliacaoXLS = this.pagina;
       },
       (error) => {}
     );
   }
 
   next() {
-    this.spinner.show();
-    let valor = this.pagina.number + 1;
-    if (this.pagina.last) {
-      valor = this.pagina.totalPages - 1;
-    }
-    console.log(this.pagina.number);
-    console.log(valor);
-    return this.buscarPorNumeroPagina(valor);
+    // this.spinner.show();
+    // let valor = this.pagina.number + 1;
+    // if (this.pagina.last) {
+    //   valor = this.pagina.totalPages - 1;
+    // }
+    // console.log(this.pagina.number);
+    // console.log(valor);
+    // return this.buscarPorNumeroPagina(valor);
   }
 
   prev() {
-    this.spinner.show();
-    let valor = this.pagina.number - 1;
-    if (this.pagina.first) {
-      valor = 0;
-    }
-    return this.buscarPorNumeroPagina(valor);
+    // this.spinner.show();
+    // let valor = this.pagina.number - 1;
+    // if (this.pagina.first) {
+    //   valor = 0;
+    // }
+    // return this.buscarPorNumeroPagina(valor);
   }
 
   reset() {
@@ -348,11 +356,13 @@ export class ListComponent implements OnInit {
   }
 
   isLastPage() {
-    return !this.pagina.first;
+    return true;
+    //return !this.pagina.first;
   }
 
   isFirstPage(): boolean {
-    return !this.pagina.last;
+    return false;
+   // return !this.pagina.last;
   }
 
   //trabalhando com ações na rows
@@ -363,7 +373,8 @@ export class ListComponent implements OnInit {
     this.conciliacaoCartaoService
       .alterarConferidoOuNao('foiConferido', valor, conciliacaoInput.id)
       .subscribe(
-        (data) => {
+        (data: any) => {
+          this.pagina = data
           this.spinner.hide();
           this.messageService.add({
             severity: 'success',
@@ -371,7 +382,7 @@ export class ListComponent implements OnInit {
             detail: ' Parabéns, bom trabalho! ',
             life: 4000,
           });
-          return this.buscarPorNumeroPagina(this.pagina.number);
+         // return this.buscarPorNumeroPagina(0);
         },
         (error) => {
           this.messageService.add({
@@ -406,8 +417,8 @@ export class ListComponent implements OnInit {
     this.conciliacaoCartaoService
       .alterarDataRecebimento(this.formDataRecebimento.value)
       .subscribe(
-        (success) => {
-          console.log(success);
+        (success: any) => {
+          this.pagina = success;
           this.spinner.hide();
           this.messageService.add({
             severity: 'success',
@@ -416,16 +427,17 @@ export class ListComponent implements OnInit {
             life: 2000,
           });
           setTimeout(() => {}, 2000);
-          return this.buscarPorNumeroPagina(this.pagina.number);
+          //return this.buscarPorNumeroPagina(1);
         },
         (error) => {
+          this.spinner.hide();
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Error',
             life: 3000,
           });
-          this.spinner.hide();
+
           return '';
         }
       );

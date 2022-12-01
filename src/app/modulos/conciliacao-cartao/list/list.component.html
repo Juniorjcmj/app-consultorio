@@ -21,6 +21,26 @@
               <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn" (click)="onSearchAute()"></button>
           </div>
       </div>
+      <div class="col-12 md:col-3">
+        <div class="p-inputgroup">
+            <input type="date" pInputText placeholder="Data" [formControl]="queryFieldsData">
+            <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn" (click)="onSearchData()"></button>
+        </div>
+    </div>
+    <div class="col-12 md:col-3">
+      <div class="p-inputgroup">
+          <p-dropdown
+          inputId="idEmpresaSearch"
+          placeholder="Empresa"
+          [options] = "empresas"
+          [formControl]="queryFieldsIdEmpresa"
+          optionLabel="nome"
+          optionValue="id"
+          [showClear]="true"
+           ></p-dropdown>
+          <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn" (click)="onSearcEmpresa()"></button>
+      </div>
+  </div>
           <!-- <div class="col-12 md:col-3">
               <div class="p-inputgroup">
                   <input type="date" pInputText placeholder="Data" [formControl]="queryFieldsData">
@@ -61,10 +81,10 @@
       <p-button type="button" icon="pi pi-refresh" (click)="reset()" styleClass="p-button-text"></p-button>
       <p-button type="button" icon="pi pi-chevron-right" (click)="next()" [disabled]="isLastPage()"
         styleClass="p-button-text"></p-button>
-      <span>Página {{pagina.number}}</span><span> de{{pagina.totalPages}} Páginas</span>
+      <!-- <span>Página {{pagina.number}}</span><span> de{{pagina.totalPages}} Páginas</span> -->
     </div>
 
-    <p-table #dt [value]="pagina.content" [rows]="50" [paginator]="true" [rowsPerPageOptions]="[10,25,50]"
+    <p-table #dt [value]="pagina" [rows]="50" [paginator]="true" [rowsPerPageOptions]="[10,25,50,100,200]"
       [globalFilterFields]="['nomeOperadora','nomeEmpresa','data', 'numeroPedido','tipoOperacao','valorPedido','quemCadastrou','quemConferiu', 'aute']"
       responsiveLayout="scroll" [(selection)]="selectedConciliacao" [rowHover]="true" dataKey="id"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
@@ -112,7 +132,7 @@
       <ng-template pTemplate="body" let-conciliacaoTable>
         <tr>
 
-          <td>{{conciliacaoTable.aute}}</td>
+          <td >{{conciliacaoTable.aute}}</td>
           <td>{{conciliacaoTable.nomeEmpresa}}</td>
           <td>{{conciliacaoTable.nomeOperadora}}</td>
           <td>{{conciliacaoTable.data | date : 'dd/MM/yyyy'}}</td>
@@ -124,8 +144,8 @@
           <td >{{conciliacaoTable.dataRecebimento | date : 'dd/MM/yyyy'}} <i (click)="showDialog(conciliacaoTable)"  class="pi pi-calendar" style="font-size: 2rem">
           </i></td>
           <td >{{conciliacaoTable.isAntecipa}}</td>
-          <td>{{conciliacaoTable.isRecebido}}</td>
-          <td (click)="isConferido(conciliacaoTable)">{{conciliacaoTable.foiConferido}}</td>
+          <td pTooltip={{conciliacaoTable.quemCadastrou}}>{{conciliacaoTable.isRecebido}}</td>
+          <td (click)="isConferido(conciliacaoTable)" pTooltip={{conciliacaoTable.quemConferiu}}>{{conciliacaoTable.foiConferido}}</td>
           <td>
             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
               (click)="editConciliacao(conciliacaoTable)"></button>
@@ -134,11 +154,11 @@
           </td>
         </tr>
       </ng-template>
-      <ng-template pTemplate="summary">
+      <!-- <ng-template pTemplate="summary">
         <div class="flex align-items-center justify-content-between">
           Total de {{pagina.totalElements}} conciliações.
         </div>
-      </ng-template>
+      </ng-template> -->
     </p-table>
   </div>
 </div>

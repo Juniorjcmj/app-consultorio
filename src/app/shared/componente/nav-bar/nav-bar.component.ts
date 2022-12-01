@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
+import { KeycloakService } from 'keycloak-angular';
 import { Router } from '@angular/router';
-import { LoginService } from 'src/app/modulos/login/login.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,23 +9,23 @@ import { LoginService } from 'src/app/modulos/login/login.service';
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit {
-  isLogado: boolean;
-  constructor(private service: LoginService,private router: Router) {
-    this.isLogado = service.isLoggedIn();
+  //isLogado: boolean;
+  constructor(private keycloakServvice: KeycloakService,private router: Router) {
+
    }
 
   ngOnInit(): void {
   }
-  logout(){
-    this.service.logout()
-    this.router.navigate(['login'])
-    }
+  // logout(){
+  //   this.service.logout()
+  //   this.router.navigate(['login'])
+  //   }
 
-    isPageUser(){
-      this.router.navigate(['page-user'])
-    }
-    isHome(){
-      this.router.navigate(['home'])
-    }
+  //   isPageUser(){
+  //     this.router.navigate(['page-user'])
+  //   }
+  //   isHome(){
+  //     this.router.navigate(['home'])
+  //   }
 
 }

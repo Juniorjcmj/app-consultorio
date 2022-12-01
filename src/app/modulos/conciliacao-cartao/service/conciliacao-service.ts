@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { environment } from 'src/environments/environment';
 import { ConciliacaoCartao, Operadora, PageConciliacao, ConciliacaoCartaoInput } from '../model/conciliacaoCartao';
+import { KeycloakService } from 'keycloak-angular';
 
 
 
@@ -13,27 +15,25 @@ export class ConciliacaoCartaoService {
 
 
 
-   apiUrlResourceServe= environment.apiUrlResourceServer+"V1/api-conciliacao/";
-   apiUrlResourceServeOperadora= environment.apiUrlResourceServer+"V1/api-operadora-cartao/";
+   apiUrlResourceServe= environment.apiUrlResourceServer+"V1/api-conciliacao";
+   apiUrlResourceServeOperadora= environment.apiUrlResourceServer+"V1/api-operadora-cartao";
 
-  constructor( private httpClient: HttpClient,private router: Router) { }
+  constructor( private httpClient: HttpClient,private router: Router,
+               private keycloakService: KeycloakService) { }
 
 
     getAll(numeroPagina: any){
 
-      return this.httpClient.get<PageConciliacao>(`${this.apiUrlResourceServe}`+"?sort=data,desc&size=100&page="+numeroPagina)
+      let url = this.apiUrlResourceServe +"/nao-recebidos"
+      return this.httpClient.get<PageConciliacao>(`${url}`+"?size=250&page="+numeroPagina)
     }
 
     alterarConferidoOuNao(nome:string, valor:any, id:any){
-      var url = this.apiUrlResourceServe+"alterar-conferido?id="+id+"&valor="+valor;
-
-      let parametro ={"foiConferido":valor }
-
-      return  this.httpClient.post<any>(`${url}`, null).pipe();
+      var url = this.apiUrlResourceServe+"/alterar-conferido?id="+id+"&valor="+valor+"&quemConferiu="+this.keycloakService.getUsername();
+      return  this.httpClient.get<any>(`${url}`).pipe();
     }
 
     manterConciliacao(record: ConciliacaoCartaoInput){
-      console.log(record)
        if(record.id == null ){
           return  this.salvarAcompanhamento(record)
        }else{
@@ -47,27 +47,25 @@ export class ConciliacaoCartaoService {
       return  this.httpClient.put<ConciliacaoCartao>(`${this.apiUrlResourceServe}`, record).pipe();
     }
     delete(record: any){
-      return  this.httpClient.delete(`${this.apiUrlResourceServe}`+record ).pipe();
+      return  this.httpClient.delete(`${this.apiUrlResourceServe}`+"?id="+record ).pipe();
     }
-
-
     alterarDataRecebimento(record: ConciliacaoCartaoInput){
-      console.log("chamando editar")
-      return  this.httpClient.put<ConciliacaoCartao>(`${this.apiUrlResourceServe}`+"data-recebimento", record).pipe();
+      return  this.httpClient.put<ConciliacaoCartao>(`${this.apiUrlResourceServe}`+"/data-recebimento", record).pipe();
     }
-
     getAllOperadora(){
       return this.httpClient.get<Operadora[]>(`${this.apiUrlResourceServeOperadora}`)
     }
-
     //FILTROS
     obterNumeroPedido(filtro: any): any {
-      return this.httpClient.get<PageConciliacao>(`${this.apiUrlResourceServe}`+"filtro-por-numero-pedido?numeroPedido="+filtro)
+      return this.httpClient.get<PageConciliacao>(`${this.apiUrlResourceServe}`+"/numero-pedido?numeroPedido="+filtro)
     }
     obterNumeroAute(filtro: any): any {
-      return this.httpClient.get<PageConciliacao>(`${this.apiUrlResourceServe}`+"filtro-por-numero-autenticacao?numeroAute="+filtro)
+      return this.httpClient.get<PageConciliacao>(`${this.apiUrlResourceServe}`+"/numero-aute?numeroAute="+filtro)
     }
     obterPorData(filtro: any): any {
-      return this.httpClient.get<PageConciliacao>(`${this.apiUrlResourceServe}`+"filtro-por-periodo?data="+filtro)
+      return this.httpClient.get<PageConciliacao>(`${this.apiUrlResourceServe}`+"/find-data?data="+filtro)
+    }
+    obterPorEmpresa(filtro: any): any {
+      return this.httpClient.get<PageConciliacao>(`${this.apiUrlResourceServe}`+"/find-empresa?id="+filtro)
     }
   }

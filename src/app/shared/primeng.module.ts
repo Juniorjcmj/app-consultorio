@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 import {ButtonModule} from 'primeng/button'
 import {MenubarModule} from 'primeng/menubar';
@@ -20,6 +20,8 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import {InputMaskModule} from 'primeng/inputmask';
 import {FieldsetModule} from 'primeng/fieldset';
 import {AccordionModule} from 'primeng/accordion';
+import { TooltipModule } from 'primeng/tooltip';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -54,7 +56,8 @@ import {AccordionModule} from 'primeng/accordion';
     SelectButtonModule,
     InputMaskModule,
     FieldsetModule,
-    AccordionModule
+    AccordionModule,
+    TooltipModule
 
 
    ]
