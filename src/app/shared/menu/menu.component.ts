@@ -33,9 +33,9 @@ export class MenuComponent implements OnInit {
                     routerLink: '/cartao'
                 },
                 {
-                    label:'Bancária',
+                    label:'Operadora',
                     icon:'pi pi-fw pi-thumbs-up-fill',
-                    routerLink: '/bancaria'
+                    routerLink: '/operadora-cartao'
                 },
 
             ]

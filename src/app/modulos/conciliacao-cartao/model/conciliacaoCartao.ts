@@ -69,6 +69,8 @@ export class Operadora{
   inicio!: string;
   fim!: string;
   nomeBandeira!: string;
+  statusViews!: string;
+  antecipacaoAutomaticaViews!: string;
 
 }
 export class Empresa{
