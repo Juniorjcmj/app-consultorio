@@ -1,18 +1,2 @@
-<mat-nav-list>
-  <div class="logo py-4">
-    <img src="../../assets/logo-dente.png" alt="Company Logo">
-  </div>
-  <mat-divider></mat-divider>
 
-  <h2 matSubheader class="mt-2"></h2>
-  <a mat-list-item routerLink="/home" routerLinkActive="list-item-active">
-    <mat-icon>home</mat-icon>Home
-  </a>
-  <a mat-list-item routerLink="/dashboard" routerLinkActive="list-item-active">
-    <mat-icon>dashboard</mat-icon>Dashboard
-  </a>
-  <a mat-list-item routerLink="/pacientes"><mat-icon>assignment_ind</mat-icon>Pacientes  </a>
-  <a mat-list-item routerLink="/usuarios"  *ngIf="isAdmin"><mat-icon>supervisor_account</mat-icon>Usuários  </a>
-  <a mat-list-item routerLink="/procedimentos"  *ngIf="isAdmin"><mat-icon>settings_input_composite</mat-icon>Procedimentos  </a>
-  <a mat-list-item routerLink="/compromissos"><mat-icon>date_range</mat-icon>Agenda  </a>
 

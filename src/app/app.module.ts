@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 
 import { HomeComponent } from './modulos/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginService } from './modulos/login/login.service';
 import { AuthGuard } from './guards/auth.guard';
 
 // **************Para formatar moeda para real brasileiro************************************
@@ -22,9 +21,7 @@ import { HeaderComponent } from './shared/componente/header/header.component';
 import { DashboardComponent } from './shared/componente/dashboard/dashboard.component';
 import { SidnavComponent } from './shared/componente/sidnav/sidnav.component';
 import { UsuarioModule } from './modulos/usuario/usuario.module';
-import { PacientesModule } from './modulos/pacientes/pacientes.module';
-import { ProcedimentoModule } from './modulos/procedimento/procedimento.module';
-import { ConsultaModule } from './modulos/consulta/consulta.module';
+
 import { PrimengModule } from './shared/primeng.module';
 import { MenuComponent } from './shared/menu/menu.component';
 import { ConciliacaoCartaoModule } from './modulos/conciliacao-cartao/conciliacao-cartao.module';
@@ -35,6 +32,7 @@ import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
+import { OperadoraCartaoModule } from './modulos/operadora-cartao/operadora-cartao.module';
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -60,9 +58,7 @@ registerLocaleData(ptBr);
     AppComponent,
     HomeComponent,
     NavBarComponent,
-    HeaderComponent,
     DashboardComponent,
-    SidnavComponent,
     //novo sistemaServico
     MenuComponent
 
@@ -78,11 +74,9 @@ registerLocaleData(ptBr);
     NgxSpinnerModule,
     FormsModule,
     UsuarioModule,
-    PacientesModule,
-    ProcedimentoModule,
-    ConsultaModule,
     PrimengModule,
     EmpresaModule,
+    OperadoraCartaoModule,
   //novo  sistema-servvico
   ConciliacaoCartaoModule,
   SweetAlert2Module,
@@ -106,7 +100,6 @@ registerLocaleData(ptBr);
     { provide: LOCALE_ID, useValue: 'pt' },
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },
     // *
-    LoginService,
     AuthGuard,
     MensagensService
   ],

@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './modulos/home/home.component';
 import { DashboardComponent } from './shared/componente/dashboard/dashboard.component';
+import { PageOperadoraComponent } from './modulos/operadora-cartao/page-operadora/page-operadora.component';
 
 
 
@@ -14,7 +15,7 @@ const routes: Routes =
      component: HomeComponent,
      canActivate: [AuthGuard]
     },
-  {path: '',pathMatch:'full', redirectTo:'home' },
+  {path: '',pathMatch:'full', redirectTo:'cartao' },
 
   //Novo layout distema servico
   {
@@ -23,39 +24,9 @@ const routes: Routes =
      loadChildren: ()=> import('./modulos/conciliacao-cartao/conciliacao-cartao.module')
                    .then(m => m.ConciliacaoCartaoModule)
   },
-  //fim
-
-  {
-    path: 'dashboard',
-     component: DashboardComponent,
-     canActivate: [AuthGuard]
-    },
-
-    {
-      path: 'usuarios',
-       canActivate: [AuthGuard],
-       loadChildren: ()=> import('./modulos/usuario/usuario.module')
-                     .then(m => m.UsuarioModule)
-    },
-    {
-       path: 'compromissos',
-       canActivate: [AuthGuard],
-       loadChildren: ()=> import('./modulos/agenda/agenda.module')
-                     .then(m => m.AgendaModule)
-    },
-
-    {
-      path: 'pacientes',
-      canActivate: [AuthGuard],
-      loadChildren: ()=> import('./modulos/pacientes/pacientes.module')
-                    .then(m => m.PacientesModule)
-   },
    {
-    path: 'procedimentos',
-    canActivate: [AuthGuard],
-    loadChildren: ()=> import('./modulos/procedimento/procedimento.module')
-                  .then(m => m.ProcedimentoModule)
- },
+    path:'operadora-cartao', component: PageOperadoraComponent, canActivate: [AuthGuard],
+   }
 
 
 ];
