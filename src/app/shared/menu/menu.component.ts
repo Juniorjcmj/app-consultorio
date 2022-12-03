@@ -37,6 +37,11 @@ export class MenuComponent implements OnInit {
                     icon:'pi pi-fw pi-thumbs-up-fill',
                     routerLink: '/operadora-cartao'
                 },
+                {
+                  label:'Empresas',
+                  icon:'pi pi-fw pi-building',
+                  routerLink: '/empresa'
+              },
 
             ]
         },

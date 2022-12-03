@@ -76,9 +76,9 @@
         <ng-template pTemplate="header">
           <tr>
 
-            <th pSortableColumn="aute">ID<p-sortIcon field="aute"></p-sortIcon>
+            <th pSortableColumn="id">ID<p-sortIcon field="aute"></p-sortIcon>
             </th>
-            <th pSortableColumn="aute">NOME<p-sortIcon field="aute"></p-sortIcon>
+            <th pSortableColumn="nome">NOME<p-sortIcon field="aute"></p-sortIcon>
             </th>
             <th pSortableColumn="nomeEmpresa">BANDEIRA <p-sortIcon field="nomeEmpresa"></p-sortIcon>
             </th>
@@ -137,7 +137,7 @@
 
 
 
-<p-dialog [(visible)]="operadoraDialog" [style]="{width: '500px'}" header="Cadastro de Conciliação " [modal]="true"
+<p-dialog [(visible)]="operadoraDialog" [style]="{width: '500px'}" header="Cadastro de Operadora " [modal]="true"
   styleClass="p-fluid">
   <ng-template pTemplate="content">
     <form [formGroup]="form">

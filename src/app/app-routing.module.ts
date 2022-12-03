@@ -5,6 +5,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './modulos/home/home.component';
 import { DashboardComponent } from './shared/componente/dashboard/dashboard.component';
 import { PageOperadoraComponent } from './modulos/operadora-cartao/page-operadora/page-operadora.component';
+import { PageEmpresaComponent } from './modulos/empresa/page-empresa/page-empresa.component';
 
 
 
@@ -26,7 +27,11 @@ const routes: Routes =
   },
    {
     path:'operadora-cartao', component: PageOperadoraComponent, canActivate: [AuthGuard],
+   },
+   {
+    path:'empresa', component: PageEmpresaComponent, canActivate: [AuthGuard],
    }
+
 
 
 ];

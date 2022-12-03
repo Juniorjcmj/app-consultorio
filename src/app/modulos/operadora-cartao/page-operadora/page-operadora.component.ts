@@ -58,7 +58,6 @@ export class PageOperadoraComponent implements OnInit {
 
       this.service.getAllOperadora().subscribe(
         (data: any) => {
-          console.log(data)
           this.spinner.hide();
           this.pagina = data;
           this.operadoraXLS = this.pagina;
@@ -74,7 +73,7 @@ export class PageOperadoraComponent implements OnInit {
   ngOnInit(): void {
     this.spinner.show();
 
-    this.spinner.show();
+
   }
 
   openNew() {
@@ -133,7 +132,7 @@ export class PageOperadoraComponent implements OnInit {
   deleteOperadora(record: Operadora) {
 
     this.confirmationService.confirm({
-      message: 'Tem certeza que deseja excluir ' + record.id + '?',
+      message: 'Tem certeza que deseja excluir ' + record.nome + '?',
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -209,7 +208,7 @@ export class PageOperadoraComponent implements OnInit {
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
-          detail: 'Conciliação Salva',
+          detail: 'Operadora Salva',
           life: 2000,
         });
         setTimeout(() => {}, 6000);

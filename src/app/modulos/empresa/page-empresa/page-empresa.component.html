@@ -1,0 +1,134 @@
+<p-card>
+  <p-toast></p-toast>
+  <div id="htmlData">
+    <div class="card">
+
+
+      <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-primary  p-button-sm" pTooltip="CRIAR NOVA EMPRESA"
+            (click)="openNew()"></button>
+
+        </ng-template>
+
+        <ng-template pTemplate="right">
+          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+            class="p-button-info mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+          <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
+            class="p-button-help mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+        </ng-template>
+      </p-toolbar>
+
+
+      <p-table #dt [value]="pagina" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,25,50,100,200]"
+        [globalFilterFields]="['nome','bandeira','inicio', 'fim','nomeBandeira']"
+        responsiveLayout="scroll" [(selection)]="selectedEmpresa" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+          <div class="flex align-items-center justify-content-between">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                placeholder="Pesquisar..." />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+
+            <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon>
+            </th>
+            <th pSortableColumn="nome">NOME<p-sortIcon field="nome"></p-sortIcon>
+            </th>
+            <th pSortableColumn="cnpj">CNPJ <p-sortIcon field="cnpj"></p-sortIcon>
+            </th>
+            <th pSortableColumn="endereco">ENDEREÇO <p-sortIcon field="endereco"></p-sortIcon>
+            </th>
+            <th pSortableColumn="telFixo">TEL FIXO <p-sortIcon field="telFixo"></p-sortIcon>
+            </th>
+            <th pSortableColumn="telMovel">TEL MÓVEL<p-sortIcon field="telMovel"></p-sortIcon>
+            </th>
+            <th pSortableColumn="email">EMAIL <p-sortIcon field="email"></p-sortIcon>
+            </th>
+
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-empresaTable>
+          <tr>
+            <td>{{empresaTable.id}}</td>
+            <td>{{empresaTable.nome}}</td>
+            <td>{{empresaTable.cnpj}}</td>
+            <td>{{empresaTable.endereco}}</td>
+            <td>{{empresaTable.telFixo}}</td>
+            <td>{{empresaTable.telMovel}} dia(s)</td>
+            <td>{{empresaTable.email }}</td>
+
+            <td>
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-primary mr-2" pTooltip="EDITAR EMPRESA"
+                (click)="edit(empresaTable)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger" pTooltip="EXCLUIR EMPRESA"
+                (click)="delete(empresaTable)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <!-- <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          Total de {{pagina.totalElements}} conciliações.
+        </div>
+      </ng-template> -->
+      </p-table>
+    </div>
+  </div>
+
+</p-card>
+
+
+
+<p-dialog [(visible)]="empresaDialog" [style]="{width: '500px'}" header="Cadastro de Empresa " [modal]="true"
+  styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <form [formGroup]="form">
+
+      <div class="field col">
+        <input type="text" pInputText id="nome" formControlName="nome" name="nome" placeholder="Nome"/>
+      </div>
+
+      <div class="field col">
+        <input type="text" pInputText id="cnpj" formControlName="cnpj" name="cnpj" placeholder="CNPJ"/>
+      </div>
+      <div class="field col">
+        <input type="text" pInputText id="endereco" formControlName="endereco" name="endereco" placeholder="Endereço"/>
+      </div>
+
+      <div class="field col">
+        <input type="text" pInputText id="telFixo" formControlName="telFixo" name="telFixo" placeholder="TEL FIXO"/>
+      </div>
+      <div class="field col">
+        <input type="text" pInputText id="telMovel" formControlName="telMovel" name="telMovel" placeholder="TEL MÓVEL"/>
+      </div>
+
+      <div class="field col">
+        <input type="text" pInputText id="email" formControlName="email" name="email" placeholder="EMAIL"/>
+      </div>
+
+
+
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" [disabled]="!form.valid"
+      (click)="manterEmpresa()"></button>
+  </ng-template>
+
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+
+  <p style="font-size: 20px; color: white">Carregando...</p>
+</ngx-spinner>
+
+
+

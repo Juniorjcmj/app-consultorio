@@ -41,7 +41,7 @@
 
       <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-success  p-button-sm"
+          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-info  p-button-sm"
             (click)="openNew()"></button>
 
           <!-- <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteacompanhamento()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
@@ -51,16 +51,16 @@
         <ng-template pTemplate="right">
 
           <div class="mb-3">
-            <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" styleClass="p-button-text"></p-button>
-            <p-button type="button" icon="pi pi-refresh" (click)="reset()" styleClass="p-button-text"></p-button>
-            <p-button type="button" icon="pi pi-chevron-right" (click)="next()" styleClass="p-button-text"></p-button>
+            <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" styleClass="p-button-text p-button-lg"></p-button>
+            <p-button type="button" icon="pi pi-refresh" (click)="reset()" styleClass="p-button-text p-button-lg"></p-button>
+            <p-button type="button" icon="pi pi-chevron-right" (click)="next()" styleClass="p-button-text p-button-lg"></p-button>
             <!-- <span>Página {{pagina.number}}</span><span> de{{pagina.totalPages}} Páginas</span> -->
           </div>
           <p-divider layout="vertical"></p-divider>
           <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
-            class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+            class="p-button-rounded p-button-text p-button-lg p-button-info" pTooltip="XLS" tooltipPosition="bottom"></button>
           <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
-            class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+            class="p-button-rounded p-button-text p-button-lg p-button-danger" pTooltip="PDF" tooltipPosition="bottom"></button>
         </ng-template>
       </p-toolbar>
 
@@ -130,9 +130,9 @@
             <td (click)="isConferido(conciliacaoTable)" pTooltip={{conciliacaoTable.quemConferiu}}>
               {{conciliacaoTable.foiConferido}}</td>
             <td>
-              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-lg p-button-secondary"
                 (click)="editConciliacao(conciliacaoTable)"></button>
-              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-lg p-button-danger"
                 (click)="deleteConciliacao(conciliacaoTable)"></button>
             </td>
           </tr>
