@@ -53,9 +53,9 @@
 
         <ng-template pTemplate="right">
           <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
-            class="p-button-info mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+            class="p-button-rounded p-button-text p-button-lg p-button-info mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
           <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
-            class="p-button-help mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+            class="p-button-rounded p-button-text p-button-lg p-button-danger mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
         </ng-template>
       </p-toolbar>
 
@@ -115,11 +115,11 @@
             <td>{{operadoraTable.inicio | date : 'dd/MM/yyyy'}}</td>
             <td>{{operadoraTable.fim | date : 'dd/MM/yyyy'}} </td>
             <td>
-              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-primary mr-2" pTooltip="EDITAR OPERADORA"
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-lg p-button-primary mr-2" pTooltip="EDITAR OPERADORA"
                 (click)="edit(operadoraTable)"></button>
-                <button pButton pRipple icon="pi pi-clone" class="p-button-rounded p-button-text p-button-success mr-2" pTooltip="CLONAR OPERADORA"
+                <button pButton pRipple icon="pi pi-clone" class="p-button-rounded p-button-text p-button-lg p-button-success mr-2" pTooltip="CLONAR OPERADORA"
                 (click)="clone(operadoraTable)"></button>
-              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger" pTooltip="EXCLUIR OPERADORA"
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-lg p-button-danger" pTooltip="EXCLUIR OPERADORA"
                 (click)="deleteOperadora(operadoraTable)"></button>
             </td>
           </tr>

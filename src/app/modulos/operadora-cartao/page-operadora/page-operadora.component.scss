@@ -3,8 +3,6 @@
   margin: 0 auto 2rem auto;
   display: block;
 }
-
-.p-button.p-button-sm {
-  font-size: 0.875rem;
-  padding: 0.65625rem 1.09375rem;
+:host ::ng-deep .p-button.p-button-lg .p-button-icon {
+  font-size: 2.20rem !important;
 }
