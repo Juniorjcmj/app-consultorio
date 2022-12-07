@@ -21,6 +21,19 @@ export class MenuComponent implements OnInit {
         routerLink: '/home',
 
     },
+    {
+      label:'Contas a Pagar',
+      icon:'pi pi-fw pi-calculator',
+      items:[
+          {
+          label:'Contas',
+          icon:'pi pi-fw pi-credit-card',
+          routerLink: '/contas-pagar',
+          },
+      ]
+
+
+  },
 
         {
 

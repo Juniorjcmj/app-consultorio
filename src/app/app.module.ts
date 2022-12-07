@@ -33,6 +33,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { OperadoraCartaoModule } from './modulos/operadora-cartao/operadora-cartao.module';
+import { ContasPagarModule } from './modulos/contas-pagar/contas-pagar.module';
+
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -60,7 +62,7 @@ registerLocaleData(ptBr);
     NavBarComponent,
     DashboardComponent,
     //novo sistemaServico
-    MenuComponent
+    MenuComponent,
 
 
   ],
@@ -77,6 +79,7 @@ registerLocaleData(ptBr);
     PrimengModule,
     EmpresaModule,
     OperadoraCartaoModule,
+    ContasPagarModule,
   //novo  sistema-servvico
   ConciliacaoCartaoModule,
   SweetAlert2Module,

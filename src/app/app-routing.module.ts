@@ -25,6 +25,12 @@ const routes: Routes =
      loadChildren: ()=> import('./modulos/conciliacao-cartao/conciliacao-cartao.module')
                    .then(m => m.ConciliacaoCartaoModule)
   },
+  {
+    path: 'contas-pagar',
+     canActivate: [AuthGuard],
+     loadChildren: ()=> import('./modulos/contas-pagar/contas-pagar.module')
+                   .then(m => m.ContasPagarModule)
+  },
    {
     path:'operadora-cartao', component: PageOperadoraComponent, canActivate: [AuthGuard],
    },
