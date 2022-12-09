@@ -8,4 +8,5 @@ export class Filtro{
   situacao  : string = "";
   subclassificacao  : string = "";
   tipoDespesa  : string = "";
+  numeroDocumento  : string = "";
 }

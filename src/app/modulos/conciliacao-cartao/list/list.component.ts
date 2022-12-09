@@ -130,7 +130,7 @@ export class ListComponent implements OnInit {
     this.conciliacaoCartaoService.obterPorData(this.queryFieldsData.value).subscribe((res:any)  =>{this.pagina = res} );
   }
   onSearcEmpresa(){
-    console.log("chamando!! por data")
+
     this.conciliacaoCartaoService.obterPorEmpresa(this.queryFieldsIdEmpresa.value).subscribe((res:any)  =>{this.pagina = res} );
   }
 

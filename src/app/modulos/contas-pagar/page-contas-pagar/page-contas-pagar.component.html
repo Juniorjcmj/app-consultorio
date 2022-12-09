@@ -2,42 +2,8 @@
   <p-toast></p-toast>
   <div id="htmlData">
     <div class="card">
-      <p-accordion>
-        <p-accordionTab header="Filtros">
-          <div class="grid p-fluid">
-            <div class="col-12 md:col-3">
-              <div class="p-inputgroup">
-                <input type="text" pInputText placeholder="Nº Pedido" >
-                <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"
-                 ></button>
-              </div>
-            </div>
-            <div class="col-12 md:col-3">
-              <div class="p-inputgroup">
-                <input type="text" pInputText placeholder="Nº Autenticação" >
-                <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"
-                  ></button>
-              </div>
-            </div>
-            <div class="col-12 md:col-3">
-              <div class="p-inputgroup">
-                <input type="date" pInputText placeholder="Data" >
-                <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"
-                  ></button>
-              </div>
-            </div>
-            <div class="col-12 md:col-3">
-              <div class="p-inputgroup">
-                <p-dropdown inputId="idEmpresaSearch" placeholder="Empresa"
-                   optionLabel="nome" optionValue="id" [showClear]="true">
-                </p-dropdown>
-                <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"
-                  ></button>
-              </div>
-            </div>
-          </div>
-        </p-accordionTab>
-      </p-accordion>
+
+       <app-filtro-avancado></app-filtro-avancado>
 
       <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
@@ -108,15 +74,19 @@
             (click)="editarDataPagamento(contasPagarTable)"></button>
 
             </td>
-            <td>{{contasPagarTable.jurosMulta  | currency }}</td>
-            <td>{{contasPagarTable.desconto  | currency }}</td>
+            <td  style="color:blue" (click)="editarJurosMulta(contasPagarTable)">{{contasPagarTable.jurosMulta  | currency }}</td>
+            <td  style="color:blue" (click)="editarDesconto(contasPagarTable)">{{contasPagarTable.desconto  | currency }}</td>
             <td>{{contasPagarTable.valorPago  | currency }}</td>
             <td>{{contasPagarTable.situacao }}</td>
             <td>{{contasPagarTable.nd }} </td>
             <td>{{contasPagarTable.tipoDespesa }} </td>
             <td>{{contasPagarTable.classificacaoDespesa }} / {{contasPagarTable.subClassificacaoDespesa }}</td>
             <td>{{contasPagarTable.parcela }} </td>
-            <td>{{contasPagarTable.localPagamento }} </td>
+            <td  style="color:blue" (click)="editarLocalPagamento(contasPagarTable)">
+              <div *ngIf="contasPagarTable.localPagamento"> {{contasPagarTable.localPagamento }}</div>
+              <button *ngIf="!contasPagarTable.localPagamento" pButton pRipple icon="pi pi-map" class="p-button-rounded p-button-text p-button-lg p-button-primary"
+            (click)="editarLocalPagamento(contasPagarTable)"></button>
+             </td>
             <td>
               <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-lg p-button-primary mr-2" pTooltip="EDITAR OPERADORA"
                 (click)="edit(contasPagarTable)"></button>
@@ -234,7 +204,7 @@
     <div class="col-12 md:col-12">
       <div class="p-inputgroup">
           <span pButton class="p-inputgroup-addon"><i class="pi pi-calendar"></i></span>
-          <input type="date" pInputText placeholder="VENCIMENTO" formControlName="dataPagamentoEdit" name="dataPagamentoEdit" >
+          <input type="date" pInputText placeholder="VENCIMENTO" formControlName="dataPagamento" name="dataPagamento" >
           <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"  [disabled]="!editarDataPgtoform.valid"
           (click)="manterDataPagamento()"></button>
       </div>
@@ -243,4 +213,52 @@
   </form>
   </ng-template>
 </p-dialog>
+<p-dialog header="" [(visible)]="editarLocalPgtoDialog">
+  <ng-template pTemplate="content">
+  <form  [formGroup]="editarLocalPgtoform">
+    <div class="col-12 md:col-12">
+      <div class="p-inputgroup">
+          <span pButton class="p-inputgroup-addon"><i class="pi pi-map"></i></span>
+          <input type="text" pInputText placeholder="LOCAL PAGAMENTO" formControlName="localPagamento" name="localPagamento" >
+          <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"  [disabled]="!editarLocalPgtoform.valid"
+          (click)="manterLocalPgto()"></button>
+      </div>
+  </div>
+
+  </form>
+  </ng-template>
+</p-dialog>
+<p-dialog header="" [(visible)]="editarDescontoDialog">
+  <ng-template pTemplate="content">
+  <form  [formGroup]="editarDescontoform">
+    <div class="col-12 md:col-12">
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon">R$</span>
+          <input type="text" pInputText placeholder="DESCONTO" formControlName="desconto" name="desconto" >
+          <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"  [disabled]="!editarDescontoform.valid"
+          (click)="manterDesconto()"></button>
+      </div>
+  </div>
+
+  </form>
+  </ng-template>
+</p-dialog>
+
+<p-dialog header="" [(visible)]="editarJurosMultaDialog">
+  <ng-template pTemplate="content">
+  <form  [formGroup]="editarJurosMultatoform">
+    <div class="col-12 md:col-12">
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon">R$</span>
+          <input type="text" pInputText placeholder="JUROS/MULTA" formControlName="jurosMulta" name="jurosMulta" >
+          <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"  [disabled]="!editarJurosMultatoform.valid"
+          (click)="manterJurosMulta()"></button>
+      </div>
+  </div>
+
+  </form>
+  </ng-template>
+</p-dialog>
+
+
 

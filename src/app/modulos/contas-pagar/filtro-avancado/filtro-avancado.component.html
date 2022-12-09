@@ -1,0 +1,76 @@
+<p-accordion>
+  <p-accordionTab header="Filtros">
+    <form [formGroup]="formFilter" style="margin-top:10px">
+    <div class="grid p-fluid">
+      <div class="col-12 md:col-3">
+        <div class="" >
+          <label for="dtInicio">DATA INÍCIO**</label>
+          <input type="date" inputId="dtInicio" pInputText placeholder="DATA INÍCIO" formControlName="dtInicio" name="dtInicio" >
+                 </div>
+      </div>
+      <div class="col-12 md:col-3">
+        <div class="">
+          <label for="dtFim">DATA FIM</label>
+          <input type="date" inputId="dtFim" pInputText placeholder="DATA FIM"  formControlName="dtFim" name="dtFim" >
+        </div>
+      </div>
+      <div class="col-12 md:col-3">
+        <div class="">
+          <label for="fornecedor">FORNECEDOR</label>
+          <input type="text" inputId="fornecedor" pInputText placeholder="Ex: FABRIMAR" formControlName="fornecedor" name="fornecedor" >
+        </div>
+      </div>
+      <div class="col-12 md:col-3">
+        <label for="idEmpresa">Empresa</label>
+          <p-dropdown inputId="idEmpresa" placeholder="Ex: Casa Nobre" [options]="empresas" formControlName="idEmpresa" name="idEmpresa"
+             optionLabel="nome" optionValue="id" [showClear]="true">
+          </p-dropdown>
+      </div>
+      <div class="col-12 md:col-3">
+        <label for="formaPagamento">FORMA DE PAGAMENTO</label>
+        <p-dropdown inputId="formaPagamento" placeholder="Ex: Boleto, Espécie..." [options]="formasPgtoOptions" formControlName="formaPagamento" name="formaPagamento"
+           optionLabel="label" optionValue="value" [showClear]="true">
+        </p-dropdown>
+    </div>
+    <div class="col-12 md:col-3">
+      <label for="tipoDespesa">TIPO DESPESA</label>
+      <p-dropdown inputId="tipoDespesa" placeholder="Ex: Fixa ou Variável" [options]="tipoDespesasOptions" formControlName="tipoDespesa" name="tipoDespesa"
+         optionLabel="label" optionValue="value" [showClear]="true">
+      </p-dropdown>
+  </div>
+  <div class="col-12 md:col-3">
+    <label for="situacao">SITUAÇÃO</label>
+    <p-dropdown inputId="situacao" placeholder="Ex: Pago ou Pendente" [options]="situacaoOptions" formControlName="situacao" name="situacao"
+       optionLabel="label" optionValue="value" [showClear]="true">
+    </p-dropdown>
+</div>
+<div class="col-12 md:col-3">
+  <div class="">
+    <label for="numeroDocumento">Nº DOC</label>
+    <input type="text" inputId="numeroDocumento" pInputText placeholder="Ex: 99222388"  formControlName="numeroDocumento" name="numeroDocumento">
+  </div>
+</div>
+<div class="col-12 md:col-3">
+  <div class="">
+    <label for="classificacao">CLASSIFICAÇÃO </label>
+    <input type="text" inputId="classificacao" pInputText placeholder="CLASSIFICAÇÃO" formControlName="classificacao" name="classificacao">
+  </div>
+</div>
+<div class="col-12 md:col-3">
+  <div class="">
+    <label for="subclassificacao"> SUBCLASSIFICAÇÃO </label>
+    <input type="text"inputId="subclassificacao" pInputText placeholder="SUBCLASSIFICAÇÃO" formControlName="subclassificacao" name="subclassificacao">
+  </div>
+</div>
+<div class="col-12 md:col-3">
+  <div class="p-inputgroup" style="margin-top:20px ;">
+      <button label="FILTRAR" type="button" pButton pRipple icon="pi pi-filter" (click)="filtroAvancado()"
+      [disabled]="!formFilter.valid"
+      ></button>
+  </div>
+</div>
+    </div>
+    </form>
+  </p-accordionTab>
+</p-accordion>
+
