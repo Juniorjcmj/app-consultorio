@@ -1,1 +1,154 @@
-<p>page-classificacao-despesa works!</p>
+<p-card>
+  <p-toast></p-toast>
+  <div id="htmlData">
+    <div class="card">
+
+
+      <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-primary  p-button-sm" pTooltip="CRIAR NOVA EMPRESA"
+            (click)="openNew()"></button>
+
+        </ng-template>
+
+        <ng-template pTemplate="right">
+          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+            class="p-button-rounded p-button-text p-button-info p-button-lg" pTooltip="XLS" tooltipPosition="bottom"></button>
+          <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
+            class="p-button-rounded p-button-text p-button-danger p-button-lg" pTooltip="PDF" tooltipPosition="bottom"></button>
+        </ng-template>
+      </p-toolbar>
+
+
+      <p-table #dt [value]="pagina" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,25,50,100,200]"
+        [globalFilterFields]="['descricao']"
+        responsiveLayout="scroll" [(selection)]="selectedClassificacao" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+          <div class="flex align-items-center justify-content-between">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                placeholder="Pesquisar..." />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+
+            <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon>
+            </th>
+            <th pSortableColumn="classificacao">CLASSICICAÇÃO<p-sortIcon field="classificacao"></p-sortIcon>
+            </th>
+            <th>SUBCLASSIFICAÇÃO</th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-classificacao>
+          <tr>
+            <td>{{classificacao.id}}</td>
+            <td>{{classificacao.descricao}}</td>
+            <td>
+            <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-text p-button-info p-button-lg" pTooltip="MOSTRAR SUBCLASSIFICAÇÃO"
+            (click)="exibirSubClassificacoes(classificacao)"></button>
+           </td>
+
+            <td>
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-primary p-button-lg " pTooltip="EDITAR CLASSIFICACÃO"
+                (click)="edit(classificacao)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger p-button-lg" pTooltip="EXCLUIR CLASSIFICAÇÃO"
+                (click)="delete(classificacao)"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+
+</p-card>
+
+
+
+<p-dialog [(visible)]="classificacaoDialog" [style]="{width: '500px'}" header="Cadastro de Classificação " [modal]="true"
+  styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <form [formGroup]="form">
+
+      <div class="field col">
+        <input type="text" pInputText id="descricao" formControlName="descricao" name="descricao" placeholder="Descrição"/>
+      </div>
+
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" [disabled]="!form.valid"
+      (click)="manterClassificacao()"></button>
+  </ng-template>
+
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+
+  <p style="font-size: 20px; color: white">Carregando...</p>
+</ngx-spinner>
+
+
+<p-sidebar [(visible)]="displaySub" [style]="{width:'45em'}"  position="right">
+
+  <ng-template pTemplate="content">
+
+
+    <p-card>
+          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-primary  p-button-sm" pTooltip="CRIAR NOVA EMPRESA"
+            (click)="adicionarSubClassificacao()" style="margin-bottom: 15px;"></button>
+
+      <p-table [value]="listaSubClassificacao">
+        <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>DESCRIÇÃO</th>
+          <th></th>
+        </tr>
+
+        </ng-template>
+        <ng-template pTemplate="body" let-subclassificacao>
+          <tr>
+            <td  style="color:blue">{{subclassificacao.id}}</td>
+           <td  style="color:blue">{{subclassificacao.descricao}}</td>
+           <td>
+            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-primary p-button-lg " pTooltip="EDITAR CLASSIFICACÃO"
+              (click)="editSubClassificacao(subclassificacao)"></button>
+            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger p-button-lg" pTooltip="EXCLUIR CLASSIFICAÇÃO"
+              (click)="deleteSub(subclassificacao)"></button>
+          </td>
+        </tr>
+      </ng-template>
+      </p-table>
+      <ng-template pTemplate="footer">
+
+      </ng-template>
+  </p-card>
+
+  </ng-template>
+</p-sidebar>
+
+<p-dialog [(visible)]="subclassificacaoDialog" [style]="{width: '500px'}" header="Cadastro de SubClassificação " [modal]="true"
+  styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <form [formGroup]="formSubclassificacao">
+
+      <div class="field col">
+        <input type="text" pInputText id="descricao" formControlName="descricao" name="descricao" placeholder="Descrição"/>
+      </div>
+
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" [disabled]="!formSubclassificacao.valid"
+      (click)="manterSubclassificacao()"></button>
+  </ng-template>
+
+</p-dialog>

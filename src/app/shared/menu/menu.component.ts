@@ -30,6 +30,11 @@ export class MenuComponent implements OnInit {
           icon:'pi pi-fw pi-credit-card',
           routerLink: '/contas-pagar',
           },
+          {
+            label:'Classificação',
+            icon:'pi pi-fw pi-list',
+            routerLink: '/classificacao',
+            },
       ]
 
 

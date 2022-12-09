@@ -6,6 +6,7 @@ import { HomeComponent } from './modulos/home/home.component';
 import { DashboardComponent } from './shared/componente/dashboard/dashboard.component';
 import { PageOperadoraComponent } from './modulos/operadora-cartao/page-operadora/page-operadora.component';
 import { PageEmpresaComponent } from './modulos/empresa/page-empresa/page-empresa.component';
+import { PageClassificacaoDespesaComponent } from './modulos/classificacao-despesa/page-classificacao-despesa/page-classificacao-despesa.component';
 
 
 
@@ -36,7 +37,11 @@ const routes: Routes =
    },
    {
     path:'empresa', component: PageEmpresaComponent, canActivate: [AuthGuard],
+   },
+   {
+    path:'classificacao', component: PageClassificacaoDespesaComponent, canActivate: [AuthGuard],
    }
+
 
 
 

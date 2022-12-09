@@ -19,7 +19,7 @@ export class ClassificacaoDespesaService {
 
 
 
-  manterContasPagar(record: ClassificacaoDespesa): Observable<ClassificacaoDespesa[]>{
+  manterClassificacao(record: ClassificacaoDespesa): Observable<ClassificacaoDespesa[]>{
     if(record.id == null ){
        return  this.salvar(record)
     }else{
@@ -38,7 +38,7 @@ export class ClassificacaoDespesaService {
       return  this.httpClient.delete(`${this.apiUrlResourceServe}`+"?id="+record ).pipe();
     }
 
-    getAllClassificação(){
+    getAllClassificacao(){
       return this.httpClient.get<ClassificacaoDespesa>(`${this.apiUrlResourceServe}`).pipe();
     }
 
@@ -46,10 +46,11 @@ export class ClassificacaoDespesaService {
     //SUBCLASSIFICAÇÃO
 
     manterSub(idClassificacao:any ,record: SubClassificacaoDespesa): Observable<SubClassificacaoDespesa[]>{
+
       if(record.id == null ){
          return  this.salvarSub(idClassificacao, record.descricao)
       }else{
-         return this.alterarSub(idClassificacao, record.descricao)
+         return this.alterarSub(record.id, record.descricao)
       }
    }
       salvarSub(idClassificacao: any,descricaoSubClassificacao: any){
@@ -57,7 +58,9 @@ export class ClassificacaoDespesaService {
         return  this.httpClient.post<SubClassificacaoDespesa[]>(`${this.apiUrlResourceServeSub}`+"?descricaoSubClassificacao="+descricaoSubClassificacao+"&idClassificacao="+idClassificacao, null).pipe();
       }
       alterarSub(idClassificacao: any,descricaoSubClassificacao: any){
-        return  this.httpClient.put<SubClassificacaoDespesa[]>(`${this.apiUrlResourceServeSub}`+"?descricaoSubClassificacao="+descricaoSubClassificacao+"&idClassificacao="+idClassificacao, null).pipe();
+      console.log("chamando alteração")
+
+        return  this.httpClient.put<SubClassificacaoDespesa[]>(`${this.apiUrlResourceServeSub}`+"?descricaoSubClassificacao="+descricaoSubClassificacao+"&idSubClassificacao="+idClassificacao, null).pipe();
       }
 
       deleteSub(idClassificacao: any,descricaoSubClassificacao: any ){
