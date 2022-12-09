@@ -35,6 +35,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { OperadoraCartaoModule } from './modulos/operadora-cartao/operadora-cartao.module';
 import { ContasPagarModule } from './modulos/contas-pagar/contas-pagar.module';
 
+import { DateFnsModule } from 'ngx-date-fns';
+import { ClassificacaoDespesaModule } from './modulos/classificacao-despesa/classificacao-despesa.module';
+
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -80,11 +83,14 @@ registerLocaleData(ptBr);
     EmpresaModule,
     OperadoraCartaoModule,
     ContasPagarModule,
+    ClassificacaoDespesaModule,
   //novo  sistema-servvico
   ConciliacaoCartaoModule,
   SweetAlert2Module,
 
-  KeycloakAngularModule
+  KeycloakAngularModule,
+
+  DateFnsModule.forRoot()
 
   ],
   providers: [
