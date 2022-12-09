@@ -23,7 +23,7 @@ import {AccordionModule} from 'primeng/accordion';
 import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DividerModule} from 'primeng/divider';
-
+import {SidebarModule} from 'primeng/sidebar';
 
 
 
@@ -58,7 +58,8 @@ import {DividerModule} from 'primeng/divider';
     FieldsetModule,
     AccordionModule,
     TooltipModule,
-    DividerModule
+    DividerModule,
+    SidebarModule
 
 
    ]

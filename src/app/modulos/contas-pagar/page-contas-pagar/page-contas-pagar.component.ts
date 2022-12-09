@@ -15,6 +15,7 @@ import { Filtro } from '../model/filtro';
 import { Empresa } from '../../conciliacao-cartao/model/conciliacaoCartao';
 
 import { format, compareAsc } from 'date-fns'
+import { position } from 'html2canvas/dist/types/css/property-descriptors/position';
 
 @Component({
   selector: 'app-page-contas-pagar',
@@ -49,6 +50,9 @@ export class PageContasPagarComponent implements OnInit {
   form!: FormGroup;
 
   display: boolean = false;
+
+  displaySideBar: boolean = false;
+  detalheContas: ContasPagarDTO[] = [];
 
   // conciliacaoCartoes$: Observable<ConciliacaoCartao[]>;
   pagina$!:  Observable<ContasPagarDTO[]>;
@@ -314,6 +318,7 @@ export class PageContasPagarComponent implements OnInit {
 
     });
     this.submitted = false;
+
     this.editarDtPgtoDialog = true;
   }
   manterDataPagamento(){
@@ -491,7 +496,11 @@ export class PageContasPagarComponent implements OnInit {
 
   }
 
-
+   detalhamentoSidebar(conta: ContasPagarDTO){
+    this.detalheContas = [];
+    this.detalheContas.push(conta);
+    this.displaySideBar = true;
+   }
 
 
 }
