@@ -3,39 +3,87 @@
   <div id="htmlData">
     <div class="card">
       <p-accordion>
-        <p-accordionTab header="Filtros">
+        <p-accordionTab header="FILTRO ">
+          <form [formGroup]="formFilter" style="margin-top:10px">
           <div class="grid p-fluid">
             <div class="col-12 md:col-3">
-              <div class="p-inputgroup">
-                <input type="text" pInputText placeholder="Nº Pedido" [formControl]="queryFields">
-                <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"
-                  (click)="onSearchNumeroPedido()"></button>
+              <div class="" >
+                <label for="dtInicio">DATA PEDIDO INÍCIO</label>
+                <input type="date" inputId="dtInicio" pInputText placeholder="DATA INÍCIO" formControlName="dtInicio" name="dtInicio" >
+                       </div>
+            </div>
+            <div class="col-12 md:col-3">
+              <div class="">
+                <label for="dtFim">DATA PEDIDO FIM</label>
+                <input type="date" inputId="dtFim" pInputText placeholder="DATA FIM"  formControlName="dtFim" name="dtFim" >
               </div>
             </div>
             <div class="col-12 md:col-3">
-              <div class="p-inputgroup">
-                <input type="text" pInputText placeholder="Nº Autenticação" [formControl]="queryFieldsAute">
-                <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"
-                  (click)="onSearchAute()"></button>
+              <div>
+                <label for="fornecedor">Nº PEDIDO</label>
+                 <input type="text" pInputText placeholder="Ex: 726699"formControlName="numeroPedido" name="numeroPedido" inputId="numeroPedido" >
               </div>
             </div>
             <div class="col-12 md:col-3">
-              <div class="p-inputgroup">
-                <input type="date" pInputText placeholder="Data" [formControl]="queryFieldsData">
-                <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"
-                  (click)="onSearchData()"></button>
+              <div>
+                <label for="fornecedor">Nº AUTENTICAÇÃO</label>
+                 <input type="text" pInputText placeholder="Ex: 99222388"formControlName="aute" name="aute" inputId="aute" >
               </div>
             </div>
             <div class="col-12 md:col-3">
-              <div class="p-inputgroup">
-                <p-dropdown inputId="idEmpresaSearch" placeholder="Empresa" [options]="empresas"
-                  [formControl]="queryFieldsIdEmpresa" optionLabel="nome" optionValue="id" [showClear]="true">
+              <div>
+                <label for="fornecedor">DATA RECEBIMENTO</label>
+                 <input type="date" pInputText formControlName="dataRecebimento" name="dataRecebimento" inputId="dataRecebimento" >
+              </div>
+            </div>
+            <div class="col-12 md:col-3">
+              <div>
+                <label for="fornecedor">PREVISÃO RECEBIMENTO</label>
+                 <input type="date" pInputText formControlName="previsaoRecebimento" name="previsaoRecebimento" inputId="previsaoRecebimento" >
+              </div>
+            </div>
+
+            <div class="col-12 md:col-3">
+              <div >
+                <label for="fornecedor">EMPRESA</label>
+                <p-dropdown inputId="idEmpresaSearch" placeholder="Ex: CN Muzema" [options]="empresas" name="idEmpresa" inputId="idEmpresa"
+                formControlName="idEmpresa" optionLabel="nome" optionValue="id" [showClear]="true">
                 </p-dropdown>
-                <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"
-                  (click)="onSearcEmpresa()"></button>
+              </div>
+            </div>
+            <div class="col-12 md:col-3">
+              <div >
+                <label for="fornecedor">OPERADORA CARTÃO</label>
+                <p-dropdown inputId="idOperadora" placeholder="Ex: PagSeguro, GETNET" [options]="operadoras" name="idOperadora" inputId="idOperadora"
+                formControlName="idOperadora" optionLabel="nomeBandeira" optionValue="id" [showClear]="true">
+                </p-dropdown>
+              </div>
+            </div>
+            <div class="col-12 md:col-3">
+              <div >
+                <label for="fornecedor">TIPO DE OPERAÇÃO</label>
+                <p-dropdown inputId="tipoOperacao" placeholder="Ex: Crédito ou Débito" [options]="stateOptions" name="tipoOperacao" inputId="tipoOperacao"
+                formControlName="tipoOperacao" optionLabel="label" optionValue="value" [showClear]="true">
+                </p-dropdown>
+              </div>
+            </div>
+            <div class="col-12 md:col-3">
+              <div >
+                <label for="fornecedor">STATUS RECEBIMENTO</label>
+                <p-dropdown inputId="isRecebido" placeholder="Ex: Recebido ou Não Recebido" [options]="statusRecebimento" name="isRecebido" inputId="isRecebido"
+                formControlName="isRecebido" optionLabel="label" optionValue="value" [showClear]="true">
+                </p-dropdown>
+              </div>
+            </div>
+            <div class="col-12 md:col-3">
+              <div class="p-inputgroup" style="margin-top:20px ;">
+                  <button label="FILTRAR" type="button" pButton pRipple icon="pi pi-filter" (click)="filtroAvancado()"
+                  [disabled]="!formFilter.valid"
+                  ></button>
               </div>
             </div>
           </div>
+          </form>
         </p-accordionTab>
       </p-accordion>
 
@@ -125,10 +173,13 @@
             <td>{{conciliacaoTable.dataRecebimento | date : 'dd/MM/yyyy'}} <i (click)="showDialog(conciliacaoTable)"
                 class="pi pi-calendar" style="font-size: 2rem">
               </i></td>
+
             <td>{{conciliacaoTable.isAntecipa}}</td>
             <td pTooltip={{conciliacaoTable.quemCadastrou}}>{{conciliacaoTable.isRecebido}}</td>
+
             <td (click)="isConferido(conciliacaoTable)" pTooltip={{conciliacaoTable.quemConferiu}}>
               {{conciliacaoTable.foiConferido}}</td>
+
             <td>
               <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-lg p-button-secondary"
                 (click)="editConciliacao(conciliacaoTable)"></button>
@@ -157,13 +208,13 @@
 
       <div class="field">
 
-        <p-dropdown formControlName="idEmpresa" inputId="idEmpresa" [options]="empresas" placeholder="Empresa"
+        <p-dropdown formControlName="idEmpresa" inputId="idEmpresa" [options]="empresas" placeholder="Empresa" name="idEmpresa"
           optionValue="id" optionLabel="nome">
         </p-dropdown>
       </div>
 
       <div class="field">
-        <p-dropdown formControlName="idOperadora" inputId="IdOperadora" [options]="operadoras" placeholder="OPERADORA"
+        <p-dropdown formControlName="idOperadora" inputId="IdOperadora" [options]="operadoras" placeholder="OPERADORA" name="idOperadora" id="idOperadora"
           optionValue="id" optionLabel="nomeBandeira" name="IdOperadora">
         </p-dropdown>
       </div>
@@ -174,8 +225,8 @@
       </div>
       <div class="field col">
 
-        <p-calendar inputId="data" formControlName="data" id="data" name="data" placeholder="DATA DO PEDIDO"
-          slotChar="dd/mm/yyyy" dateFormat="dd/mm/yy"></p-calendar>
+        <input type="date" pInputText inputId="data" formControlName="data" id="data" name="data" placeholder="DATA DO PEDIDO"
+          slotChar="dd/mm/yyyy" dateFormat="dd/mm/yy"/>
       </div>
 
       <div class="formgrid grid">
@@ -190,7 +241,7 @@
       </div>
       <div class="field col">
 
-        <p-inputNumber id="aute" formControlName="aute" name="aute" placeholder="AUTE"></p-inputNumber>
+        <input  pInputText type="text"  id="aute" formControlName="aute" name="aute" placeholder="AUTE" />
       </div>
       <div class="field col">
         <label for="numeroPedido">Nº PEDIDO</label>
@@ -217,8 +268,8 @@
   <ng-template pTemplate="content">
     <form [formGroup]="formDataRecebimento">
       <div class="field col">
-        <p-calendar formControlName="dataRecebimento" placeholder="Selecionar data" slotChar="dd/mm/yyyy"
-          dateFormat="dd/mm/yy"></p-calendar>
+        <input type="date" pInputText formControlName="dataRecebimento" placeholder="Selecionar data" slotChar="dd/mm/yyyy"
+          dateFormat="dd/mm/yy"/>
       </div>
     </form>
   </ng-template>

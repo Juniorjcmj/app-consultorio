@@ -68,4 +68,10 @@ export class ConciliacaoCartaoService {
     obterPorEmpresa(filtro: any): any {
       return this.httpClient.get<PageConciliacao>(`${this.apiUrlResourceServe}`+"/find-empresa?id="+filtro)
     }
+
+    filtroAvancado(filtro: any): any {
+      return this.httpClient.get<PageConciliacao>(`${this.apiUrlResourceServe}`+"/filtro-avancado?idEmpresa="+filtro.idEmpresa+"&idOperadora="+filtro.idOperadora
+      +"&dtInicio="+filtro.dtInicio+"&dtFim="+filtro.dtFim+"&numeroPedido="+filtro.numeroPedido+"&aute="+filtro.aute+"&dataRecebimento="+filtro.dataRecebimento
+      +"&previsaoRecebimento="+filtro.previsaoRecebimento+"&tipoOperacao="+filtro.tipoOperacao+"&isRecebido="+filtro.isRecebido)
+    }
   }

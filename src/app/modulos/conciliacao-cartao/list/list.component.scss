@@ -7,3 +7,8 @@
 :host ::ng-deep .p-button.p-button-lg .p-button-icon {
   font-size: 2.20rem !important;
 }
+
+:host ::ng-deep label {
+  font-size: 1.20rem !important;
+  font-weight: 700;
+}

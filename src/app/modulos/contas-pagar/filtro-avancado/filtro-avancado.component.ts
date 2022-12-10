@@ -37,7 +37,7 @@ export class FiltroAvancadoComponent implements OnInit {
   ) {
     this.formFilter = this.formBuilder.group({
 
-      dtInicio:[null, Validators.required],
+      dtInicio:[null],
       dtFim:[],
       classificacao:[null],
       subclassificacao:[null],

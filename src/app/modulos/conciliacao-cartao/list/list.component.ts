@@ -47,6 +47,7 @@ export class ListComponent implements OnInit {
   operadoras!: Operadora[];
 
   stateOptions!: any[];
+  statusRecebimento!: any[];
 
   form!: FormGroup;
   formDataRecebimento!: FormGroup;
@@ -66,6 +67,8 @@ export class ListComponent implements OnInit {
   queryFieldsData = new FormControl();
   queryFieldsIdEmpresa = new FormControl();
 
+  formFilter!: FormGroup;
+
 
   constructor(
     private conciliacaoCartaoService: ConciliacaoCartaoService,
@@ -80,6 +83,10 @@ export class ListComponent implements OnInit {
     this.stateOptions = [
       { label: 'CRÉDITO', value: 'CRÉDITO' },
       { label: 'DÉBITO', value: 'DÉBITO' },
+    ];
+    this.statusRecebimento = [
+      { label: 'RECEBIDO', value: 'true' },
+      { label: 'NÃO RECEBIDO', value: 'false' },
     ];
 
     this.conciliacaoCartaoService.getAll(this.page).subscribe(
@@ -105,6 +112,21 @@ export class ListComponent implements OnInit {
       },
       (error) => {}
     );
+
+    this.formFilter = this.formBuilder.group({
+      dtInicio:[null],
+      dtFim:[],
+      numeroPedido:[null],
+      aute:[null],
+      idEmpresa: [null],
+      idOperadora:[null],
+      dataRecebimento:[null],
+      previsaoRecebimento: [null],
+      tipoOperacao:[null],
+      isRecebido:[null],
+
+
+    })
   }
 
   ngOnInit(): void {
@@ -118,6 +140,9 @@ export class ListComponent implements OnInit {
       distinctUntilChanged(),//só faz a busca se o valor for diferente do anterior
       switchMap(value => this.conciliacaoCartaoService.obterNumeroPedido(this.queryFields.value).subscribe((res:any) =>{this.pagina = res} ) ))
 
+  }
+  filtroAvancado(){
+    this.conciliacaoCartaoService.filtroAvancado(this.formFilter.value).subscribe((res:any)  =>{this.pagina = res} );
   }
   onSearchNumeroPedido(){
     this.conciliacaoCartaoService.obterNumeroPedido(this.queryFields.value).subscribe((res:any)  =>{this.pagina = res} );
