@@ -133,6 +133,14 @@
           <p-dropdown [options]="tipoDespesasOptions" formControlName="tipoDespesa" id="tipoDespesa"
              placeholder="Tipo Despesa" optionLabel="label" optionValue="value" name="tipoDespesa"></p-dropdown>
           </div>
+          <div class="col-6 ">
+            <p-dropdown [options]="classificacaoDespesa" formControlName="classificacaoDespesa"inputId="classificacaoDespesa" (onChange)="mostraClassificacao($event)"
+               placeholder="Classificação" optionLabel="descricao" optionValue="descricao" name="classificacaoDespesa"></p-dropdown>
+          </div>
+          <div class="col-6 ">
+            <p-dropdown [options]="subclassificacaoDespesa" formControlName="subClassificacaoDespesa"inputId="subClassificacaoDespesa"
+               placeholder="subClassificacaoDespesa" optionLabel="descricao" optionValue="descricao" name="subClassificacaoDespesa"></p-dropdown>
+          </div>
        <div class="col-12 md:col-6">
         <div class="p-inputgroup">
             <span class="p-inputgroup-addon"><i class="pi pi-calendar"></i></span>
@@ -165,18 +173,8 @@
           <input type="text" pInputText placeholder="Número DOC" formControlName="nd" name="nd">
       </div>
     </div>
-    <div class="col-12 md:col-6">
-      <div class="p-inputgroup">
-          <span class="p-inputgroup-addon"><i class="pi pi-directions"></i></span>
-          <input type="text" pInputText placeholder="Classificação" formControlName="classificacaoDespesa" name="classificacaoDespesa">
-      </div>
-    </div>
-    <div class="col-12 md:col-6">
-      <div class="p-inputgroup">
-          <span class="p-inputgroup-addon"><i class="pi pi-directions-alt"></i></span>
-          <input type="text" pInputText placeholder="SubClassificacaoDespesa" formControlName="subClassificacaoDespesa" name="SubClassificacao">
-      </div>
-    </div>
+
+
     <div class="col-12 md:col-6">
       <div class="p-inputgroup">
           <span class="p-inputgroup-addon"><i class="pi pi-comment"></i></span>
@@ -264,7 +262,7 @@
   </ng-template>
 </p-dialog>
 
-<p-sidebar [(visible)]="displaySideBar" [style]="{width:'45em'}"  position="right">
+<p-sidebar [(visible)]="displaySideBar" [style]="{height:'20em'}"  position="bottom" >
 
   <ng-template pTemplate="content">
 

@@ -1,6 +1,11 @@
 import { EmpresaService } from './../../empresa/service/empresa-service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import * as FileSaver from 'file-saver';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -14,8 +19,14 @@ import { ContasPagarInput } from '../model/contasPagarInput';
 import { Filtro } from '../model/filtro';
 import { Empresa } from '../../conciliacao-cartao/model/conciliacaoCartao';
 
-import { format, compareAsc } from 'date-fns'
+import { format, compareAsc } from 'date-fns';
 import { position } from 'html2canvas/dist/types/css/property-descriptors/position';
+import { ClassificacaoDespesaService } from '../../classificacao-despesa/classificacao-despesa.service';
+import { ConditionalExpr } from '@angular/compiler';
+import {
+  SubClassificacaoDespesa,
+  ClassificacaoDespesa,
+} from '../../classificacao-despesa/classificacao-despesa';
 
 @Component({
   selector: 'app-page-contas-pagar',
@@ -24,16 +35,15 @@ import { position } from 'html2canvas/dist/types/css/property-descriptors/positi
   providers: [MessageService, ConfirmationService],
 })
 export class PageContasPagarComponent implements OnInit {
-
   filtro: Filtro = new Filtro();
 
   @ViewChild('htmlData') htmlData!: ElementRef;
 
   ContasPagarInputDialog!: boolean;
 
-  ContasPagarInput!:   ContasPagarInput;
+  ContasPagarInput!: ContasPagarInput;
 
-  selectedContasPagar!:   ContasPagarDTO[];
+  selectedContasPagar!: ContasPagarDTO[];
 
   submitted!: boolean;
 
@@ -41,11 +51,13 @@ export class PageContasPagarComponent implements OnInit {
 
   exportColumns: any[] = [];
 
-  ContasPagarDtoXLS!:   ContasPagarDTO[];
+  ContasPagarDtoXLS!: ContasPagarDTO[];
 
   formasPgtoOptions!: any[];
   tipoDespesasOptions!: any[];
   situacaoOptions!: any[];
+  classificacaoDespesa!: any[];
+  subclassificacaoDespesa!: SubClassificacaoDespesa[];
 
   form!: FormGroup;
 
@@ -55,8 +67,8 @@ export class PageContasPagarComponent implements OnInit {
   detalheContas: ContasPagarDTO[] = [];
 
   // conciliacaoCartoes$: Observable<ConciliacaoCartao[]>;
-  pagina$!:  Observable<ContasPagarDTO[]>;
-  empresas!:   Empresa[];
+  pagina$!: Observable<ContasPagarDTO[]>;
+  empresas!: Empresa[];
 
   @ViewChild('myDiv') myDiv!: ElementRef;
 
@@ -81,25 +93,22 @@ export class PageContasPagarComponent implements OnInit {
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
-    private keycloakService: KeycloakService) {
-
+    private keycloakService: KeycloakService,
+    private classificacaoService: ClassificacaoDespesaService
+  ) {
     this.editarDtPgtoDialog = false;
     this.editarLocalPgtoDialog = false;
     this.editarJurosMultaDialog = false;
     this.editarDescontoDialog = false;
 
-    this.pegandoPrimeiroEUltimoDiaDaSemana()
-   this.service.getListaContasPagar().subscribe(
-    data => {
+    this.pegandoPrimeiroEUltimoDiaDaSemana();
+    this.service.getListaContasPagar().subscribe((data) => {
       this.pagina$ = data;
-    }
-   );
-
+    });
 
     this.empresaService.getAll().subscribe(
-      (data : any) => {
+      (data: any) => {
         this.empresas = data;
-
       },
       (error: any) => {}
     );
@@ -120,37 +129,52 @@ export class PageContasPagarComponent implements OnInit {
     this.situacaoOptions = [
       { label: 'PAGO', value: 'PAGO' },
       { label: 'PENDENTE', value: 'PENDENTE' },
-    ]
-   }
+    ];
+
+    this.classificacaoService.getAllClassificacao().subscribe(
+      (data: any) => {
+        this.classificacaoDespesa = data;
+      },
+      (error: any) => {}
+    );
+  }
 
   ngOnInit(): void {
     this.spinner.show();
   }
 
-  pegandoPrimeiroEUltimoDiaDaSemana(){
-    console.log("chamando")
+  mostraClassificacao(event: any) {
+    let classificacao = this.classificacaoDespesa.filter(
+      (x) => x.descricao === event.value
+    );
+    this.subclassificacaoDespesa = classificacao[0].subClassificacao;
+    console.log(classificacao[0]);
+  }
+
+  pegandoPrimeiroEUltimoDiaDaSemana() {
     var data = new Date();
-   var primeiro = data.getDate() - data.getDay();
+    var primeiro = data.getDate() - data.getDay();
 
-   let primeiroDia = new Date(data.setDate(primeiro));
-   let ultimoDia = new Date(data.setDate(data.getDate()+6));
+    let primeiroDia = new Date(data.setDate(primeiro));
+    let ultimoDia = new Date(data.setDate(data.getDate() + 6));
 
-    this.filtro.dtInicio = format(primeiroDia, 'yyyy-MM-dd')
-    this.filtro.dtFim = format(ultimoDia, 'yyyy-MM-dd')
+    this.filtro.dtInicio = format(primeiroDia, 'yyyy-MM-dd');
+    this.filtro.dtFim = format(ultimoDia, 'yyyy-MM-dd');
 
-    this.pagina$ = this.service.filtroAvancado(this.filtro) .pipe(
-      tap(s =>{
+    this.pagina$ = this.service.filtroAvancado(this.filtro).pipe(
+      tap((s) => {
         this.spinner.hide();
       }),
-      catchError(erros => {
+      catchError((erros) => {
         this.spinner.hide();
-        return of([])
-  })
-    )
+        return of([]);
+      })
+    );
     this.service.setListaContasPagar(this.pagina$);
   }
 
   openNew() {
+    this.subclassificacaoDespesa = [];
     this.form = this.formBuilder.group({
       empresa_id: [null, Validators.required],
       valorDuplicata: [null, Validators.required],
@@ -160,14 +184,15 @@ export class PageContasPagarComponent implements OnInit {
       nd: [null, Validators.required],
       tipoDespesa: [null, Validators.required],
       numeroParcelas: [null, Validators.required],
-      classificacaoDespesa:[null, Validators.required],
-      subClassificacaoDespesa:[null, Validators.required],
-      observacao:[null, Validators.required]
+      classificacaoDespesa: [null, Validators.required],
+      subClassificacaoDespesa: [null, Validators.required],
+      observacao: [null, Validators.required],
     });
     this.submitted = false;
     this.ContasPagarInputDialog = true;
   }
   edit(contas: ContasPagarDTO) {
+    this.subclassificacaoDespesa = [];
     this.form = this.formBuilder.group({
       id: [contas.id, Validators.required],
       empresa_id: [contas.empresaId, Validators.required],
@@ -178,16 +203,18 @@ export class PageContasPagarComponent implements OnInit {
       nd: [contas.nd, Validators.required],
       tipoDespesa: [contas.tipoDespesa, Validators.required],
       numeroParcelas: [contas.numeroParcelas, Validators.required],
-      classificacaoDespesa:[contas.classificacaoDespesa, Validators.required],
-      subClassificacaoDespesa:[contas.subClassificacaoDespesa, Validators.required],
-      observacao:[contas.observacao, Validators.required]
+      classificacaoDespesa: [contas.classificacaoDespesa, Validators.required],
+      subClassificacaoDespesa: [
+        contas.subClassificacaoDespesa,
+        Validators.required,
+      ],
+      observacao: [contas.observacao, Validators.required],
     });
     this.submitted = false;
     this.ContasPagarInputDialog = true;
   }
 
   delete(record: ContasPagarDTO) {
-
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja excluir ' + record.fornecedor + '?',
       header: 'Confirmar',
@@ -195,33 +222,33 @@ export class PageContasPagarComponent implements OnInit {
       accept: () => {
         //codigo para excluir
         this.spinner.show();
-        this.service.delete(record.id).pipe(
-          tap(s =>{
-            this.spinner.hide();
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Successful',
-              detail: 'Conta Excluida com Sucesso!',
-              life: 2000,
-            });
-          }),
-          catchError(erros => {
-            this.spinner.hide();
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: 'Error',
-              life: 3000,
-            });
-            return of([])
-
-          })
-        ).subscribe(
-          (data: any) => {
+        this.service
+          .delete(record.id)
+          .pipe(
+            tap((s) => {
+              this.spinner.hide();
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Successful',
+                detail: 'Conta Excluida com Sucesso!',
+                life: 2000,
+              });
+            }),
+            catchError((erros) => {
+              this.spinner.hide();
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Error',
+                life: 3000,
+              });
+              return of([]);
+            })
+          )
+          .subscribe((data: any) => {
             this.spinner.hide();
             document.location.reload();
-          }
-        );
+          });
       },
     });
   }
@@ -236,8 +263,8 @@ export class PageContasPagarComponent implements OnInit {
     this.display = false;
     this.submitted = true;
 
-  this.pagina$ = this.service.manterContasPagar(this.form.value).pipe(
-      tap(s =>{
+    this.pagina$ = this.service.manterContasPagar(this.form.value).pipe(
+      tap((s) => {
         this.spinner.hide();
         this.messageService.add({
           severity: 'success',
@@ -246,7 +273,7 @@ export class PageContasPagarComponent implements OnInit {
           life: 2000,
         });
       }),
-      catchError(erros => {
+      catchError((erros) => {
         this.spinner.hide();
         this.messageService.add({
           severity: 'error',
@@ -254,10 +281,9 @@ export class PageContasPagarComponent implements OnInit {
           detail: 'Error',
           life: 3000,
         });
-        return of([])
-
+        return of([]);
       })
-    )
+    );
   }
   createId(): string {
     let id = '';
@@ -311,196 +337,182 @@ export class PageContasPagarComponent implements OnInit {
     );
   }
 
-  editarDataPagamento(conta: ContasPagarDTO){
+  editarDataPagamento(conta: ContasPagarDTO) {
     this.editarDataPgtoform = this.formBuilder.group({
       id: [conta.id],
       dataPagamento: [conta.dataPagamento, Validators.required],
-
     });
     this.submitted = false;
 
     this.editarDtPgtoDialog = true;
   }
-  manterDataPagamento(){
-
+  manterDataPagamento() {
     this.spinner.show();
     this.editarDtPgtoDialog = false;
     this.display = false;
     this.submitted = true;
-    this.service.manterDataPagamento(this.editarDataPgtoform.value).pipe(
-      tap(s =>{
-        this.spinner.hide();
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Operação realizada com Sucesso!',
-          life: 4000,
-        });
-        document.location.reload();
-      }),
-      catchError(erros => {
-        this.spinner.hide();
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Error',
-          life: 3000,
-        });
-        return of([])
-
-      })
-    ).subscribe(
-      (data: any) => {
+    this.service
+      .manterDataPagamento(this.editarDataPgtoform.value)
+      .pipe(
+        tap((s) => {
+          this.spinner.hide();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Operação realizada com Sucesso!',
+            life: 4000,
+          });
+          document.location.reload();
+        }),
+        catchError((erros) => {
+          this.spinner.hide();
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Error',
+            life: 3000,
+          });
+          return of([]);
+        })
+      )
+      .subscribe((data: any) => {
         this.pagina$ = data;
         this.spinner.hide();
         document.location.reload();
-      }
-    )
-
+      });
   }
-  editarLocalPagamento(conta: ContasPagarDTO){
+  editarLocalPagamento(conta: ContasPagarDTO) {
     this.editarLocalPgtoform = this.formBuilder.group({
       id: [conta.id],
       localPagamento: [conta.localPagamento, Validators.required],
-
     });
     this.submitted = false;
     this.editarLocalPgtoDialog = true;
   }
-  manterLocalPgto(){
-
+  manterLocalPgto() {
     this.spinner.show();
     this.editarLocalPgtoDialog = false;
     this.display = false;
     this.submitted = true;
-    this.service.manterLocalPgto(this.editarLocalPgtoform.value).pipe(
-      tap(s =>{
+    this.service
+      .manterLocalPgto(this.editarLocalPgtoform.value)
+      .pipe(
+        tap((s) => {
+          this.spinner.hide();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Operação realizada com Sucesso!',
+            life: 4000,
+          });
+          document.location.reload();
+        }),
+        catchError((erros) => {
+          this.spinner.hide();
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Error',
+            life: 3000,
+          });
+          return of([]);
+        })
+      )
+      .subscribe((data: any) => {
         this.spinner.hide();
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Operação realizada com Sucesso!',
-          life: 4000,
-        });
         document.location.reload();
-      }),
-      catchError(erros => {
-        this.spinner.hide();
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Error',
-          life: 3000,
-        });
-        return of([])
-
-      })
-    ).subscribe(
-      (data: any) => {
-        this.spinner.hide();
-        document.location.reload();
-      }
-    )
-
+      });
   }
 
-  editarDesconto(conta: ContasPagarDTO){
+  editarDesconto(conta: ContasPagarDTO) {
     this.editarDescontoform = this.formBuilder.group({
       id: [conta.id],
       desconto: [conta.desconto, Validators.required],
-
     });
     this.submitted = false;
     this.editarDescontoDialog = true;
   }
-  manterDesconto(){
-
+  manterDesconto() {
     this.spinner.show();
     this.editarDescontoDialog = false;
     this.display = false;
     this.submitted = true;
-    this.service.manterDesconto(this.editarDescontoform.value).pipe(
-      tap(s =>{
+    this.service
+      .manterDesconto(this.editarDescontoform.value)
+      .pipe(
+        tap((s) => {
+          this.spinner.hide();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Operação realizada com Sucesso!',
+            life: 4000,
+          });
+          document.location.reload();
+        }),
+        catchError((erros) => {
+          this.spinner.hide();
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Error',
+            life: 3000,
+          });
+          return of([]);
+        })
+      )
+      .subscribe((data: any) => {
         this.spinner.hide();
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Operação realizada com Sucesso!',
-          life: 4000,
-        });
         document.location.reload();
-      }),
-      catchError(erros => {
-        this.spinner.hide();
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Error',
-          life: 3000,
-        });
-        return of([])
-
-      })
-    ).subscribe(
-      (data: any) => {
-        this.spinner.hide();
-        document.location.reload();
-      }
-    )
-
+      });
   }
 
-  editarJurosMulta(conta: ContasPagarDTO){
+  editarJurosMulta(conta: ContasPagarDTO) {
     this.editarJurosMultatoform = this.formBuilder.group({
       id: [conta.id],
       jurosMulta: [conta.jurosMulta, Validators.required],
-
     });
     this.submitted = false;
     this.editarJurosMultaDialog = true;
   }
-  manterJurosMulta(){
-
+  manterJurosMulta() {
     this.spinner.show();
     this.editarJurosMultaDialog = false;
     this.display = false;
     this.submitted = true;
-    this.service.manterJurosMulta(this.editarJurosMultatoform.value).pipe(
-      tap(s =>{
+    this.service
+      .manterJurosMulta(this.editarJurosMultatoform.value)
+      .pipe(
+        tap((s) => {
+          this.spinner.hide();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Operação realizada com Sucesso!',
+            life: 4000,
+          });
+          document.location.reload();
+        }),
+        catchError((erros) => {
+          this.spinner.hide();
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Error',
+            life: 3000,
+          });
+          return of([]);
+        })
+      )
+      .subscribe((data: any) => {
         this.spinner.hide();
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Operação realizada com Sucesso!',
-          life: 4000,
-        });
         document.location.reload();
-      }),
-      catchError(erros => {
-        this.spinner.hide();
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Error',
-          life: 3000,
-        });
-        return of([])
-
-      })
-    ).subscribe(
-      (data: any) => {
-        this.spinner.hide();
-        document.location.reload();
-      }
-    )
-
+      });
   }
 
-   detalhamentoSidebar(conta: ContasPagarDTO){
+  detalhamentoSidebar(conta: ContasPagarDTO) {
     this.detalheContas = [];
     this.detalheContas.push(conta);
     this.displaySideBar = true;
-   }
-
-
+  }
 }
