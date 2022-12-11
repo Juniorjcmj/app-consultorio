@@ -86,6 +86,10 @@ export class PageContasPagarComponent implements OnInit {
   editarDescontoDialog: boolean;
   editarDescontoform!: FormGroup;
 
+  //STATISTICA
+  valoresPagos!: any;
+  valoresApagar!: any;
+
   constructor(
     private empresaService: EmpresaService,
     private service: ContasPagarService,
@@ -96,6 +100,8 @@ export class PageContasPagarComponent implements OnInit {
     private keycloakService: KeycloakService,
     private classificacaoService: ClassificacaoDespesaService
   ) {
+    this.ContasPagarDtoXLS = [];
+
     this.editarDtPgtoDialog = false;
     this.editarLocalPgtoDialog = false;
     this.editarJurosMultaDialog = false;
@@ -104,6 +110,7 @@ export class PageContasPagarComponent implements OnInit {
     this.pegandoPrimeiroEUltimoDiaDaSemana();
     this.service.getListaContasPagar().subscribe((data) => {
       this.pagina$ = data;
+      this.ContasPagarDtoXLS = data;
     });
 
     this.empresaService.getAll().subscribe(
@@ -134,9 +141,12 @@ export class PageContasPagarComponent implements OnInit {
     this.classificacaoService.getAllClassificacao().subscribe(
       (data: any) => {
         this.classificacaoDespesa = data;
+        this.ContasPagarDtoXLS =  data;
+
       },
       (error: any) => {}
     );
+
   }
 
   ngOnInit(): void {
@@ -309,18 +319,19 @@ export class PageContasPagarComponent implements OnInit {
       let PDF = new jsPDF('p', 'mm', 'a4');
       let position = 0;
       PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
-      PDF.save('angular-demo.pdf');
+      PDF.save('contas.pdf');
     });
   }
-  exportExcel() {
+  exportExcelContas() {
+
     import('xlsx').then((xlsx) => {
-      const worksheet = xlsx.utils.json_to_sheet(this.ContasPagarDtoXLS!);
+      const worksheet = xlsx.utils.json_to_sheet(this.ContasPagarDtoXLS);
       const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
       const excelBuffer: any = xlsx.write(workbook, {
         bookType: 'xlsx',
         type: 'array',
       });
-      this.saveAsExcelFile(excelBuffer, 'products');
+      this.saveAsExcelFile(excelBuffer, 'contas');
     });
   }
 
