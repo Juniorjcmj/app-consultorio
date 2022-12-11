@@ -19,14 +19,12 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { NavBarComponent } from './shared/componente/nav-bar/nav-bar.component';
 import { HeaderComponent } from './shared/componente/header/header.component';
 import { DashboardComponent } from './shared/componente/dashboard/dashboard.component';
-import { SidnavComponent } from './shared/componente/sidnav/sidnav.component';
-import { UsuarioModule } from './modulos/usuario/usuario.module';
 
 import { PrimengModule } from './shared/primeng.module';
 import { MenuComponent } from './shared/menu/menu.component';
 import { ConciliacaoCartaoModule } from './modulos/conciliacao-cartao/conciliacao-cartao.module';
 import { EmpresaModule } from './modulos/empresa/empresa.module';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+
 
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -78,7 +76,6 @@ registerLocaleData(ptBr);
     MatIconModule,
     NgxSpinnerModule,
     FormsModule,
-    UsuarioModule,
     PrimengModule,
     EmpresaModule,
     OperadoraCartaoModule,
@@ -86,7 +83,6 @@ registerLocaleData(ptBr);
     ClassificacaoDespesaModule,
   //novo  sistema-servvico
   ConciliacaoCartaoModule,
-  SweetAlert2Module,
 
   KeycloakAngularModule,
 
@@ -109,8 +105,8 @@ registerLocaleData(ptBr);
     { provide: LOCALE_ID, useValue: 'pt' },
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },
     // *
-    AuthGuard,
-    MensagensService
+    AuthGuard
+
   ],
   exports:[
 

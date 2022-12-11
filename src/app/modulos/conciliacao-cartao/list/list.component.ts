@@ -15,7 +15,7 @@ import * as FileSaver from 'file-saver';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { EmpresaService } from '../../empresa/service/empresa-service';
 
-import Swal from 'sweetalert2';
+
 import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { KeycloakService } from 'keycloak-angular';
