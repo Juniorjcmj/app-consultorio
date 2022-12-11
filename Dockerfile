@@ -1,10 +1,19 @@
-FROM node:lts-alpine
-ENV NODE_ENV=production
-WORKDIR /usr/src/app
-COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
-RUN npm install --production --silent && mv node_modules ../
-COPY . .
-EXPOSE 3000
-RUN chown -R node /usr/src/app
-USER node
-CMD ["npm", "start"]
+FROM node:18.12.1-buster  as angular
+
+WORKDIR /app
+COPY package.json /app
+ RUN npm install --silent
+ COPY . .
+ RUN npm run build
+
+FROM nginx:alpine
+VOLUME /var/cache/nginx
+COPY --from=angular app/dist/app-consultorio /usr/share/nginx/html
+COPY ./config/nginx.conf /etc/nginx/conf.d/default.conf
+
+
+# docker build -t app-gestao .
+# docker run -p 8082:80 app-gestao
+
+# ctrl + shift + p docker: Compose up
+# depois so escolher o docker-compose.yml
