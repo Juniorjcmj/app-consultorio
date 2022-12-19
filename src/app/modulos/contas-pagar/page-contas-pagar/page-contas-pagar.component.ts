@@ -16,17 +16,18 @@ import { catchError, of, tap, Observable, delay, map } from 'rxjs';
 import { ContasPagarService } from '../contas-pagar.service';
 import { ContasPagarDTO } from '../model/contasPagarDTO';
 import { ContasPagarInput } from '../model/contasPagarInput';
-import { Filtro } from '../model/filtro';
+
 import { Empresa } from '../../conciliacao-cartao/model/conciliacaoCartao';
 
 import { format, compareAsc } from 'date-fns';
-import { position } from 'html2canvas/dist/types/css/property-descriptors/position';
+
 import { ClassificacaoDespesaService } from '../../classificacao-despesa/classificacao-despesa.service';
-import { ConditionalExpr } from '@angular/compiler';
+
 import {
   SubClassificacaoDespesa,
   ClassificacaoDespesa,
 } from '../../classificacao-despesa/classificacao-despesa';
+import { FiltroAvancado } from '../model/filtro';
 
 @Component({
   selector: 'app-page-contas-pagar',
@@ -35,7 +36,7 @@ import {
   providers: [MessageService, ConfirmationService],
 })
 export class PageContasPagarComponent implements OnInit {
-  filtro: Filtro = new Filtro();
+  filtro: FiltroAvancado = new FiltroAvancado();
 
   @ViewChild('htmlData') htmlData!: ElementRef;
 
@@ -60,6 +61,8 @@ export class PageContasPagarComponent implements OnInit {
   subclassificacaoDespesa!: SubClassificacaoDespesa[];
 
   form!: FormGroup;
+  formDeteleLote!: FormGroup;
+  formDeleteLOteDialog: boolean = false;
 
   display: boolean = false;
 
@@ -141,11 +144,11 @@ export class PageContasPagarComponent implements OnInit {
     this.classificacaoService.getAllClassificacao().subscribe(
       (data: any) => {
         this.classificacaoDespesa = data;
-        this.ContasPagarDtoXLS =  data;
 
       },
       (error: any) => {}
     );
+
 
   }
 
@@ -158,7 +161,7 @@ export class PageContasPagarComponent implements OnInit {
       (x) => x.descricao === event.value
     );
     this.subclassificacaoDespesa = classificacao[0].subClassificacao;
-    console.log(classificacao[0]);
+
   }
 
   pegandoPrimeiroEUltimoDiaDaSemana() {
@@ -168,10 +171,10 @@ export class PageContasPagarComponent implements OnInit {
     let primeiroDia = new Date(data.setDate(primeiro));
     let ultimoDia = new Date(data.setDate(data.getDate() + 6));
 
-    this.filtro.dtInicio = format(primeiroDia, 'yyyy-MM-dd');
-    this.filtro.dtFim = format(ultimoDia, 'yyyy-MM-dd');
+    this.filtro.dataVencimentoInicial = format(primeiroDia, 'yyyy-MM-dd');
+    this.filtro.dataVencimentoFinal = format(ultimoDia, 'yyyy-MM-dd');
 
-    this.pagina$ = this.service.filtroAvancado(this.filtro).pipe(
+    this.pagina$ = this.service.filtroAvancadoAvancado(this.filtro).pipe(
       tap((s) => {
         this.spinner.hide();
       }),
@@ -261,6 +264,49 @@ export class PageContasPagarComponent implements OnInit {
           });
       },
     });
+  }
+  abrirDeleteEmLote() {
+    this.formDeteleLote = this.formBuilder.group({
+      numeroDocumento: [null, Validators.required]
+    });
+
+    this.submitted = false;
+    this.formDeleteLOteDialog = true;
+  }
+
+  deleteEmLote() {
+        this.spinner.show();
+        this.service
+          .deleteEmLote(this.formDeteleLote.value)
+          .pipe(
+            tap((s) => {
+              this.spinner.hide();
+              this.formDeleteLOteDialog = false;
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Successful',
+                detail: 'Contas Excluidas com Sucesso!',
+                life: 2000,
+              });
+            }),
+            catchError((erros) => {
+              this.spinner.hide();
+              this.formDeleteLOteDialog = false;
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Error',
+                life: 3000,
+              });
+              return of([]);
+            })
+          )
+          .subscribe((data: any) => {
+            this.spinner.hide();
+            this.formDeleteLOteDialog = false;
+            document.location.reload();
+          });
+
   }
   hideDialog() {
     this.ContasPagarInputDialog = false;
@@ -416,7 +462,7 @@ export class PageContasPagarComponent implements OnInit {
             detail: 'Operação realizada com Sucesso!',
             life: 4000,
           });
-          document.location.reload();
+       //   document.location.reload();
         }),
         catchError((erros) => {
           this.spinner.hide();
@@ -431,7 +477,7 @@ export class PageContasPagarComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.spinner.hide();
-        document.location.reload();
+     //   document.location.reload();
       });
   }
 
@@ -520,10 +566,11 @@ export class PageContasPagarComponent implements OnInit {
         document.location.reload();
       });
   }
-
   detalhamentoSidebar(conta: ContasPagarDTO) {
     this.detalheContas = [];
     this.detalheContas.push(conta);
     this.displaySideBar = true;
   }
+
+
 }

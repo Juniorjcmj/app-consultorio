@@ -24,6 +24,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DividerModule} from 'primeng/divider';
 import {SidebarModule} from 'primeng/sidebar';
+import{MultiSelectModule} from 'primeng/multiselect'
 
 
 
@@ -59,7 +60,8 @@ import {SidebarModule} from 'primeng/sidebar';
     AccordionModule,
     TooltipModule,
     DividerModule,
-    SidebarModule
+    SidebarModule,
+    MultiSelectModule
 
 
    ]
