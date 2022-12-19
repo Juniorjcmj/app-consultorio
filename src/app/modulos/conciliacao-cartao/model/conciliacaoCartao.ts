@@ -74,7 +74,7 @@ export class Operadora{
 
 }
 export class Empresa{
-  id! : number;
+  id! : string;
 	nome!: string;
 	cnpj!: string;
 	endereco!: string;

@@ -5,7 +5,7 @@ import { KeycloakService } from 'keycloak-angular';
 import { environment } from 'src/environments/environment';
 import { ContasPagarInput } from './model/contasPagarInput';
 import { ContasPagarDTO } from './model/contasPagarDTO';
-import { Filtro } from './model/filtro';
+import { FiltroAvancado } from './model/filtro';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { ContasPagarUpdateGenerico } from './model/contasPagarUpdateGenerico';
 
@@ -46,6 +46,10 @@ export class ContasPagarService {
    delete(record: any){
      return  this.httpClient.delete(`${this.apiUrlResourceServe}`+"?id="+record ).pipe();
    }
+   deleteEmLote(record: any){
+
+    return  this.httpClient.delete(`${this.apiUrlResourceServe}`+"/delete-lote?numeroDocumento="+record['numeroDocumento'] ).pipe();
+  }
 
   manterDataPagamento(record: ContasPagarUpdateGenerico){
     return  this.httpClient.put(`${this.apiUrlResourceServe}`+"/update-data-pagamento", record ).pipe();
@@ -61,17 +65,7 @@ export class ContasPagarService {
   }
 
     //FILTROS
-    filtroAvancado(filtro: Filtro): any {
-
-      return this.httpClient.get<ContasPagarDTO>(`${this.apiUrlResourceServe}`+"/filtro-avancado?dtInicio="+filtro.dtInicio+
-                                                                                                "&dtFim="+filtro.dtFim+
-                                                                                                "&classificacao="+filtro.classificacao+
-                                                                                                "&subclassificacao="+filtro.subclassificacao+
-                                                                                                "&situacao="+filtro.situacao+
-                                                                                                "&formaPagamento="+filtro.formaPagamento+
-                                                                                                "&fornecedor="+filtro.fornecedor+
-                                                                                                "&idEmpresa="+filtro.idEmpresa+
-                                                                                                "&tipoDespesa="+filtro.tipoDespesa+
-                                                                                                "&numeroDocumento="+filtro.tipoDespesa);
+    filtroAvancadoAvancado(filtro: FiltroAvancado): any {
+      return this.httpClient.post<ContasPagarDTO>(`${this.apiUrlResourceServe}`+"/filtro-avancadissimo",filtro);
     }
 }

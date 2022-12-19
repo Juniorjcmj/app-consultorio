@@ -5,9 +5,11 @@ import { ConfirmationService } from 'primeng/api';
 import { Observable, tap, catchError, of } from 'rxjs';
 import { ContasPagarService } from '../contas-pagar.service';
 import { ContasPagarDTO } from '../model/contasPagarDTO';
-import { Filtro } from '../model/filtro';
+
 import { EmpresaService } from '../../empresa/service/empresa-service';
 import { Empresa } from '../../conciliacao-cartao/model/conciliacaoCartao';
+import { ClassificacaoDespesaService } from '../../classificacao-despesa/classificacao-despesa.service';
+import { ClassificacaoDespesa, SubClassificacaoDespesa } from '../../classificacao-despesa/classificacao-despesa';
 
 @Component({
   selector: 'app-filtro-avancado',
@@ -20,35 +22,42 @@ export class FiltroAvancadoComponent implements OnInit {
   tipoDespesasOptions!: any[];
   situacaoOptions!: any[];
 
-  filtro: Filtro = new Filtro();
-
   pagina$!: Observable<ContasPagarDTO[]>;
 
   formFilter!: FormGroup;
 
+  formFilterAvancadissimo!: FormGroup;
+
   empresas!:   Empresa[];
+  classificacaoDespesa!: ClassificacaoDespesa[];
+  subclassificacaoDespesa!: SubClassificacaoDespesa[];
 
   constructor(
     private service: ContasPagarService,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
     private empresaService: EmpresaService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private classificacaoService: ClassificacaoDespesaService
   ) {
-    this.formFilter = this.formBuilder.group({
+    this.subclassificacaoDespesa = []
 
-      dtInicio:[null],
-      dtFim:[],
-      classificacao:[null],
-      subclassificacao:[null],
-      situacao:[null],
-      tipoDespesa:[null],
-      numeroDocumento:[null],
+    this.formFilterAvancadissimo = this.formBuilder.group({
+
+      dataVencimentoInicial:[null],
+      dataVencimentoFinal:[null],
+      dataPagamentoInicial:[null],
+      dataPagamentoFinal:[null],
       fornecedor:[null],
-      idEmpresa: [null],
-      formaPagamento:[null]
-
-    })
+      nd:[null],
+      localPagamento:[null],
+      formaPagamento:[null],
+      tipoDespesa:[null],
+      situacao:[null],
+      empresaId:[null],
+      classificacaoDespesa:[null],
+      subClassificacaoDespesa:[null],
+          })
 
     this.formasPgtoOptions = [
       { label: 'ESPÉCIE', value: 'ESPÉCIE' },
@@ -75,24 +84,42 @@ export class FiltroAvancadoComponent implements OnInit {
       },
       (error: any) => {}
     );
+    this.classificacaoService.getAllClassificacao().subscribe(
+      (data: any) => {
+        this.classificacaoDespesa = data;
+      },
+      (error: any) => {}
+    );
   }
 
   ngOnInit(): void {}
 
-  filtroAvancado() {
+  filtroAvancadissimo() {
 
-        this.pagina$ = this.service.filtroAvancado(this.formFilter.value).pipe(
-          tap(s =>{
-            this.spinner.hide();
-          }),
-          catchError(erros => {
-            this.spinner.hide();
-            return of([])
-      })
-        )
+    console.log(this.formFilterAvancadissimo.value)
 
-        this.service.setListaContasPagar(this.pagina$)
+    this.pagina$ = this.service.filtroAvancadoAvancado(this.formFilterAvancadissimo.value).pipe(
+      tap(s =>{
+        this.spinner.hide();
+        this.subclassificacaoDespesa = []
+      }),
+      catchError(erros => {
+        this.spinner.hide();
+        this.subclassificacaoDespesa = []
+        return of([])
+  })
+    )
 
+    this.service.setListaContasPagar(this.pagina$)
+}
+ carregarSubClassificacao(event: any) {
+  let classificacao = this.classificacaoDespesa.filter(
+    (x) => x.descricao === event.itemValue
+  );
+  this.subclassificacaoDespesa = classificacao[0].subClassificacao;
+}
+resetarFiltro(){
+  this.formFilterAvancadissimo.reset()
+}
 
-  }
 }

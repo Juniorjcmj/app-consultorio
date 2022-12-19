@@ -7,8 +7,11 @@
 
       <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-primary  p-button-sm" pTooltip="CRIAR NOVO A PAGAR"
+          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-success  p-button-sm" pTooltip="Criar uma nova conta a pagar."
             (click)="openNew()"></button>
+            <p-divider layout="vertical"></p-divider>
+            <button pButton pRipple label="Delete em Lote" icon="pi pi-trash" class="p-button-danger  p-button-sm" pTooltip="Deletar todas com mesmo número de documento."
+            (click)="abrirDeleteEmLote()"></button>
         </ng-template>
 
         <ng-template pTemplate="right">
@@ -48,9 +51,9 @@
             <th pSortableColumn="situacao">SITUAÇÃO <p-sortIcon field="dataRecebimento"></p-sortIcon></th>
             <th pSortableColumn="nd">ND <p-sortIcon field="dataRecebimento"></p-sortIcon></th>
             <th pSortableColumn="tipoDespesa">TIPO DESPESA <p-sortIcon field="tipoDespesa"></p-sortIcon></th>
-            <th pSortableColumn="classificacaoDespesa"> CLASSIFICAÇÃO <p-sortIcon field="dataRecebimento"></p-sortIcon></th>
+            <!-- <th pSortableColumn="classificacaoDespesa"> CLASSIFICAÇÃO <p-sortIcon field="dataRecebimento"></p-sortIcon></th> -->
             <th pSortableColumn="parcela">PARCELA <p-sortIcon field="dataRecebimento"></p-sortIcon></th>
-            <th pSortableColumn="localPagamento">LOC PGTO <p-sortIcon field="dataRecebimento"></p-sortIcon></th>
+
             <th></th>
             <th></th>
           </tr>
@@ -80,13 +83,8 @@
             <td>{{contasPagarTable.situacao }}</td>
             <td>{{contasPagarTable.nd }} </td>
             <td>{{contasPagarTable.tipoDespesa }} </td>
-            <td>{{contasPagarTable.classificacaoDespesa }} / {{contasPagarTable.subClassificacaoDespesa }}</td>
             <td>{{contasPagarTable.parcela }} </td>
-            <td  style="color:blue" (click)="editarLocalPagamento(contasPagarTable)">
-              <div *ngIf="contasPagarTable.localPagamento"> {{contasPagarTable.localPagamento }}</div>
-              <button *ngIf="!contasPagarTable.localPagamento" pButton pRipple icon="pi pi-map" class="p-button-rounded p-button-text p-button-lg p-button-primary"
-            (click)="editarLocalPagamento(contasPagarTable)"></button>
-             </td>
+
              <td>
                <button  pButton pRipple (click)="detalhamentoSidebar(contasPagarTable)" icon="pi pi-ellipsis-h"  pTooltip="OBSERVAÇÃO, JUROS/MULTA E DESCONTO"
                class="p-button-rounded p-button-text p-button-lg p-button-primary mr-2" ></button>
@@ -274,6 +272,8 @@
           <th>OBSERVVAÇÃO</th>
           <th>JUROS/MULTA</th>
           <th>DESCONTO</th>
+          <th >LOC PGTO</th>
+          <th >CLASSIFICAÇÃO</th>
         </tr>
         </ng-template>
         <ng-template pTemplate="body" let-c>
@@ -281,6 +281,12 @@
           <td>{{c.observacao}}</td>
            <td  style="color:blue" (click)="editarJurosMulta(c)">{{c.jurosMulta  | currency }}</td>
            <td  style="color:blue" (click)="editarDesconto(c)">{{c.desconto  | currency }}</td>
+           <td  style="color:blue" (click)="editarLocalPagamento(c)">
+            <div *ngIf="c.localPagamento"> {{c.localPagamento }}</div>
+            <button *ngIf="!c.localPagamento" pButton pRipple icon="pi pi-map" class="p-button-rounded p-button-text p-button-lg p-button-primary"
+          (click)="editarLocalPagamento(c)"></button>
+           </td>
+           <td>{{c.classificacaoDespesa }} / {{c.subClassificacaoDespesa }}</td>
         </tr>
       </ng-template>
       </p-table>
@@ -291,5 +297,20 @@
 
   </ng-template>
 </p-sidebar>
+
+<p-dialog header="" [(visible)]="formDeleteLOteDialog">
+  <ng-template pTemplate="content">
+  <form  [formGroup]="formDeteleLote">
+    <div class="col-12 md:col-12">
+      <div class="p-inputgroup">
+          <input type="text" pInputText placeholder="Nº Documento" formControlName="numeroDocumento" name="numeroDocumento" >
+          <button type="button" pButton pRipple icon="pi pi-trash" class="p-button-danger"  [disabled]="!formDeteleLote.valid"
+          (click)="deleteEmLote()"></button>
+      </div>
+  </div>
+
+  </form>
+  </ng-template>
+</p-dialog>
 
 

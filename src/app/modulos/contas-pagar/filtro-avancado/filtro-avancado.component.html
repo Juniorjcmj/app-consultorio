@@ -1,17 +1,30 @@
+
 <p-accordion>
-  <p-accordionTab header="FILTROS">
-    <form [formGroup]="formFilter" style="margin-top:10px">
+  <p-accordionTab header="FILTRO AVANÇADO">
+    <form [formGroup]="formFilterAvancadissimo" style="margin-top:10px">
     <div class="grid p-fluid">
       <div class="col-12 md:col-3">
         <div class="" >
-          <label for="dtInicio">DATA INÍCIO</label>
-          <input type="date" inputId="dtInicio" pInputText placeholder="DATA INÍCIO" formControlName="dtInicio" name="dtInicio" >
+          <label for="dataVencimentoInicial">DATA VENCIMENTO INÍCIO</label>
+          <input type="date" inputId="dataVencimentoInicial" pInputText placeholder="DATA INÍCIO" formControlName="dataVencimentoInicial" name="dataVencimentoInicial" >
                  </div>
       </div>
       <div class="col-12 md:col-3">
         <div class="">
-          <label for="dtFim">DATA FIM</label>
-          <input type="date" inputId="dtFim" pInputText placeholder="DATA FIM"  formControlName="dtFim" name="dtFim" >
+          <label for="dataVencimentoFinal">DATA VENCIMENTO FIM</label>
+          <input type="date" inputId="dataVencimentoFinal" pInputText placeholder="DATA FIM"  formControlName="dataVencimentoFinal" name="dataVencimentoFinal" >
+        </div>
+      </div>
+      <div class="col-12 md:col-3">
+        <div class="" >
+          <label for="dataPagamentoInicial">DATA PAGAMENTO INÍCIO</label>
+          <input type="date" inputId="dataPagamentoInicial" pInputText placeholder="DATA INÍCIO" formControlName="dataPagamentoInicial" name="dataPagamentoInicial" >
+                 </div>
+      </div>
+      <div class="col-12 md:col-3">
+        <div class="">
+          <label for="dataPagamentoFinal">DATA PAGAMENTO FIM</label>
+          <input type="date" inputId="dataPagamentoFinal" pInputText placeholder="DATA FIM"  formControlName="dataPagamentoFinal" name="dataPagamentoFinal" >
         </div>
       </div>
       <div class="col-12 md:col-3">
@@ -21,16 +34,17 @@
         </div>
       </div>
       <div class="col-12 md:col-3">
-        <label for="idEmpresa">Empresa</label>
-          <p-dropdown inputId="idEmpresa" placeholder="Ex: Casa Nobre" [options]="empresas" formControlName="idEmpresa" name="idEmpresa"
-             optionLabel="nome" optionValue="id" [showClear]="true">
-          </p-dropdown>
+        <label for="empresaId">Empresa</label>
+          <p-multiSelect inputId="empresaId" placeholder="Ex: Casa Nobre" [options]="empresas" formControlName="empresaId" name="empresaId"
+             optionLabel="nome" optionValue="id" >
+          </p-multiSelect>
       </div>
       <div class="col-12 md:col-3">
         <label for="formaPagamento">FORMA DE PAGAMENTO</label>
-        <p-dropdown inputId="formaPagamento" placeholder="Ex: Boleto, Espécie..." [options]="formasPgtoOptions" formControlName="formaPagamento" name="formaPagamento"
-           optionLabel="label" optionValue="value" [showClear]="true">
-        </p-dropdown>
+        <p-multiSelect inputId="formaPagamento" placeholder="Ex: Boleto, Espécie..." [options]="formasPgtoOptions"
+         formControlName="formaPagamento" name="formaPagamento"
+           optionLabel="label" optionValue="value">
+        </p-multiSelect>
     </div>
     <div class="col-12 md:col-3">
       <label for="tipoDespesa">TIPO DESPESA</label>
@@ -46,26 +60,39 @@
 </div>
 <div class="col-12 md:col-3">
   <div class="">
-    <label for="numeroDocumento">Nº DOC</label>
-    <input type="text" inputId="numeroDocumento" pInputText placeholder="Ex: 99222388"  formControlName="numeroDocumento" name="numeroDocumento">
+    <label for="nd">Nº DOC</label>
+    <input type="text" inputId="nd" pInputText placeholder="Ex: 99222388"  formControlName="nd" name="nd">
   </div>
 </div>
 <div class="col-12 md:col-3">
   <div class="">
-    <label for="classificacao">CLASSIFICAÇÃO </label>
-    <input type="text" inputId="classificacao" pInputText placeholder="CLASSIFICAÇÃO" formControlName="classificacao" name="classificacao">
-  </div>
+    <label for="classificacaoDespesa">CLASSIFICAÇÃO </label>
+    <p-multiSelect  [options]="classificacaoDespesa" inputId="classificacaoDespesa"  placeholder="CLASSIFICAÇÃO"
+    optionLabel="descricao" optionValue="descricao"
+    (onChange)="carregarSubClassificacao($event)"
+    formControlName="classificacaoDespesa" name="classificacaoDespesa">
+     </p-multiSelect>
+    </div>
 </div>
 <div class="col-12 md:col-3">
   <div class="">
-    <label for="subclassificacao"> SUBCLASSIFICAÇÃO </label>
-    <input type="text"inputId="subclassificacao" pInputText placeholder="SUBCLASSIFICAÇÃO" formControlName="subclassificacao" name="subclassificacao">
+    <label for="subClassificacaoDespesa"> SUBCLASSIFICAÇÃO </label>
+    <p-multiSelect [options]="subclassificacaoDespesa" inputId="subClassificacaoDespesa"  placeholder="SUBCLASSIFICAÇÃO"
+    optionLabel="descricao" optionValue="descricao"
+    formControlName="subClassificacaoDespesa" name="subClassificacaoDespesa">
+      </p-multiSelect>
   </div>
 </div>
 <div class="col-12 md:col-3">
   <div class="p-inputgroup" style="margin-top:20px ;">
-      <button label="FILTRAR" type="button" pButton pRipple icon="pi pi-filter" (click)="filtroAvancado()"
-      [disabled]="!formFilter.valid"
+      <button label="FILTRAR" type="button" pButton pRipple icon="pi pi-filter" (click)="filtroAvancadissimo()"
+      [disabled]="!formFilterAvancadissimo.valid"
+      ></button>
+  </div>
+</div>
+<div class="col-12 md:col-3">
+  <div class="p-inputgroup" style="margin-top:20px ;">
+      <button label="LIMPAR" type="button" pButton pRipple icon="pi pi-eraser" (click)="resetarFiltro()" class="p-button-secondary mb-2"
       ></button>
   </div>
 </div>

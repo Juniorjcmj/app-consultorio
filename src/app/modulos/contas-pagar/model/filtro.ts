@@ -1,12 +1,16 @@
-export class Filtro{
-  classificacao: string = "";
-  dtFim  : string = "";
-  dtInicio  : string = "";
-  formaPagamento  : string = "";
-  fornecedor  : string = "";
-  idEmpresa  : string = "";
-  situacao  : string = "";
-  subclassificacao  : string = "";
-  tipoDespesa  : string = "";
-  numeroDocumento  : string = "";
+
+export class FiltroAvancado{
+dataVencimentoInicial	!: string;
+dataVencimentoFinal!: string;
+dataPagamentoInicial!: string;
+dataPagamentoFinal!: string;
+fornecedor	!: string;
+nd	!: string;
+localPagamento	!: string;
+formaPagamento	!: string[];
+tipoDespesa	!: string;
+situacao	!: string;
+empresaId	!: string[];
+classificacaoDespesa!: string[];
+subClassificacaoDespesa!: string[];
 }
