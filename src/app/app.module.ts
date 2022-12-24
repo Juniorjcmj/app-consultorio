@@ -35,23 +35,24 @@ import { ContasPagarModule } from './modulos/contas-pagar/contas-pagar.module';
 
 import { DateFnsModule } from 'ngx-date-fns';
 import { ClassificacaoDespesaModule } from './modulos/classificacao-despesa/classificacao-despesa.module';
+import { AuthModule } from './modulos/auth/auth.module';
 
-function initializeKeycloak(keycloak: KeycloakService) {
-  return () =>
-    keycloak.init({
-      config: {
-        url: 'http://localhost:8180/',
-        realm: 'auth-server',
-        clientId: 'api-gestao-client'
-      },
-      initOptions: {
-        onLoad: 'check-sso',
-        silentCheckSsoRedirectUri:
-          window.location.origin + '/assets/silent-check-sso.html'
-      },
-      loadUserProfileAtStartUp:true
-    });
-}
+// function initializeKeycloak(keycloak: KeycloakService) {
+//   return () =>
+//     keycloak.init({
+//       config: {
+//         url: 'http://localhost:8180/',
+//         realm: 'auth-server',
+//         clientId: 'api-gestao-client'
+//       },
+//       initOptions: {
+//         onLoad: 'check-sso',
+//         silentCheckSsoRedirectUri:
+//           window.location.origin + '/assets/silent-check-sso.html'
+//       },
+//       loadUserProfileAtStartUp:true
+//     });
+// }
 
 
 registerLocaleData(ptBr);
@@ -81,6 +82,7 @@ registerLocaleData(ptBr);
     OperadoraCartaoModule,
     ContasPagarModule,
     ClassificacaoDespesaModule,
+    AuthModule,
   //novo  sistema-servvico
   ConciliacaoCartaoModule,
 
@@ -90,12 +92,12 @@ registerLocaleData(ptBr);
 
   ],
   providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeKeycloak,
-      multi: true,
-      deps: [KeycloakService]
-    },
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: initializeKeycloak,
+    //   multi: true,
+    //   deps: [KeycloakService]
+    // },
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: AuthInterceptor,

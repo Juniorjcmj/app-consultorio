@@ -1,0 +1,17 @@
+.container
+{
+  margin-top: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+:host ::ng-deep .p-card{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+}
+

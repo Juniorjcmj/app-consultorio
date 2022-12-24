@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrlAuthenticationServer: 'http://localhost:8080/',
-  apiUrlResourceServer: 'http://localhost:8080/'
+  apiUrlAuthenticationServer: 'http://localhost:99/',
+  apiUrlResourceServer: 'http://localhost:99/'
 };

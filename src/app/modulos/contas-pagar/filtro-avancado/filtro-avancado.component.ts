@@ -32,6 +32,9 @@ export class FiltroAvancadoComponent implements OnInit {
   classificacaoDespesa!: ClassificacaoDespesa[];
   subclassificacaoDespesa!: SubClassificacaoDespesa[];
 
+  disabledDataVencimento: boolean = false;
+  disabledDataPagamento: boolean = false;
+
   constructor(
     private service: ContasPagarService,
     private confirmationService: ConfirmationService,
@@ -120,6 +123,18 @@ export class FiltroAvancadoComponent implements OnInit {
 }
 resetarFiltro(){
   this.formFilterAvancadissimo.reset()
+  this.disabledDataVencimento= false;
+  this.disabledDataPagamento = false;
 }
+
+ onDisabledDataVencimento(event: any){
+
+  this.disabledDataVencimento = true;
+  console.log( event.value)
+ }
+ onDisabledDataPagamento(event: any){
+  this.disabledDataPagamento = true;
+  console.log( event.value)
+ }
 
 }

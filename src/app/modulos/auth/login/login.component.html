@@ -1,0 +1,32 @@
+<div class="container" *ngIf="isLogado">
+
+<p-card  [style]="{width: '360px'}" styleClass="p-card-shadow">
+    <ng-template pTemplate="header">
+
+        <form [formGroup]="formLogin" novalidate>
+          <input type="text"
+          formControlName = "username"
+          name="username"
+          required
+          minlength="5"
+          email
+          pInputText
+          type="text"
+          placeholder="LOGIN">
+          <br> <br>
+         <input
+         formControlName = "password"
+         name="password"
+         pInputText
+         required
+         minlength="5"
+         type="password" nbInput  placeholder="SENHA">
+         <br> <br>
+         <button pButton pRipple  status="success" [disabled]="!formLogin.valid"  (click)="onSubmit()">Entrar</button>
+
+        </form>
+    </ng-template>
+</p-card>
+
+
+</div>

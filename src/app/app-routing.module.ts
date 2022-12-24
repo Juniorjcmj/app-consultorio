@@ -7,17 +7,18 @@ import { DashboardComponent } from './shared/componente/dashboard/dashboard.comp
 import { PageOperadoraComponent } from './modulos/operadora-cartao/page-operadora/page-operadora.component';
 import { PageEmpresaComponent } from './modulos/empresa/page-empresa/page-empresa.component';
 import { PageClassificacaoDespesaComponent } from './modulos/classificacao-despesa/page-classificacao-despesa/page-classificacao-despesa.component';
+import { LoginComponent } from './modulos/auth/login/login.component';
 
 
 
 const routes: Routes =
 [
-  {
-    path: 'home',
-     component: HomeComponent,
-     canActivate: [AuthGuard]
-    },
   {path: '',pathMatch:'full', redirectTo:'cartao' },
+
+  {
+    path: 'login',
+     component: LoginComponent
+    },
 
   //Novo layout distema servico
   {
