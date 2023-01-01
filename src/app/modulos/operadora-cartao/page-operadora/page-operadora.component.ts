@@ -9,6 +9,7 @@ import * as FileSaver from 'file-saver';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs';
+import { OperadoraPage } from './operadoraPage';
 
 @Component({
   selector: 'app-page-operadora',
@@ -44,6 +45,7 @@ export class PageOperadoraComponent implements OnInit {
 
   // conciliacaoCartoes$: Observable<ConciliacaoCartao[]>;
   pagina!: Operadora[];
+  page!: OperadoraPage;
 
   @ViewChild('myDiv') myDiv!: ElementRef;
 
@@ -56,11 +58,12 @@ export class PageOperadoraComponent implements OnInit {
     private spinner: NgxSpinnerService
     ) {
 
-      this.service.getAllOperadora().subscribe(
+      this.service.getAllOperadoraPage(50, 0).subscribe(
         (data: any) => {
           this.spinner.hide();
-          this.pagina = data;
-          this.operadoraXLS = this.pagina;
+          this.page = data;
+         this.pagina = this.page.content
+          this.operadoraXLS = this.page.content;
         },
         (error) => { }
       );
@@ -162,9 +165,10 @@ export class PageOperadoraComponent implements OnInit {
     });
   }
   findAll(): void {
-   this.service.getAllOperadora().subscribe(
+   this.service.getAllOperadoraPage(this.page.size , this.page.number).subscribe(
     (data: any)=>{
-      this.pagina = data;
+      this.page = data;
+      this.pagina = this.page.content
       this.spinner.hide();
     },
     (error) => {
@@ -184,12 +188,12 @@ export class PageOperadoraComponent implements OnInit {
     this.submitted = false;
   }
   getAllDesativadas(){
-     this.service.getAllOperadoraDesativada().subscribe(
+     this.service.getAllOperadoraDesativada(50,0).subscribe(
     (data: any) => {
-      console.log(data)
       this.spinner.hide();
-      this.pagina = data;
-      this.operadoraXLS = this.pagina;
+      this.page = data;
+      this.pagina = this.page.content
+      this.operadoraXLS = this.page.content;
     },
     (error) => { }
   );
@@ -203,8 +207,7 @@ export class PageOperadoraComponent implements OnInit {
     this.submitted = true;
     this.service.manter(this.form.value).subscribe(
       (success:any) => {
-        this.pagina = success;
-        this.spinner.hide();
+        this.findAll()
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
@@ -286,6 +289,44 @@ export class PageOperadoraComponent implements OnInit {
     FileSaver.saveAs(
       data,
       fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
+    );
+  }
+//MÉTODOS AUXILIARES PARA PAGINAÇÃO
+  nextPage(){
+    this.service.getAllOperadoraPage(50, this.page.number + 1).subscribe(
+      (data: any) => {
+        this.spinner.hide();
+        this.page = data;
+       this.pagina = this.page.content
+       console.log(this.page)
+        this.operadoraXLS = this.page.content;
+      },
+      (error) => { }
+    );
+  }
+  previousPage(){
+    this.spinner.show()
+    console.log("chamando  página anterior")
+    var number = this.page.number - 1
+    this.service.getAllOperadoraPage(50, number).subscribe(
+      (data: any) => {
+        this.spinner.hide();
+        this.page = data;
+        this.pagina = this.page.content
+        this.operadoraXLS = this.page.content;
+      },
+      (error) => { }
+    );
+  }
+  resetPage(){
+    this.service.getAllOperadoraPage(50, 0).subscribe(
+      (data: any) => {
+        this.spinner.hide();
+        this.page = data;
+       this.pagina = this.page.content
+        this.operadoraXLS = this.page.content;
+      },
+      (error) => { }
     );
   }
 

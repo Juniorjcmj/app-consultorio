@@ -50,20 +50,31 @@
           <!-- <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteacompanhamento()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
         </ng-template>
 
-
         <ng-template pTemplate="right">
+
+          <button pButton pRipple label="Anterior" icon="pi pi-caret-left" class="p-button-text p-button-plain mr-2 mb-2"
+          (click)="previousPage()"></button>
+          <p-divider layout="vertical"></p-divider>
+          <button pButton pRipple label="Início" icon="pi pi-eraser" class="p-button-text p-button-plain mr-2 mb-2"
+          (click)="resetPage()"></button>
+          <p-divider layout="vertical"></p-divider>
+          <button pButton pRipple label="Próxima" icon="pi pi-caret-right" class="p-button-text p-button-plain mr-2 mb-2"
+          (click)="nextPage()"></button>
+          <p-divider layout="vertical"></p-divider>
+
           <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
             class="p-button-rounded p-button-text p-button-lg p-button-info mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+            <p-divider layout="vertical"></p-divider>
           <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
             class="p-button-rounded p-button-text p-button-lg p-button-danger mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
         </ng-template>
       </p-toolbar>
 
 
-      <p-table #dt [value]="pagina" [rows]="100" [paginator]="true" [rowsPerPageOptions]="[10,25,50,100,200]"
+      <p-table #dt [value]="pagina" [rows]="100" [paginator]="true" [rowsPerPageOptions]="[25,50]"
         [globalFilterFields]="['nome','bandeira','inicio', 'fim','nomeBandeira']"
         responsiveLayout="scroll" [(selection)]="selectedOperadora" [rowHover]="true" dataKey="id"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} Operadoras" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
           <div class="flex align-items-center justify-content-between">
             <span class="p-input-icon-left">

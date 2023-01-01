@@ -25,6 +25,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DividerModule} from 'primeng/divider';
 import {SidebarModule} from 'primeng/sidebar';
 import{MultiSelectModule} from 'primeng/multiselect'
+import { PaginatorModule } from 'primeng/paginator';
 
 
 
@@ -61,7 +62,8 @@ import{MultiSelectModule} from 'primeng/multiselect'
     TooltipModule,
     DividerModule,
     SidebarModule,
-    MultiSelectModule
+    MultiSelectModule,
+    PaginatorModule
 
 
    ]

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
 import { environment } from 'src/environments/environment';
 import { Operadora } from '../conciliacao-cartao/model/conciliacaoCartao';
+import { OperadoraPage } from './page-operadora/operadoraPage';
 
 @Injectable({
   providedIn: 'root',
@@ -36,13 +37,19 @@ export class OperadoraCartaoService {
       .pipe();
   }
   getAllOperadora() {
-    return this.httpClient.get<Operadora[]>(
-      `${this.apiUrlResourceServeOperadora}`
+    return this.httpClient.get<OperadoraPage>(
+      `${this.apiUrlResourceServeOperadora}`+"/page"
     );
   }
-  getAllOperadoraDesativada() {
+  getAllOperadoraPage(size: any, number: any) {
+    return this.httpClient.get<OperadoraPage>(
+      `${this.apiUrlResourceServeOperadora}`+ "/page?size="+size+"&page="+number
+    );
+  }
+  getAllOperadoraDesativada(size: any, number: any) {
+
     return this.httpClient.get<Operadora[]>(
-      `${this.apiUrlResourceServeOperadora}`+"/desativadas"
+      `${this.apiUrlResourceServeOperadora}`+"/desativadas?size="+size+"&page="+number
     );
   }
   delete(record: any){

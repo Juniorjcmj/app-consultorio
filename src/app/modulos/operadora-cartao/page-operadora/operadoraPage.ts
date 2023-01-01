@@ -1,6 +1,6 @@
 import { Operadora } from "../../conciliacao-cartao/model/conciliacaoCartao";
 
-export interface operadoraPage{
+export interface OperadoraPage{
 
 content: Operadora[];
  last: boolean;
