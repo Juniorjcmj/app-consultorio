@@ -5,7 +5,7 @@ import { APP_INITIALIZER, CUSTOM_ELEMENTS_SCHEMA, DEFAULT_CURRENCY_CODE, LOCALE_
 import { AppComponent } from './app.component';
 
 import { HomeComponent } from './modulos/home/home.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthGuard } from './guards/auth.guard';
 
 // **************Para formatar moeda para real brasileiro************************************
@@ -36,6 +36,7 @@ import { ContasPagarModule } from './modulos/contas-pagar/contas-pagar.module';
 import { DateFnsModule } from 'ngx-date-fns';
 import { ClassificacaoDespesaModule } from './modulos/classificacao-despesa/classificacao-despesa.module';
 import { AuthModule } from './modulos/auth/auth.module';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 // function initializeKeycloak(keycloak: KeycloakService) {
 //   return () =>
@@ -98,11 +99,11 @@ registerLocaleData(ptBr);
     //   multi: true,
     //   deps: [KeycloakService]
     // },
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: AuthInterceptor,
-    //   multi:true
-    //  },
+   {
+     provide: HTTP_INTERCEPTORS,
+       useClass: AuthInterceptor,
+       multi:true
+      },
       // **********Para formatar moeda para real brasileiro**************************
     { provide: LOCALE_ID, useValue: 'pt' },
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },

@@ -18,7 +18,7 @@ export class OperadoraCartaoService {
     private keycloakService: KeycloakService
   ) {}
 
-  manter(record: Operadora) {
+  manter(record: any) {
     if (record.id == null) {
       return this.manterOperadora(record);
     } else {
@@ -46,9 +46,9 @@ export class OperadoraCartaoService {
     );
   }
   delete(record: any){
-    return  this.httpClient.delete(`${this.apiUrlResourceServeOperadora}`+"?id="+record ).pipe();
+    return  this.httpClient.delete(`${this.apiUrlResourceServeOperadora}`+"/"+record ).pipe();
   }
   desativarOperadora(id: number) {
-    return  this.httpClient.get(`${this.apiUrlResourceServeOperadora}`+"/desativar-operadora?id="+id ).pipe();
+    return  this.httpClient.get(`${this.apiUrlResourceServeOperadora}`+"/desativar/"+id ).pipe();
  }
 }

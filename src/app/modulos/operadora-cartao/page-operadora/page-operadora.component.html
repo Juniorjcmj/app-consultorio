@@ -137,57 +137,60 @@
 
 
 
-<p-dialog [(visible)]="operadoraDialog" [style]="{width: '500px'}" header="Cadastro de Operadora " [modal]="true"
+<p-dialog [(visible)]="operadoraDialog" [style]="{width: '500px'}" header="CADASTRO OPERADORA " [modal]="true"
   styleClass="p-fluid">
   <ng-template pTemplate="content">
     <form [formGroup]="form">
+      <div class="grid p-fluid">
 
-      <div class="field col">
-        <input type="text" pInputText id="nome" formControlName="nome" name="nome" placeholder="Nome"/>
+      <div class="col-6 ">
+        <label for="float-input">NOME</label>
+        <input type="text" pInputText id="nome" formControlName="nome" name="nome" />
       </div>
 
-      <div class="field col">
-        <input type="text" pInputText id="bandeira" formControlName="bandeira" name="bandeira" placeholder="Bandeira"/>
+      <div class="col-6 ">
+        <label for="float-input">BANDEIRA</label>
+        <input type="text" pInputText id="bandeira" formControlName="bandeira" name="bandeira"/>
       </div>
 
-      <div class="field">
+      <div class="col-12 ">
           <label for="float-input">ANTECIPAÇÃO AUTOMÁTICA</label>
         <p-selectButton [options]="stateOptions" formControlName="antecipacaoAutomatica" id="antecipacaoAutomatica"
-          placeholder="ANTECIPAÇÃO AUTOMÁTICA" optionLabel="label" optionValue="value" name="antecipacaoAutomatica"></p-selectButton>
+          optionLabel="label" optionValue="value" name="antecipacaoAutomatica"></p-selectButton>
         </div>
 
-      <div class="field col">
+      <div class="col-6 ">
         <label for="float-input">DIAS PARA RECEBIMENTO</label>
-        <p-inputNumber id="diasParaRecebimento" formControlName="diasParaRecebimento" name="diasParaRecebimento"
-        placeholder="DIAS PARA RECEBIMENTO"></p-inputNumber>
+        <input type="text" pInputText  type="text" id="diasParaRecebimento" formControlName="diasParaRecebimento" name="diasParaRecebimento"
+       />
       </div>
-      <div class="field col">
+      <div class="col-6 ">
         <label for="float-input">TX ANT CRÉDITO</label>
-        <p-inputNumber id="taxaAntecipacaoCredito" formControlName="taxaAntecipacaoCredito" name="taxaAntecipacaoCredito"
-        placeholder="TX ANT CRÉDITO"></p-inputNumber>
+        <input type="text" pInputTextinput type="text" pInputText id="taxaAntecipacaoCredito" formControlName="taxaAntecipacaoCredito" name="taxaAntecipacaoCredito"
+       />
       </div>
-      <div class="field col">
+      <div class="col-6 ">
         <label for="float-input">TX PADRÃO CRÉDITO</label>
-        <p-inputNumber id="taxaPadraoCredito" formControlName="taxaPadraoCredito" name="taxaPadraoCredito"
-        placeholder="TX PADRÃO CRÉDITO"></p-inputNumber>
+        <input type="text" pInputText id="taxaPadraoCredito" formControlName="taxaPadraoCredito" name="taxaPadraoCredito"
+      />
       </div>
-      <div class="field col">
+      <div class="col-6 ">
         <label for="float-input">TX PADRÃO DÉBITO</label>
-        <p-inputNumber id="taxaPadraoDebito" formControlName="taxaPadraoDebito" name="taxaPadraoDebito"
-        placeholder="TX PADRÃO DÉBITO"></p-inputNumber>
+        <input type="text" pInputText id="taxaPadraoDebito" formControlName="taxaPadraoDebito" name="taxaPadraoDebito"
+       />
       </div>
 
-      <div class="field col">
+      <div class="col-6 ">
         <label for="float-input">DATA ÍNICIO</label>
-        <input type="date" pInputText inputId="inicio" formControlName="inicio" id="inicio" name="inicio" placeholder="INÍCIO"
+        <input type="date" pInputText inputId="inicio" formControlName="inicio" id="inicio" name="inicio"
           slotChar="dd/mm/yyyy" dateFormat="dd/mm/yy"/>
       </div>
-      <div class="field col">
+      <div class="col-6 ">
         <label for="float-input">DATA FIM</label>
         <input type="date" pInputText inputId="fim" formControlName="fim" id="fim" name="fim" placeholder="FIM"
           slotChar="dd/mm/yyyy" dateFormat="dd/mm/yy"/>
       </div>
-
+       </div>
     </form>
   </ng-template>
   <ng-template pTemplate="footer">

@@ -53,8 +53,8 @@ export class PageOperadoraComponent implements OnInit {
     private messageService: MessageService,
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService,
-    private keycloakService: KeycloakService) {
+    private spinner: NgxSpinnerService
+    ) {
 
       this.service.getAllOperadora().subscribe(
         (data: any) => {
@@ -196,7 +196,7 @@ export class PageOperadoraComponent implements OnInit {
   }
 
   manterOperadora() {
-    console.log(this.form.value)
+
     this.spinner.show();
     this.operadoraDialog = false;
     this.display = false;

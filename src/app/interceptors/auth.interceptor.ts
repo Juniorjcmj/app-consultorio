@@ -13,7 +13,6 @@ export class AuthInterceptor implements HttpInterceptor{
 
         let newReq =req;
         let token = this.loginService.getToken();
-
         if(token != null){
             newReq =  newReq.clone({setHeaders:{Authorization: `Bearer ${token}`}})
         }
