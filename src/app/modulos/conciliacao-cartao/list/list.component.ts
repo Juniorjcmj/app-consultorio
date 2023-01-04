@@ -20,6 +20,9 @@ import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { KeycloakService } from 'keycloak-angular';
 
+import { OperadoraCartaoService } from '../../operadora-cartao/operadora-cartao.service';
+import { AuthService } from '../../auth/auth.service';
+
 
 @Component({
   selector: 'app-list',
@@ -56,6 +59,8 @@ export class ListComponent implements OnInit {
 
   page: number;
 
+  pageConciliacao: PageConciliacao = new PageConciliacao();
+
   // conciliacaoCartoes$: Observable<ConciliacaoCartao[]>;
   pagina!: ConciliacaoCartao[];
 
@@ -77,9 +82,12 @@ export class ListComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
     private empresaService: EmpresaService,
-    private keycloakService: KeycloakService
+    private authService: AuthService,
+    private serviceOperadora: OperadoraCartaoService
   ) {
-    this.page = 0;
+
+    this.page = this.pageConciliacao.number == undefined ? 0 : this.pageConciliacao.number;
+    console.log(this.page)
     this.stateOptions = [
       { label: 'CRÉDITO', value: 'CRÉDITO' },
       { label: 'DÉBITO', value: 'DÉBITO' },
@@ -92,15 +100,16 @@ export class ListComponent implements OnInit {
     this.conciliacaoCartaoService.getAll(this.page).subscribe(
       (data: any) => {
         this.spinner.hide();
-        this.pagina = data;
+        this.pagina = data.content;
+
         this.conciliacaoXLS = this.pagina;
       },
       (error) => { }
     );
-    this.conciliacaoCartaoService.getAllOperadora().subscribe(
+    this.serviceOperadora.getAllOperadoraPage(250,0).subscribe(
       (data) => {
         this.spinner.hide();
-        this.operadoras = data;
+        this.operadoras = data.content;
 
       },
       (error) => {}
@@ -142,23 +151,18 @@ export class ListComponent implements OnInit {
 
   }
   filtroAvancado(){
-    this.conciliacaoCartaoService.filtroAvancado(this.formFilter.value).subscribe((res:any)  =>{this.pagina = res} );
+    this.spinner.show();
+    this.conciliacaoCartaoService.filtroAvancado(this.formFilter.value, this.pageConciliacao.number).subscribe(
+      (res:any)  =>{
+      this.pageConciliacao = res;
+      this.pagina = this.pageConciliacao.content
+      this.spinner.hide();
+    }
+       );
   }
   onSearchNumeroPedido(){
     this.conciliacaoCartaoService.obterNumeroPedido(this.queryFields.value).subscribe((res:any)  =>{this.pagina = res} );
   }
-  onSearchAute(){
-    this.conciliacaoCartaoService.obterNumeroAute(this.queryFieldsAute.value).subscribe((res:any)  =>{this.pagina = res} );
-  }
-  onSearchData(){
-
-    this.conciliacaoCartaoService.obterPorData(this.queryFieldsData.value).subscribe((res:any)  =>{this.pagina = res} );
-  }
-  onSearcEmpresa(){
-
-    this.conciliacaoCartaoService.obterPorEmpresa(this.queryFieldsIdEmpresa.value).subscribe((res:any)  =>{this.pagina = res} );
-  }
-
 
   openNew() {
 
@@ -171,7 +175,7 @@ export class ListComponent implements OnInit {
       numeroPedido: [null, Validators.required],
       aute: [null, Validators.required],
       tipoOperacao: [null, Validators.required],
-      quemCadastrou:[this.keycloakService.getUsername()]
+      quemCadastrou:[this.authService.getUser()]
     });
 
     this.submitted = false;
@@ -208,7 +212,7 @@ export class ListComponent implements OnInit {
       aute: [conciliacao.aute, Validators.required],
       tipoOperacao: [conciliacao.tipoOperacao, Validators.required],
       dataRecebimento: [conciliacao.dataRecebimento],
-      quemConferiu:[this.keycloakService.getUsername()]
+      quemConferiu:[this.authService.getUser()]
     });
 
     //this.conciliacao = { ...conciliacao };
@@ -230,7 +234,7 @@ export class ListComponent implements OnInit {
               life: 2000,
             });
 
-            return this.buscarPorNumeroPagina(this.page);
+            return this.buscarPorNumeroPagina(this.pageConciliacao.number);
           },
           (error) => {
             this.spinner.hide();
@@ -257,7 +261,8 @@ export class ListComponent implements OnInit {
     this.submitted = true;
     this.conciliacaoCartaoService.manterConciliacao(this.form.value).subscribe(
       (success:any) => {
-        this.pagina = success;
+        //this.pagina = success;
+        this.buscarPorNumeroPagina(this.pageConciliacao.number);
         this.spinner.hide();
         this.messageService.add({
           severity: 'success',
@@ -351,7 +356,8 @@ export class ListComponent implements OnInit {
     this.conciliacaoCartaoService.getAll(numeroPagina).subscribe(
       (data: any) => {
         this.spinner.hide();
-        this.pagina = data;
+        this.pageConciliacao = data;
+        this.pagina = this.pageConciliacao.content;
         this.conciliacaoXLS = this.pagina;
       },
       (error) => {}
@@ -360,13 +366,13 @@ export class ListComponent implements OnInit {
 
   next() {
     this.spinner.show();
-    let valor = this.page + 1;
+    let valor = this.pageConciliacao.number + 1;
     return this.buscarPorNumeroPagina(valor);
   }
 
   prev() {
     this.spinner.show();
-    let valor = this.page > 0 ? this.page -1 : 0 ;
+    let valor = this.pageConciliacao.number > 0 ? this.pageConciliacao.number -1 : 0 ;
     return this.buscarPorNumeroPagina(valor);
   }
 
@@ -447,7 +453,7 @@ export class ListComponent implements OnInit {
             life: 2000,
           });
           setTimeout(() => {}, 2000);
-          return this.buscarPorNumeroPagina(this.page);
+          return this.buscarPorNumeroPagina(this.pageConciliacao.number);
         },
         (error) => {
           this.spinner.hide();

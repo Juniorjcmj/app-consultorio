@@ -50,5 +50,8 @@ loginUser(token: any){
   getToken(){
     return  localStorage.getItem('token');
   }
+  getUser(){
+    return localStorage.getItem('nome')
+  }
 }
 

@@ -26,6 +26,7 @@ import {DividerModule} from 'primeng/divider';
 import {SidebarModule} from 'primeng/sidebar';
 import{MultiSelectModule} from 'primeng/multiselect'
 import { PaginatorModule } from 'primeng/paginator';
+import {PanelModule} from 'primeng/panel';
 
 
 
@@ -63,7 +64,8 @@ import { PaginatorModule } from 'primeng/paginator';
     DividerModule,
     SidebarModule,
     MultiSelectModule,
-    PaginatorModule
+    PaginatorModule,
+    PanelModule
 
 
    ]

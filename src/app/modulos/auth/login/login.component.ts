@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(){
-  console.log(this.formLogin.value['username'], this.formLogin.value['password'])
+
         this.authServer.genereteToken(this.formLogin.value['username'], this.formLogin.value['password']).subscribe(
           (response:any) =>{
            localStorage.setItem('token', response.access_token);

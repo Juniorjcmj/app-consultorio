@@ -1,6 +1,7 @@
-<div class="container" *ngIf="isLogado">
 
-<p-card  [style]="{width: '360px'}" styleClass="p-card-shadow">
+<div class="container" *ngIf="isLogado">
+  <p-panel header="LOGIN">
+<p-card  [style]="{'width': '25rem', 'margin-bottom': '2em'}" styleClass="p-card-shadow"   >
     <ng-template pTemplate="header">
 
         <form [formGroup]="formLogin" novalidate>
@@ -22,11 +23,11 @@
          minlength="5"
          type="password" nbInput  placeholder="SENHA">
          <br> <br>
-         <button pButton pRipple  status="success" [disabled]="!formLogin.valid"  (click)="onSubmit()">Entrar</button>
+         <button pButton pRipple  status="success" [disabled]="!formLogin.valid"  (click)="onSubmit()" class="p-button-plain mr-2 mb-2">Entrar</button>
 
         </form>
     </ng-template>
 </p-card>
-
+  </p-panel>
 
 </div>

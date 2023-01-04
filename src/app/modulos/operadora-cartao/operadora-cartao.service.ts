@@ -21,6 +21,7 @@ export class OperadoraCartaoService {
 
   manter(record: any) {
     if (record.id == null) {
+
       return this.manterOperadora(record);
     } else {
       return this.atualizarOperadora(record);
