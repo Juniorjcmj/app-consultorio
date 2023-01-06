@@ -58,7 +58,7 @@ export class PageOperadoraComponent implements OnInit {
     private spinner: NgxSpinnerService
     ) {
 
-      this.service.getAllOperadoraPage(50, 0).subscribe(
+      this.service.getAllOperadoraPage(100, 0).subscribe(
         (data: any) => {
           this.spinner.hide();
           this.page = data;
@@ -188,7 +188,7 @@ export class PageOperadoraComponent implements OnInit {
     this.submitted = false;
   }
   getAllDesativadas(){
-     this.service.getAllOperadoraDesativada(50,0).subscribe(
+     this.service.getAllOperadoraDesativada(this.page.size,0).subscribe(
     (data: any) => {
       this.spinner.hide();
       this.page = data;
@@ -293,7 +293,7 @@ export class PageOperadoraComponent implements OnInit {
   }
 //MÉTODOS AUXILIARES PARA PAGINAÇÃO
   nextPage(){
-    this.service.getAllOperadoraPage(50, this.page.number + 1).subscribe(
+    this.service.getAllOperadoraPage(this.page.size, this.page.number + 1).subscribe(
       (data: any) => {
         this.spinner.hide();
         this.page = data;
@@ -308,7 +308,7 @@ export class PageOperadoraComponent implements OnInit {
     this.spinner.show()
     console.log("chamando  página anterior")
     var number = this.page.number - 1
-    this.service.getAllOperadoraPage(50, number).subscribe(
+    this.service.getAllOperadoraPage(this.page.size, number).subscribe(
       (data: any) => {
         this.spinner.hide();
         this.page = data;
@@ -319,7 +319,7 @@ export class PageOperadoraComponent implements OnInit {
     );
   }
   resetPage(){
-    this.service.getAllOperadoraPage(50, 0).subscribe(
+    this.service.getAllOperadoraPage(this.page.size, 0).subscribe(
       (data: any) => {
         this.spinner.hide();
         this.page = data;

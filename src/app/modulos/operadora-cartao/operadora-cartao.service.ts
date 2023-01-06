@@ -28,11 +28,13 @@ export class OperadoraCartaoService {
     }
   }
   manterOperadora(record: any) {
+
     return this.httpClient
       .post<any>(`${this.apiUrlResourceServeOperadora}`, record)
       .pipe();
   }
   atualizarOperadora(record: any) {
+
     return this.httpClient
       .put<any>(`${this.apiUrlResourceServeOperadora}`, record)
       .pipe();
