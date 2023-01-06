@@ -12,7 +12,7 @@ export class MenuComponent implements OnInit {
 
   items: MenuItem[];
 
-  constructor( private router: Router, private keycloakService: KeycloakService) {
+  constructor( private router: Router) {
 
     this.items = [
       {
@@ -132,7 +132,9 @@ export class MenuComponent implements OnInit {
   }
 
   logout(){
-    this.keycloakService.logout("http://localhost:4200/")
+    localStorage.clear();
+
+    this.router.navigate(["login"])
 
   }
 
