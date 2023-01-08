@@ -41,7 +41,7 @@ export class PageOperadoraComponent implements OnInit {
 
   display: boolean = false;
 
-
+  formFilter!: FormGroup;
 
   // conciliacaoCartoes$: Observable<ConciliacaoCartao[]>;
   pagina!: Operadora[];
@@ -71,12 +71,32 @@ export class PageOperadoraComponent implements OnInit {
         { label: 'SIM', value: 'true' },
         { label: 'NÃO', value: 'false' },
       ];
-     }
+
+      this.formFilter = this.formBuilder.group({
+        nome:[null],
+        bandeira:[null],
+        dataInicio:[null],
+        dataFim: [null],
+      })
+    }
+
 
   ngOnInit(): void {
     this.spinner.show();
 
 
+
+  }
+  filtroAvancado(){
+    this.spinner.show();
+    this.service.filtroAvancado(this.formFilter.value, this.page.number).subscribe(
+      (res:any)  =>{
+        this.page = res;
+      this.pagina = this.page.content
+      this.formFilter.reset();
+      this.spinner.hide();
+    }
+       );
   }
 
   openNew() {
@@ -90,7 +110,7 @@ export class PageOperadoraComponent implements OnInit {
       taxaPadraoCredito: [null, Validators.required],
       taxaPadraoDebito:[null, Validators.required],
       inicio:[null, Validators.required],
-      fim:[null, Validators.required]
+      fim:[null]
     });
     this.submitted = false;
     this.operadoraDialog = true;

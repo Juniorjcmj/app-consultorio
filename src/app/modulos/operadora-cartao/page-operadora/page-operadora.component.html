@@ -4,38 +4,42 @@
     <div class="card">
       <p-accordion>
         <p-accordionTab header="Filtros">
-          <div class="grid p-fluid">
-            <div class="col-12 md:col-3">
-              <div class="p-inputgroup">
-                <input type="text" pInputText placeholder="Nº Pedido" >
-                <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"
-                 ></button>
+          <form [formGroup]="formFilter" style="margin-top:10px">
+            <div class="grid p-fluid">
+              <div class="col-12 md:col-3">
+                <div class="" >
+                  <label for="dataInicio">DATA INÍCIO</label>
+                  <input type="date" inputId="dataInicio" pInputText placeholder="DATA INÍCIO" formControlName="dataInicio" name="dataInicio" >
+                         </div>
+              </div>
+              <div class="col-12 md:col-3">
+                <div class="">
+                  <label for="dataFim">DATA FIM</label>
+                  <input type="date" inputId="dataFim" pInputText placeholder="DATA FIM"  formControlName="dataFim" name="dataFim" >
+                </div>
+              </div>
+              <div class="col-12 md:col-3">
+                <div>
+                  <label for="nome">NOME</label>
+                   <input type="text" pInputText placeholder="Ex: GET NET"formControlName="nome" name="nome" inputId="nome" >
+                </div>
+              </div>
+              <div class="col-12 md:col-3">
+                <div>
+                  <label for="bandeira">BANDEIRA</label>
+                   <input type="text" pInputText placeholder="Ex: MASTER"formControlName="bandeira" name="bandeira" inputId="bandeira" >
+                </div>
+              </div>
+
+              <div class="col-12 md:col-3">
+                <div class="p-inputgroup" style="margin-top:20px ;">
+                    <button label="FILTRAR" type="button" pButton pRipple icon="pi pi-filter" (click)="filtroAvancado()"
+                    [disabled]="!formFilter.valid"
+                    ></button>
+                </div>
               </div>
             </div>
-            <div class="col-12 md:col-3">
-              <div class="p-inputgroup">
-                <input type="text" pInputText placeholder="Nº Autenticação" >
-                <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"
-                  ></button>
-              </div>
-            </div>
-            <div class="col-12 md:col-3">
-              <div class="p-inputgroup">
-                <input type="date" pInputText placeholder="Data" >
-                <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"
-                  ></button>
-              </div>
-            </div>
-            <div class="col-12 md:col-3">
-              <div class="p-inputgroup">
-                <p-dropdown inputId="idEmpresaSearch" placeholder="Empresa"
-                   optionLabel="nome" optionValue="id" [showClear]="true">
-                </p-dropdown>
-                <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"
-                  ></button>
-              </div>
-            </div>
-          </div>
+            </form>
         </p-accordionTab>
       </p-accordion>
 

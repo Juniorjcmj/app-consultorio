@@ -11,6 +11,9 @@ import { OperadoraPage } from './page-operadora/operadoraPage';
 })
 export class OperadoraCartaoService {
 
+
+
+
   apiUrlResourceServeOperadora =
     environment.apiUrlResourceServer + 'V1/api-operadora-cartao';
   constructor(
@@ -61,4 +64,10 @@ export class OperadoraCartaoService {
   desativarOperadora(id: number) {
     return  this.httpClient.get(`${this.apiUrlResourceServeOperadora}`+"/desativar/"+id ).pipe();
  }
+
+ filtroAvancado(filtro: any, page: number) {
+
+  return this.httpClient.get<OperadoraPage>(`${this.apiUrlResourceServeOperadora}`+"/filter?nome="+filtro["nome"]+"&bandeira="+filtro["bandeira"]
+   +"&dataInicio="+filtro["dataInicio"]+"&dataFim="+filtro["dataFim"]+"&page="+page)
+}
 }
