@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { KeycloakService } from 'keycloak-angular';
+import { AuthService } from '../../modulos/auth/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -11,8 +12,19 @@ import { KeycloakService } from 'keycloak-angular';
 export class MenuComponent implements OnInit {
 
   items: MenuItem[];
+  itemsOff: MenuItem[];
 
-  constructor( private router: Router) {
+  nomeUsuario: any = ""
+
+  constructor( private router: Router,private authService: AuthService) {
+
+    this.nomeUsuario = this.authService.getUser();
+
+    this.itemsOff = [
+      {
+        label:'Bem Vindo!',
+    }
+    ]
 
     this.items = [
       {
@@ -63,67 +75,9 @@ export class MenuComponent implements OnInit {
 
             ]
         },
-        // {
-        //     label:'Usuários',
-        //     icon:'pi pi-fw pi-user',
-        //     items:[
-        //         {
-        //             label:'Novo',
-        //             icon:'pi pi-fw pi-user-plus',
-
-        //         },
-        //         {
-        //             label:'Lista',
-        //             icon:'pi pi-fw pi-book',
-
-        //         },
-
-        //     ]
-        // },
-        // {
-        //     label:'Configuração',
-        //     icon:'pi pi-fw pi-cog',
-
-        //     items:[
-        //         {
-        //             label:'Acompanhamento',
-        //             icon:'pi pi-fw pi-chart-pie',
-        //             routerLink: '/acompanhamento',
-
-        //         },
-        //         {
-        //             label:'Bebidas',
-        //             icon:'pi pi-fw pi-filter-fill',
-        //             routerLink: '/bebidas',
-        //         },
-        //         {
-        //             label:'Carnes',
-        //             icon:'pi pi-fw pi-image',
-        //             routerLink: '/carnes',
-        //         },
-        //         {
-        //             label:'Consumo por Pessoa',
-        //             icon:'pi pi-fw pi-chart-bar',
-        //             routerLink: '/consumo-pessoa',
-        //         },
-        //         {
-        //           label:'Tipo Acompanhamento',
-        //           icon:'pi pi-fw pi-reddit',
-        //           routerLink: '/tipo-acompanhamento',
-
-        //       },
-        //       {
-        //           label:'Tipo de Corte',
-        //           icon:'pi pi-fw pi-pencil',
-        //           routerLink: '/tipo-corte',
-        //       },
-        //       {
-        //           label:'Unidade',
-        //           icon:'pi pi-fw pi-eye',
-        //           routerLink: '/unidade',
-        //       }
-        //     ]
-        // },
+        {
+          label:this.nomeUsuario
+      },
 
     ];
   }
@@ -137,5 +91,9 @@ export class MenuComponent implements OnInit {
     this.router.navigate(["auth/login"])
 
   }
+  usuarioLogado():boolean{
+    return this.authService.isLoggedIn();
+  }
+
 
 }
