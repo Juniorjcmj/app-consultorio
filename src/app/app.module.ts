@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, CUSTOM_ELEMENTS_SCHEMA, DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule } from '@angular/core';
+import { APP_INITIALIZER, CUSTOM_ELEMENTS_SCHEMA, DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule, isDevMode } from '@angular/core';
 
 
 
@@ -37,6 +37,7 @@ import { DateFnsModule } from 'ngx-date-fns';
 import { ClassificacaoDespesaModule } from './modulos/classificacao-despesa/classificacao-despesa.module';
 import { AuthModule } from './modulos/auth/auth.module';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 // function initializeKeycloak(keycloak: KeycloakService) {
 //   return () =>
@@ -89,7 +90,13 @@ registerLocaleData(ptBr);
 
   KeycloakAngularModule,
 
-  DateFnsModule.forRoot()
+  DateFnsModule.forRoot(),
+   ServiceWorkerModule.register('ngsw-worker.js', {
+     enabled: !isDevMode(),
+     // Register the ServiceWorker as soon as the application is stable
+     // or after 30 seconds (whichever comes first).
+     registrationStrategy: 'registerWhenStable:30000'
+   })
 
   ],
   providers: [

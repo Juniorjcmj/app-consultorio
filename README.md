@@ -9,3 +9,8 @@ npm i ngx-spinner
 
 # Additional SwicthAlert
 npm install sweetalert2
+
+# Comando para rodar PWA
+ng build
+tem que entrar no /dist/projeto
+npx serve
