@@ -13,35 +13,19 @@ import { LoginComponent } from './modulos/auth/login/login.component';
 
 const routes: Routes =
 [
-  {path: '',pathMatch:'full', redirectTo:'cartao' },
+  { path: '',pathMatch:'full', redirectTo:'cartao' },
 
-  {
-    path: 'login',
-     component: LoginComponent
-    },
+  { path: 'auth', loadChildren: ()=> import('./modulos/auth/auth.module').then(m => m.AuthModule)},
 
-  //Novo layout distema servico
-  {
-    path: 'cartao',
-     canActivate: [AuthGuard],
-     loadChildren: ()=> import('./modulos/conciliacao-cartao/conciliacao-cartao.module')
-                   .then(m => m.ConciliacaoCartaoModule)
-  },
-  {
-    path: 'contas-pagar',
-     canActivate: [AuthGuard],
-     loadChildren: ()=> import('./modulos/contas-pagar/contas-pagar.module')
-                   .then(m => m.ContasPagarModule)
-  },
-   {
-    path:'operadora-cartao', component: PageOperadoraComponent, canActivate: [AuthGuard],
-   },
-   {
-    path:'empresa', component: PageEmpresaComponent, canActivate: [AuthGuard],
-   },
-   {
-    path:'classificacao', component: PageClassificacaoDespesaComponent, canActivate: [AuthGuard],
-   }
+  { path: 'cartao',canActivate: [AuthGuard],loadChildren: ()=> import('./modulos/conciliacao-cartao/conciliacao-cartao.module').then(m => m.ConciliacaoCartaoModule)},
+
+  { path: 'contas-pagar',canActivate: [AuthGuard],loadChildren: ()=> import('./modulos/contas-pagar/contas-pagar.module').then(m => m.ContasPagarModule)},
+
+  { path:'operadora-cartao', component: PageOperadoraComponent, canActivate: [AuthGuard],},
+
+  { path:'empresa', component: PageEmpresaComponent, canActivate: [AuthGuard],},
+
+  { path:'classificacao', component: PageClassificacaoDespesaComponent, canActivate: [AuthGuard],}
 
 
 

@@ -12,7 +12,7 @@ import { AuthGuard } from './guards/auth.guard';
 import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 import { MaterialModule } from './shared/material.module';
-import { MensagensService } from './services/mensagens.service';
+
 
 import { MatIconModule } from '@angular/material/icon';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -93,6 +93,7 @@ registerLocaleData(ptBr);
 
   ],
   providers: [
+
     // {
     //   provide: APP_INITIALIZER,
     //   useFactory: initializeKeycloak,
