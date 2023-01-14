@@ -1,3 +1,4 @@
+import { CustomMensagensService } from './../../../services/mensagens.service';
 import { EmpresaService } from './../../empresa/service/empresa-service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
@@ -28,12 +29,14 @@ import {
   ClassificacaoDespesa,
 } from '../../classificacao-despesa/classificacao-despesa';
 import { FiltroAvancado } from '../model/filtro';
+import { ContasPagarPage } from './contasPagarPage';
+
 
 @Component({
   selector: 'app-page-contas-pagar',
   templateUrl: './page-contas-pagar.component.html',
   styleUrls: ['./page-contas-pagar.component.scss'],
-  providers: [MessageService, ConfirmationService],
+  providers: [MessageService, ConfirmationService, CustomMensagensService],
 })
 export class PageContasPagarComponent implements OnInit {
   filtro: FiltroAvancado = new FiltroAvancado();
@@ -70,7 +73,7 @@ export class PageContasPagarComponent implements OnInit {
   detalheContas: ContasPagarDTO[] = [];
 
   // conciliacaoCartoes$: Observable<ConciliacaoCartao[]>;
-  pagina$!: Observable<ContasPagarDTO[]>;
+  pagina$!: Observable<ContasPagarPage>;
   empresas!: Empresa[];
 
   @ViewChild('myDiv') myDiv!: ElementRef;
@@ -96,6 +99,7 @@ export class PageContasPagarComponent implements OnInit {
   constructor(
     private empresaService: EmpresaService,
     private service: ContasPagarService,
+    private customMessage: CustomMensagensService,
     private messageService: MessageService,
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
@@ -113,7 +117,7 @@ export class PageContasPagarComponent implements OnInit {
     this.pegandoPrimeiroEUltimoDiaDaSemana();
     this.service.getListaContasPagar().subscribe((data) => {
       this.pagina$ = data;
-      this.ContasPagarDtoXLS = data;
+
     });
 
     this.empresaService.getAll().subscribe(
@@ -189,6 +193,7 @@ export class PageContasPagarComponent implements OnInit {
   openNew() {
     this.subclassificacaoDespesa = [];
     this.form = this.formBuilder.group({
+      id:[],
       empresa_id: [null, Validators.required],
       valorDuplicata: [null, Validators.required],
       dataVencimento: [null, Validators.required],
@@ -200,6 +205,8 @@ export class PageContasPagarComponent implements OnInit {
       classificacaoDespesa: [null, Validators.required],
       subClassificacaoDespesa: [null, Validators.required],
       observacao: [null, Validators.required],
+
+
     });
     this.submitted = false;
     this.ContasPagarInputDialog = true;
@@ -222,6 +229,7 @@ export class PageContasPagarComponent implements OnInit {
         Validators.required,
       ],
       observacao: [contas.observacao, Validators.required],
+
     });
     this.submitted = false;
     this.ContasPagarInputDialog = true;
@@ -322,12 +330,13 @@ export class PageContasPagarComponent implements OnInit {
     this.pagina$ = this.service.manterContasPagar(this.form.value).pipe(
       tap((s) => {
         this.spinner.hide();
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Conta Salva com Sucesso!',
-          life: 2000,
-        });
+        this.customMessage.onSuccessSmall();
+        // this.messageService.add({
+        //   severity: 'success',
+        //   summary: 'Successful',
+        //   detail: 'Conta Salva com Sucesso!',
+        //   life: 2000,
+        // });
       }),
       catchError((erros) => {
         this.spinner.hide();
@@ -370,15 +379,22 @@ export class PageContasPagarComponent implements OnInit {
   }
   exportExcelContas() {
 
-    import('xlsx').then((xlsx) => {
-      const worksheet = xlsx.utils.json_to_sheet(this.ContasPagarDtoXLS);
-      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-      const excelBuffer: any = xlsx.write(workbook, {
-        bookType: 'xlsx',
-        type: 'array',
-      });
-      this.saveAsExcelFile(excelBuffer, 'contas');
-    });
+    this.pagina$.subscribe(
+      (data: any) => {
+        import('xlsx').then((xlsx) => {
+          const worksheet = xlsx.utils.json_to_sheet(data.content);
+          const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+          const excelBuffer: any = xlsx.write(workbook, {
+            bookType: 'xlsx',
+            type: 'array',
+          });
+          this.saveAsExcelFile(excelBuffer, 'contas');
+        });
+      },
+      (error: any) => {}
+    );
+
+
   }
 
   saveAsExcelFile(buffer: any, fileName: string): void {

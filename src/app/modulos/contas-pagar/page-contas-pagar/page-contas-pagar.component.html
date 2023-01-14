@@ -24,7 +24,7 @@
       </p-toolbar>
 
 
-      <p-table #dt [value]="pagina" [rows]="100" [paginator]="true" [rowsPerPageOptions]="[10,25,50,100,200]"
+      <p-table #dt [value]="pagina.content" [rows]="100" [paginator]="true" [rowsPerPageOptions]="[10,25,50,100,200]"
         [globalFilterFields]="['tipoDespesa','nd','fornecedor', 'nomeEmpresa','tipoDespesa','situacao', 'dataVencimento','dataPagamento','classificacaoDespesa','subClassificacaoDespesa']"
         responsiveLayout="scroll" [(selection)]="selectedContasPagar" [rowHover]="true" dataKey="id"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
@@ -124,19 +124,19 @@
        </div>
        <div class="col-6 ">
         <p-dropdown [options]="formasPgtoOptions" formControlName="formaPagamento" id="formaPagamento"
-           placeholder="Forma de PGTO" optionLabel="label" optionValue="value" name="formaPagamento"></p-dropdown>
+           placeholder="FORMA PGTO" optionLabel="label" optionValue="value" name="formaPagamento"></p-dropdown>
         </div>
         <div class="col-6 ">
           <p-dropdown [options]="tipoDespesasOptions" formControlName="tipoDespesa" id="tipoDespesa"
-             placeholder="Tipo Despesa" optionLabel="label" optionValue="value" name="tipoDespesa"></p-dropdown>
+             placeholder="TIPO DESPESA" optionLabel="label" optionValue="value" name="tipoDespesa"></p-dropdown>
           </div>
           <div class="col-6 ">
             <p-dropdown [options]="classificacaoDespesa" formControlName="classificacaoDespesa"inputId="classificacaoDespesa" (onChange)="mostraClassificacao($event)"
-               placeholder="Classificação" optionLabel="descricao" optionValue="descricao" name="classificacaoDespesa"></p-dropdown>
+               placeholder="CLASSIFICAÇÃO" optionLabel="descricao" optionValue="descricao" name="classificacaoDespesa"></p-dropdown>
           </div>
           <div class="col-6 ">
             <p-dropdown [options]="subclassificacaoDespesa" formControlName="subClassificacaoDespesa"inputId="subClassificacaoDespesa"
-               placeholder="subClassificacaoDespesa" optionLabel="descricao" optionValue="descricao" name="subClassificacaoDespesa"></p-dropdown>
+               placeholder="SUBCLASSIFICAÇÃO" optionLabel="descricao" optionValue="descricao" name="subClassificacaoDespesa"></p-dropdown>
           </div>
        <div class="col-12 md:col-6">
         <div class="p-inputgroup">
@@ -147,27 +147,27 @@
     <div class="col-12 md:col-6">
       <div class="p-inputgroup">
           <span class="p-inputgroup-addon">R$</span>
-          <input type="text" pInputText placeholder="valor duplicata" formControlName="valorDuplicata" name="valorDuplicata">
+          <input type="text" pInputText placeholder="VALOR DUPLICATA" formControlName="valorDuplicata" name="valorDuplicata">
       </div>
     </div>
 
    <div class="col-12 md:col-6">
       <div class="p-inputgroup">
           <span class="p-inputgroup-addon"><i class="pi pi-id-card"></i></span>
-          <input type="text" pInputText placeholder="Fornecedor" formControlName="fornecedor" name="fornecedor">
+          <input type="text" pInputText placeholder="FORNECEDOR" formControlName="fornecedor" name="fornecedor">
       </div>
     </div>
 
     <div class="col-12 md:col-6">
       <div class="p-inputgroup">
           <span class="p-inputgroup-addon"><i class="pi pi-chart-line"></i></span>
-          <input type="text" pInputText placeholder="Número Parcelas" formControlName="numeroParcelas" name="numeroParcelas">
+          <input type="text" pInputText placeholder="NÚMERO DE PARCELAS" formControlName="numeroParcelas" name="numeroParcelas">
       </div>
     </div>
     <div class="col-12 md:col-6">
       <div class="p-inputgroup">
           <span class="p-inputgroup-addon"><i class="pi pi-file-pdf"></i></span>
-          <input type="text" pInputText placeholder="Número DOC" formControlName="nd" name="nd">
+          <input type="text" pInputText placeholder="NÚMERO DOC" formControlName="nd" name="nd">
       </div>
     </div>
 
@@ -175,7 +175,7 @@
     <div class="col-12 md:col-6">
       <div class="p-inputgroup">
           <span class="p-inputgroup-addon"><i class="pi pi-comment"></i></span>
-          <input type="text" pInputText placeholder="Observação" formControlName="observacao" name="observacao">
+          <input type="text" pInputText placeholder="OBSERVAÇÃO" formControlName="observacao" name="observacao">
       </div>
     </div>
 

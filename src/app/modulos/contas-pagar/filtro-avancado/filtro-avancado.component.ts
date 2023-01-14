@@ -1,3 +1,4 @@
+import { ContasPagarPage } from './../page-contas-pagar/contasPagarPage';
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -22,7 +23,7 @@ export class FiltroAvancadoComponent implements OnInit {
   tipoDespesasOptions!: any[];
   situacaoOptions!: any[];
 
-  pagina$!: Observable<ContasPagarDTO[]>;
+  pagina$!: Observable<ContasPagarPage>;
 
   formFilter!: FormGroup;
 
@@ -98,8 +99,6 @@ export class FiltroAvancadoComponent implements OnInit {
   ngOnInit(): void {}
 
   filtroAvancadissimo() {
-
-    console.log(this.formFilterAvancadissimo.value)
 
     this.pagina$ = this.service.filtroAvancadoAvancado(this.formFilterAvancadissimo.value).pipe(
       tap(s =>{

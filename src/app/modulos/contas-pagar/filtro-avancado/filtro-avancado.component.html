@@ -95,17 +95,18 @@
 </div>
 <div class="col-12 md:col-3">
   <div class="p-inputgroup" style="margin-top:20px ;">
-      <button label="FILTRAR" type="button" pButton pRipple icon="pi pi-filter" (click)="filtroAvancadissimo()"
-      [disabled]="!formFilterAvancadissimo.valid"
+      <button label="LIMPAR" type="button" pButton pRipple icon="pi pi-eraser" (click)="resetarFiltro()" class="p-button-secondary mb-2"
       ></button>
   </div>
 </div>
 <div class="col-12 md:col-3">
   <div class="p-inputgroup" style="margin-top:20px ;">
-      <button label="LIMPAR" type="button" pButton pRipple icon="pi pi-eraser" (click)="resetarFiltro()" class="p-button-secondary mb-2"
+      <button label="FILTRAR" type="button" pButton pRipple icon="pi pi-filter" (click)="filtroAvancadissimo()"
+      [disabled]="!formFilterAvancadissimo.valid"
       ></button>
   </div>
 </div>
+
     </div>
     </form>
   </p-accordionTab>
