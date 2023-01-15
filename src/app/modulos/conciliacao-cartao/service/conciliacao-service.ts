@@ -15,10 +15,8 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class ConciliacaoCartaoService {
 
-
-
-   apiUrlResourceServe= environment.apiUrlResourceServer+"V1/api-conciliacao";
-   apiUrlResourceServeOperadora= environment.apiUrlResourceServer+"V1/api-operadora-cartao";
+apiUrlResourceServe= environment.apiUrlResourceServer+"V1/api-conciliacao";
+apiUrlResourceServeOperadora= environment.apiUrlResourceServer+"V1/api-operadora-cartao";
 
   constructor( private httpClient: HttpClient,private router: Router,
                private authService: AuthService) { }
