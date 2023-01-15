@@ -8,6 +8,7 @@ import { PageOperadoraComponent } from './modulos/operadora-cartao/page-operador
 import { PageEmpresaComponent } from './modulos/empresa/page-empresa/page-empresa.component';
 import { PageClassificacaoDespesaComponent } from './modulos/classificacao-despesa/page-classificacao-despesa/page-classificacao-despesa.component';
 import { LoginComponent } from './modulos/auth/login/login.component';
+import { NotfoundComponent } from './modulos/notfound/notfound.component';
 
 
 
@@ -25,9 +26,9 @@ const routes: Routes =
 
   { path:'empresa', component: PageEmpresaComponent, canActivate: [AuthGuard],},
 
-  { path:'classificacao', component: PageClassificacaoDespesaComponent, canActivate: [AuthGuard],}
+  { path:'classificacao', component: PageClassificacaoDespesaComponent, canActivate: [AuthGuard],},
 
-
+  { path:'**', component: NotfoundComponent}
 
 
 ];

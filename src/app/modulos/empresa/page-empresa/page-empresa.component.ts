@@ -9,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { Empresa } from '../../conciliacao-cartao/model/conciliacaoCartao';
 import { EmpresaService } from '../service/empresa-service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-page-empresa',
@@ -51,7 +52,7 @@ export class PageEmpresaComponent implements OnInit {
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
-    private keycloakService: KeycloakService) {
+    private authService: AuthService) {
 
 
 
@@ -61,7 +62,9 @@ export class PageEmpresaComponent implements OnInit {
           this.pagina = data;
           this.empresaXLS = this.pagina;
         },
-        (error) => { }
+        (error) => {
+          this.authService.getRedirect401(error.status);
+        }
       );
      }
 

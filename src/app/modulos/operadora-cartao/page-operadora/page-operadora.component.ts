@@ -10,6 +10,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs';
 import { OperadoraPage } from './operadoraPage';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-page-operadora',
@@ -55,7 +56,8 @@ export class PageOperadoraComponent implements OnInit {
     private messageService: MessageService,
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private authService: AuthService
     ) {
 
       this.service.getAllOperadoraPage(100, 0).subscribe(
@@ -65,7 +67,9 @@ export class PageOperadoraComponent implements OnInit {
          this.pagina = this.page.content
           this.operadoraXLS = this.page.content;
         },
-        (error) => { }
+        (error) => {
+          this.authService.getRedirect401(error.status);
+        }
       );
       this.stateOptions = [
         { label: 'SIM', value: 'true' },
@@ -83,9 +87,6 @@ export class PageOperadoraComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
-
-
-
   }
   filtroAvancado(){
     this.spinner.show();

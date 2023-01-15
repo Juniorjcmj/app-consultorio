@@ -22,6 +22,7 @@ import { KeycloakService } from 'keycloak-angular';
 
 import { OperadoraCartaoService } from '../../operadora-cartao/operadora-cartao.service';
 import { AuthService } from '../../auth/auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -83,11 +84,11 @@ export class ListComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private empresaService: EmpresaService,
     private authService: AuthService,
-    private serviceOperadora: OperadoraCartaoService
+    private serviceOperadora: OperadoraCartaoService,
+    private route: Router
   ) {
 
     this.page = this.pageConciliacao.number == undefined ? 0 : this.pageConciliacao.number;
-    console.log(this.page)
     this.stateOptions = [
       { label: 'CRÉDITO', value: 'CRÉDITO' },
       { label: 'DÉBITO', value: 'DÉBITO' },
@@ -104,7 +105,9 @@ export class ListComponent implements OnInit {
 
         this.conciliacaoXLS = this.pagina;
       },
-      (error) => { }
+      (error) => {
+       this.authService.getRedirect401(error.status);
+       }
     );
     this.serviceOperadora.getAllOperadoraPage(250,0).subscribe(
       (data) => {
@@ -112,14 +115,18 @@ export class ListComponent implements OnInit {
         this.operadoras = data.content;
 
       },
-      (error) => {}
+      (error) => {
+        this.authService.getRedirect401(error.status);
+      }
     );
 
     this.empresaService.getAll().subscribe(
       (data) => {
         this.empresas = data;
       },
-      (error) => {}
+      (error) => {
+        this.authService.getRedirect401(error.status);
+      }
     );
 
     this.formFilter = this.formBuilder.group({

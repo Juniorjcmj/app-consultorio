@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { ClassificacaoDespesa, SubClassificacaoDespesa } from '../classificacao-despesa';
 import { ClassificacaoDespesaService } from '../classificacao-despesa.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-page-classificacao-despesa',
@@ -52,7 +53,7 @@ export class PageClassificacaoDespesaComponent implements OnInit {
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
-    private keycloakService: KeycloakService) {
+    private authService: AuthService) {
 
       this.service.getAllClassificacao().subscribe(
         (data: any) => {
@@ -60,7 +61,9 @@ export class PageClassificacaoDespesaComponent implements OnInit {
           this.pagina = data;
           this.classificacaoXLS = this.pagina;
         },
-        (error) => { }
+        (error) => {
+          this.authService.getRedirect401(error.status);
+        }
       );
 
     }
@@ -106,6 +109,7 @@ export class PageClassificacaoDespesaComponent implements OnInit {
         this.findAll();
       },
       (error) => {
+        this.authService.getRedirect401(error.status);
         this.spinner.hide();
         this.form.reset();
         this.messageService.add({
@@ -139,9 +143,10 @@ export class PageClassificacaoDespesaComponent implements OnInit {
             return this.findAll();
           },
           (error) => {
+            this.authService.getRedirect401(error.status);
             this.spinner.hide();
             this.messageService.add({
-              severity: 'error',
+              severity: error.status,
               summary: 'Error',
               detail: 'Error',
               life: 3000,
@@ -159,8 +164,9 @@ export class PageClassificacaoDespesaComponent implements OnInit {
      },
      (error) => {
        this.spinner.hide();
+       this.authService.getRedirect401(error.status);
        this.messageService.add({
-         severity: 'error',
+         severity: error.status,
          summary: 'Error',
          detail: 'Error',
          life: 3000,
@@ -281,9 +287,10 @@ export class PageClassificacaoDespesaComponent implements OnInit {
       },
       (error) => {
         this.spinner.hide();
+        this.authService.getRedirect401(error.status);
         this.formSubclassificacao.reset();
         this.messageService.add({
-          severity: 'error',
+          severity: error.status,
           summary: 'Error',
           detail: 'Error',
           life: 3000,

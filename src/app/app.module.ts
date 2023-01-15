@@ -38,6 +38,7 @@ import { ClassificacaoDespesaModule } from './modulos/classificacao-despesa/clas
 import { AuthModule } from './modulos/auth/auth.module';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { NotfoundComponent } from './modulos/notfound/notfound.component';
 
 // function initializeKeycloak(keycloak: KeycloakService) {
 //   return () =>
@@ -67,6 +68,7 @@ registerLocaleData(ptBr);
     DashboardComponent,
     //novo sistemaServico
     MenuComponent,
+    NotfoundComponent,
 
 
   ],
@@ -90,13 +92,13 @@ registerLocaleData(ptBr);
 
   KeycloakAngularModule,
 
-  DateFnsModule.forRoot(),
-   ServiceWorkerModule.register('ngsw-worker.js', {
-     enabled: !isDevMode(),
-     // Register the ServiceWorker as soon as the application is stable
-     // or after 30 seconds (whichever comes first).
-     registrationStrategy: 'registerWhenStable:30000'
-   })
+  // DateFnsModule.forRoot(),
+  //  ServiceWorkerModule.register('ngsw-worker.js', {
+  //    enabled: !isDevMode(),
+  //    // Register the ServiceWorker as soon as the application is stable
+  //    // or after 30 seconds (whichever comes first).
+  //    registrationStrategy: 'registerWhenStable:30000'
+  //  })
 
   ],
   providers: [
@@ -120,7 +122,7 @@ registerLocaleData(ptBr);
 
   ],
   exports:[
-
+    NotfoundComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]

@@ -53,5 +53,14 @@ loginUser(token: any){
   getUser(){
     return localStorage.getItem('nome')
   }
+
+  getRedirect401(error :any){
+
+    if(error.status === 401){
+      localStorage.clear();
+      this.router.navigate(["auth/login"])
+    }
+
+  }
 }
 

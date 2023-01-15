@@ -30,6 +30,7 @@ import {
 } from '../../classificacao-despesa/classificacao-despesa';
 import { FiltroAvancado } from '../model/filtro';
 import { ContasPagarPage } from './contasPagarPage';
+import { AuthService } from '../../auth/auth.service';
 
 
 @Component({
@@ -104,7 +105,7 @@ export class PageContasPagarComponent implements OnInit {
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
-    private keycloakService: KeycloakService,
+    private authService: AuthService,
     private classificacaoService: ClassificacaoDespesaService
   ) {
     this.ContasPagarDtoXLS = [];
@@ -115,16 +116,22 @@ export class PageContasPagarComponent implements OnInit {
     this.editarDescontoDialog = false;
 
     this.pegandoPrimeiroEUltimoDiaDaSemana();
-    this.service.getListaContasPagar().subscribe((data) => {
+    this.service.getListaContasPagar().subscribe(
+      (data) => {
       this.pagina$ = data;
-
-    });
+    },
+      (error:any)=>{
+        this.authService.getRedirect401(error.status);
+      }
+    );
 
     this.empresaService.getAll().subscribe(
       (data: any) => {
         this.empresas = data;
       },
-      (error: any) => {}
+      (error: any) => {
+        this.authService.getRedirect401(error.status);
+      }
     );
     this.formasPgtoOptions = [
       { label: 'ESPÉCIE', value: 'ESPÉCIE' },
@@ -150,7 +157,9 @@ export class PageContasPagarComponent implements OnInit {
         this.classificacaoDespesa = data;
 
       },
-      (error: any) => {}
+      (error: any) => {
+        this.authService.getRedirect401(error.status);
+      }
     );
 
 
