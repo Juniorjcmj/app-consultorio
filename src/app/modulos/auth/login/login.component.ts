@@ -39,6 +39,8 @@ export class LoginComponent implements OnInit {
            localStorage.setItem('refresh_token', response.refresh_token);
            localStorage.setItem('token_type', response.token_type);
 
+           console.log(this.authServer.getPermissoes())
+
            this.router.navigate(['/operadora-cartao'])
 
           }, error =>{

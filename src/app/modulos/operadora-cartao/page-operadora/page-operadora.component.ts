@@ -64,7 +64,7 @@ export class PageOperadoraComponent implements OnInit {
         (data: any) => {
           this.spinner.hide();
           this.page = data;
-         this.pagina = this.page.content
+          this.pagina = this.page.content
           this.operadoraXLS = this.page.content;
         },
         (error) => {
@@ -83,7 +83,6 @@ export class PageOperadoraComponent implements OnInit {
         dataFim: [null],
       })
     }
-
 
   ngOnInit(): void {
     this.spinner.show();
