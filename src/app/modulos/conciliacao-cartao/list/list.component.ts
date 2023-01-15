@@ -102,7 +102,6 @@ export class ListComponent implements OnInit {
       (data: any) => {
         this.spinner.hide();
         this.pagina = data.content;
-
         this.conciliacaoXLS = this.pagina;
       },
       (error) => {
