@@ -1,0 +1,115 @@
+{
+  "configVersion": 1,
+  "timestamp": 1673794313906,
+  "index": "/app-consultorio/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/app-consultorio/489.fca070864df945b6.js",
+        "/app-consultorio/574.ed95696252bf02b9.js",
+        "/app-consultorio/735.96204ea5b709aa58.js",
+        "/app-consultorio/favicon.ico",
+        "/app-consultorio/index.html",
+        "/app-consultorio/main.5e87d1dbcbc505f7.js",
+        "/app-consultorio/manifest.webmanifest",
+        "/app-consultorio/polyfills.be7dc4a949e197fb.js",
+        "/app-consultorio/runtime.399d1e00cdd03306.js",
+        "/app-consultorio/styles.aafbfb17ca8fd631.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/app-consultorio/assets/icons/icon-128x128.png",
+        "/app-consultorio/assets/icons/icon-144x144.png",
+        "/app-consultorio/assets/icons/icon-152x152.png",
+        "/app-consultorio/assets/icons/icon-192x192.png",
+        "/app-consultorio/assets/icons/icon-384x384.png",
+        "/app-consultorio/assets/icons/icon-512x512.png",
+        "/app-consultorio/assets/icons/icon-72x72.png",
+        "/app-consultorio/assets/icons/icon-96x96.png",
+        "/app-consultorio/assets/login.jpg",
+        "/app-consultorio/assets/logo-dente.png",
+        "/app-consultorio/assets/silent-check-sso.html",
+        "/app-consultorio/assets/styles/_prime-flex.scss",
+        "/app-consultorio/assets/styles/_prime-ng.scss",
+        "/app-consultorio/assets/styles/_spinner.scss",
+        "/app-consultorio/assets/styles/styles.scss",
+        "/app-consultorio/assets/zap.png",
+        "/app-consultorio/color.dae87a04d07ca92b.png",
+        "/app-consultorio/hue.8b1818380241e6ac.png",
+        "/app-consultorio/primeicons.0112589c5695a9ed.ttf",
+        "/app-consultorio/primeicons.943ab24c43224d29.svg",
+        "/app-consultorio/primeicons.ba3f916dfb64be8c.woff2",
+        "/app-consultorio/primeicons.f8b9e8a4e401b603.woff"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/app-consultorio/489.fca070864df945b6.js": "29eefef7cdd9f936573fe4215a10ddd5db8a1c3e",
+    "/app-consultorio/574.ed95696252bf02b9.js": "270688cb8fe01918c63de75ade709a7b65644720",
+    "/app-consultorio/735.96204ea5b709aa58.js": "7aa9f84cedb5cbe821108d2cbbfadd5996397462",
+    "/app-consultorio/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "/app-consultorio/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "/app-consultorio/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "/app-consultorio/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "/app-consultorio/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "/app-consultorio/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "/app-consultorio/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "/app-consultorio/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "/app-consultorio/assets/login.jpg": "1764fa1575f9d8d1b8d68f49ef696088cf56643f",
+    "/app-consultorio/assets/logo-dente.png": "d361b5c06a8fb5a30bbd82ada3565a3a075ea6fd",
+    "/app-consultorio/assets/silent-check-sso.html": "cfed723ed6dae1b6ebb3793232381f3033347b30",
+    "/app-consultorio/assets/styles/_prime-flex.scss": "108a8c1bfc6f2116c1ed3524bcb1fbdbfe5a99ec",
+    "/app-consultorio/assets/styles/_prime-ng.scss": "cdc70261f78b206edf854652b064e1f7aee73ebe",
+    "/app-consultorio/assets/styles/_spinner.scss": "55ca0fa4163814accf87787ee9418ec44a2c9d46",
+    "/app-consultorio/assets/styles/styles.scss": "14c89b89760ad842286e55e1c03b72b8befe5d7d",
+    "/app-consultorio/assets/zap.png": "8927b87ca297334d96ac0070ae51dd64814b1d55",
+    "/app-consultorio/color.dae87a04d07ca92b.png": "ff4c4bcb2207891b292f544edb4da9d2df5d45cf",
+    "/app-consultorio/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
+    "/app-consultorio/hue.8b1818380241e6ac.png": "f81ae627637a684614aa726e206c73ce099a01fd",
+    "/app-consultorio/index.html": "78e486cd715186a3ad692f7afcb3dfb646a06413",
+    "/app-consultorio/main.5e87d1dbcbc505f7.js": "64bcf58afdf6661ed7f8c5fa0d2d73f6e6682c94",
+    "/app-consultorio/manifest.webmanifest": "e99d460ea3d74ec2cb7ce8c82fb8ab94bacbd309",
+    "/app-consultorio/polyfills.be7dc4a949e197fb.js": "b03a0c6ebb2c0f718b1c7a044fe1a8a979a4ca97",
+    "/app-consultorio/primeicons.0112589c5695a9ed.ttf": "ceeb46d594fde5cc507cdf8b70e38e78fe47653c",
+    "/app-consultorio/primeicons.943ab24c43224d29.svg": "d3332a45242b8f6edbf3f3c7176a280e7edcd961",
+    "/app-consultorio/primeicons.ba3f916dfb64be8c.woff2": "55a4b2a5f02e362405d8d874903af0b5f6a6c15d",
+    "/app-consultorio/primeicons.f8b9e8a4e401b603.woff": "b1648b50be13350fde8b5d9a6fe78354ddcc43e4",
+    "/app-consultorio/runtime.399d1e00cdd03306.js": "e6108a8c7332c9b6404c9e2e1129d3d1b2741a9d",
+    "/app-consultorio/styles.aafbfb17ca8fd631.css": "fcecdc8a8e35b69662332e297f5adb38a51baaf4"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
