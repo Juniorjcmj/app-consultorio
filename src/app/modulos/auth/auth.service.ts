@@ -56,11 +56,27 @@ loginUser(token: any){
 
   getRedirect401(error :any){
 
-    if(error.status === 401){
-      localStorage.clear();
-      this.router.navigate(["auth/login"])
+    if(error === 401){
+    localStorage.clear();
+    return   this.router.navigate(["auth/login"])
     }
 
+     return null;
   }
+  getPermissoes(){
+    console.log(this.decodePayloadJWT());
+    console.log(this.getToken());
+  }
+  public decodePayloadJWT(): any {
+    try {
+      return jwt_decode(this.getToken());
+    } catch (Error) {
+      return null;
+    }
+  }
+}
+
+function jwt_decode(arg0: string | null): any {
+  throw new Error('Function not implemented.');
 }
 
