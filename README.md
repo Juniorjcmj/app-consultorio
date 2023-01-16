@@ -14,3 +14,6 @@ npm install sweetalert2
 ng build
 tem que entrar no /dist/projeto
 npx serve
+
+# Deploy gitHub
+https://www.youtube.com/watch?v=PbgVbCb3zuE

@@ -1,9 +1,9 @@
 
 export const environment = {
   production: true,
-  // apiUrlAuthenticationServer: 'http://localhost:98/',
-  // apiUrlResourceServer: 'http://localhost:98/'
+  apiUrlAuthenticationServer: 'https://localhost:8443/',
+  apiUrlResourceServer: 'https://localhost:8443/',
 
- apiUrlAuthenticationServer: 'http://casanobre.masterdaweb.net:98/',
-  apiUrlResourceServer: 'http://casanobre.masterdaweb.net:98/'
+//  apiUrlAuthenticationServer: 'https://casanobre.masterdaweb.net:8443/',
+//   apiUrlResourceServer: 'https://casanobre.masterdaweb.net:8443/'
 };
