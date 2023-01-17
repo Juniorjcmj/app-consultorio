@@ -76,6 +76,18 @@ export class MenuComponent implements OnInit {
             ]
         },
         {
+
+          label:'Configuração',
+          icon:'pi pi-fw pi-cog',
+          items:[
+              {
+                  label:'Usuários',
+                  icon:'pi pi-fw pi-users',
+                  routerLink: '/usuarios'
+              }
+          ]
+      },
+        {
           label:this.nomeUsuario
       },
 
