@@ -1,13 +1,13 @@
 {
-  "name": "app-consultorio",
-  "version": "0.0.0",
+  "name": "app-gestao",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build ",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy:ghdocs":"ng build --output-path docs --base-href /app-consultorio/"
+    "deploy:ghdocs":"ng build --output-path docs --base-href /app-gestao/"
   },
   "private": true,
   "dependencies": {
