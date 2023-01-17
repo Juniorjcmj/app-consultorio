@@ -6,11 +6,13 @@ import { AuthService } from '../auth.service';
 import { UsuarioServiceService } from '../usuario-service.service';
 import { Observable, map, catchError, tap, of } from 'rxjs';
 import { UsuarioModel } from '../model/usuarioInput';
+import { CustomMensagensService } from 'src/app/services/mensagens.service';
 
 @Component({
   selector: 'app-manter-usuario',
   templateUrl: './manter-usuario.component.html',
-  styleUrls: ['./manter-usuario.component.scss']
+  styleUrls: ['./manter-usuario.component.scss'],
+  providers: [MessageService, ConfirmationService, CustomMensagensService],
 })
 export class ManterUsuarioComponent implements OnInit {
 
@@ -25,6 +27,7 @@ export class ManterUsuarioComponent implements OnInit {
 
       this.pagina$ = this.service.getAll().pipe(
         tap((s) => {
+          console.log(s)
           this.spinner.hide();
         }),
         catchError((erros) => {
