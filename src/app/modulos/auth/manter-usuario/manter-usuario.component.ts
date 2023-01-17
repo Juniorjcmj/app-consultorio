@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { AuthService } from '../auth.service';
+import { UsuarioServiceService } from '../usuario-service.service';
+import { Observable, map, catchError, tap, of } from 'rxjs';
+import { UsuarioModel } from '../model/usuarioInput';
 
 @Component({
   selector: 'app-manter-usuario',
@@ -7,7 +14,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManterUsuarioComponent implements OnInit {
 
-  constructor() { }
+
+ pagina$: Observable<UsuarioModel[]>;
+
+  constructor(private service: UsuarioServiceService, private messageService: MessageService,
+    private formBuilder: FormBuilder,
+    private confirmationService: ConfirmationService,
+    private spinner: NgxSpinnerService,
+    private authService: AuthService) {
+
+      this.pagina$ = this.service.getAll().pipe(
+        tap((s) => {
+          this.spinner.hide();
+        }),
+        catchError((erros) => {
+          this.spinner.hide();
+          return of([]);
+        })
+      )
+
+      }
+
 
   ngOnInit(): void {
   }
