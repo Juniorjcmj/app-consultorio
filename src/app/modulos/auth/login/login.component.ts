@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CustomMensagensService } from 'src/app/services/mensagens.service';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -17,7 +18,10 @@ export class LoginComponent implements OnInit {
   formLogin!: FormGroup;
 
   mostrarLoginOuSenhaInvalidos = false ;
-  constructor(private authServer : AuthService,  private router: Router,private formBuilder: FormBuilder,) {
+  constructor(private authServer : AuthService,
+              private router: Router,
+              private formBuilder: FormBuilder,
+              private message: CustomMensagensService) {
 
     this.formLogin = this.formBuilder.group({
       username: [null, Validators.required],
@@ -39,19 +43,14 @@ export class LoginComponent implements OnInit {
            localStorage.setItem('refresh_token', response.refresh_token);
            localStorage.setItem('token_type', response.token_type);
 
-           console.log(this.authServer.getPermissoes())
-
            this.router.navigate(['/operadora-cartao'])
 
           }, error =>{
             this.mostrarLoginOuSenhaInvalidos = true;
-            console.log(error);
+            this.message.onMessage("Login ou senha inválidos", "error")
           }
         )
-
-
-
-}
+      }
 isLogado(){
   return !this.authServer.isLoggedIn();
 }
