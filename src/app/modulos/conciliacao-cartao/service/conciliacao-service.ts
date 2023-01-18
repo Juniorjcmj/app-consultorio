@@ -73,6 +73,6 @@ apiUrlResourceServeOperadora= environment.apiUrlResourceServer+"V1/api-operadora
     filtroAvancado(filtro: any, page: number): any {
       return this.httpClient.get<PageConciliacao>(`${this.apiUrlResourceServe}`+"/filter?idEmpresa="+filtro.idEmpresa+"&idOperadora="+filtro.idOperadora
       +"&dtInicio="+filtro.dtInicio+"&dtFim="+filtro.dtFim+"&numeroPedido="+filtro.numeroPedido+"&aute="+filtro.aute+"&dataRecebimento="+filtro.dataRecebimento
-      +"&previsaoRecebimento="+filtro.previsaoRecebimento+"&tipoOperacao="+filtro.tipoOperacao+"&isRecebido="+filtro.isRecebido +"&page="+page)
+      +"&previsaoRecebimento="+filtro.previsaoRecebimento+"&tipoOperacao="+filtro.tipoOperacao+"&isRecebido="+filtro.isRecebido +"&page="+page+"&size="+250)
     }
   }
