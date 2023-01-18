@@ -211,9 +211,9 @@ export class PageContasPagarComponent implements OnInit {
       nd: [null, Validators.required],
       tipoDespesa: [null, Validators.required],
       numeroParcelas: [null, Validators.required],
-      classificacaoDespesa: [null, Validators.required],
-      subClassificacaoDespesa: [null, Validators.required],
-      observacao: [null, Validators.required],
+      classificacaoDespesa: [null],
+      subClassificacaoDespesa: [null],
+      observacao: [null],
 
 
     });
@@ -232,12 +232,11 @@ export class PageContasPagarComponent implements OnInit {
       nd: [contas.nd, Validators.required],
       tipoDespesa: [contas.tipoDespesa, Validators.required],
       numeroParcelas: [contas.numeroParcelas, Validators.required],
-      classificacaoDespesa: [contas.classificacaoDespesa, Validators.required],
+      classificacaoDespesa: [contas.classificacaoDespesa],
       subClassificacaoDespesa: [
-        contas.subClassificacaoDespesa,
-        Validators.required,
+        contas.subClassificacaoDespesa
       ],
-      observacao: [contas.observacao, Validators.required],
+      observacao: [contas.observacao],
 
     });
     this.submitted = false;
