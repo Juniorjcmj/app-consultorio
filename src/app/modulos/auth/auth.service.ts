@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+//import * as jwt_decode from 'jwt-decode';
+import jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +50,7 @@ loginUser(token: any){
   }
 
   getToken(){
-    return  localStorage.getItem('token');
+    return  localStorage.getItem('token') as string;
   }
   getUser(){
     return localStorage.getItem('nome')
@@ -64,19 +66,20 @@ loginUser(token: any){
      return null;
   }
   getPermissoes(){
-    console.log(this.decodePayloadJWT());
-    console.log(this.getToken());
+   const permissoes = this.decodePayloadJWT();
+    return permissoes['authorities'];
   }
+
   public decodePayloadJWT(): any {
+    var token = localStorage.getItem('token') as string;
+
     try {
-      return jwt_decode(this.getToken());
+      return jwt_decode(token) ;
     } catch (Error) {
       return null;
     }
   }
 }
 
-function jwt_decode(arg0: string | null): any {
-  throw new Error('Function not implemented.');
-}
+
 
