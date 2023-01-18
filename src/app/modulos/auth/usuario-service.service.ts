@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { UsuarioModel } from './model/usuarioInput';
+import { UsuarioModel } from './model/usuarioModel';
+import { PermissaoModel } from './model/permissaoModel';
+import { GrupoModel } from './model/grupoModel';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,8 @@ import { UsuarioModel } from './model/usuarioInput';
 export class UsuarioServiceService {
 
   apiUrlResourceServe= environment.apiUrlResourceServer+"V1/api-usuarios";
+  apiPermissao= environment.apiUrlResourceServer+"V1/api-permissao";
+  apiGrupos= environment.apiUrlResourceServer+"V1/api-grupos";
 
   constructor(private httpClient: HttpClient,private router: Router) {
 
@@ -20,20 +24,21 @@ export class UsuarioServiceService {
     return this.httpClient.get<UsuarioModel[]>(`${this.apiUrlResourceServe}`)
   }
 
+
   manter(record: UsuarioModel) {
     if (record.id == null) {
-      return this.manterEmpresa(record);
+      return this.manterUsuario(record);
     } else {
-      return this.atualizarEmpresa(record);
+      return this.atualizarUsuario(record);
     }
   }
-  manterEmpresa(record: UsuarioModel) {
-    console.log( record)
+  manterUsuario(record: UsuarioModel) {
+
     return this.httpClient
       .post<any>(`${this.apiUrlResourceServe}`, record)
       .pipe();
   }
-  atualizarEmpresa(record: UsuarioModel) {
+  atualizarUsuario(record: UsuarioModel) {
     return this.httpClient
       .put<any>(`${this.apiUrlResourceServe}`, record)
       .pipe();
@@ -43,6 +48,13 @@ export class UsuarioServiceService {
   }
   getById(record: any){
     return  this.httpClient.get(`${this.apiUrlResourceServe}`+"/"+record ).pipe();
+  }
+
+  getAllPermissoes(): any{
+    return this.httpClient.get<PermissaoModel[]>(`${this.apiPermissao}`)
+  }
+  getAllGrupo(): any{
+    return this.httpClient.get<GrupoModel[]>(`${this.apiGrupos}`)
   }
 
 }

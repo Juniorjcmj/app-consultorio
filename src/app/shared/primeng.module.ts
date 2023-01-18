@@ -27,6 +27,7 @@ import {SidebarModule} from 'primeng/sidebar';
 import{MultiSelectModule} from 'primeng/multiselect'
 import { PaginatorModule } from 'primeng/paginator';
 import {PanelModule} from 'primeng/panel';
+import {PasswordModule} from 'primeng/password';
 
 
 
@@ -65,7 +66,8 @@ import {PanelModule} from 'primeng/panel';
     SidebarModule,
     MultiSelectModule,
     PaginatorModule,
-    PanelModule
+    PanelModule,
+    PasswordModule
 
 
    ]

@@ -1,5 +1,12 @@
 <p-card *ngIf="pagina$ | async as pagina">
 
+  <p-toolbar styleClass="mb-4">
+    <ng-template pTemplate="left">
+      <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-success  p-button-sm" pTooltip="Criar uma nova conta a pagar."
+        (click)="openNew()"></button>
+    </ng-template>
+  </p-toolbar>
+
   <p-table #dt [value]="pagina" [rows]="100" [paginator]="true" [rowsPerPageOptions]="[25,50]"
     [globalFilterFields]="['nome','bandeira','inicio', 'fim','nomeBandeira']" responsiveLayout="scroll"
     currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} Operadoras"
@@ -39,15 +46,85 @@
         <td>{{usuarioTable.idade}}</td>
         <td>{{usuarioTable.identidade }}</td>
         <td>
-          <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-lg p-button-primary mr-2" pTooltip="EDITAR OPERADORA"
-          (click)="edit(operadoraTable)"></button>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-lg p-button-primary mr-2" pTooltip="EDITAR OPERADORA"
+          (click)="edit(usuarioTable)"></button>
           <button pButton pRipple icon="pi pi-clone" class="p-button-rounded p-button-text p-button-lg p-button-success mr-2" pTooltip="CLONAR OPERADORA"
-          (click)="clone(operadoraTable)"></button>
+          (click)="alterarSenha(usuarioTable)"></button>
         <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-lg p-button-danger" pTooltip="EXCLUIR OPERADORA"
-          (click)="deleteOperadora(operadoraTable)"></button> -->
+          (click)="delete(usuarioTable)"></button>
         </td>
       </tr>
     </ng-template>
 
   </p-table>
 </p-card>
+
+<p-dialog [(visible)]="usuarioFormDialog" [style]="{width: '700px', height:'600px'}" header="CADASTRO DE USUÁRIOS " [modal]="true"
+  styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <form [formGroup]="form">
+      <div class="grid p-fluid">
+
+
+       <div class="col-12 md:col-6">
+        <label  for="numeroPedido">NOME</label>
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+            <input type="text" pInputText  formControlName="nome">
+        </div>
+      </div>
+      <div class="col-12 md:col-6">
+        <label  for="numeroPedido">LOGIN</label>
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-at"></i></span>
+            <input type="text" pInputText placeholder="login@email.com" formControlName="login">
+        </div>
+      </div>
+      <div class="col-12 md:col-6">
+        <label  for="numeroPedido">SENHA</label>
+            <p-password   formControlName="senha"></p-password>
+      </div>
+      <div class="col-12 md:col-6">
+        <label  for="numeroPedido">CPF</label>
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-prime"></i></span>
+            <input type="text" pInputText  formControlName="cpf">
+        </div>
+      </div>
+      <div class="col-12 md:col-6">
+        <label  for="numeroPedido">TELEFONE</label>
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-phone"></i></span>
+            <input type="text" pInputText formControlName="telefone">
+        </div>
+      </div>
+      <div class="col-12 md:col-6">
+        <label  for="numeroPedido">IDADE</label>
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-sync"></i></span>
+            <input type="text" pInputText  formControlName="idade">
+        </div>
+      </div>
+      <div class="col-12 md:col-6">
+        <label  for="numeroPedido">IDENTIDADE</label>
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
+            <input type="text" pInputText  formControlName="identidade">
+        </div>
+      </div>
+      <div class="col-6 ">
+        <label  for="numeroPedido">CARGO</label>
+        <p-dropdown [options]="grupos" formControlName="cargo" id="cargo"
+           optionLabel="nome" optionValue="nome" name="cargo"></p-dropdown>
+        </div>
+
+    </div>
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" [disabled]="!form.valid"
+      (click)="manterUsuario()"></button>
+  </ng-template>
+
+</p-dialog>
