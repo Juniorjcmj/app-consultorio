@@ -80,7 +80,11 @@
             <!-- <td  style="color:blue" (click)="editarJurosMulta(contasPagarTable)">{{contasPagarTable.jurosMulta  | currency }}</td>
             <td  style="color:blue" (click)="editarDesconto(contasPagarTable)">{{contasPagarTable.desconto  | currency }}</td> -->
             <td>{{contasPagarTable.valorPago  | currency }}</td>
-            <td>{{contasPagarTable.situacao }}</td>
+            <td [ngClass]="{
+              'pago':contasPagarTable.situacao === 'PAGO',
+              'pendente':contasPagarTable.situacao === 'PENDENTE'}">
+              {{contasPagarTable.situacao }}
+            </td>
             <td>{{contasPagarTable.nd }} </td>
             <td>{{contasPagarTable.tipoDespesa }} </td>
             <td>{{contasPagarTable.parcela }} </td>
