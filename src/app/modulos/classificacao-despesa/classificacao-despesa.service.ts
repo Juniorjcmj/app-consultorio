@@ -58,7 +58,7 @@ export class ClassificacaoDespesaService {
         return  this.httpClient.post<SubClassificacaoDespesa[]>(`${this.apiUrlResourceServeSub}`+"?descricaoSubClassificacao="+descricaoSubClassificacao+"&idClassificacao="+idClassificacao, null).pipe();
       }
       alterarSub(idClassificacao: any,descricaoSubClassificacao: any){
-      console.log("chamando alteração")
+
 
         return  this.httpClient.put<SubClassificacaoDespesa[]>(`${this.apiUrlResourceServeSub}`+"?descricaoSubClassificacao="+descricaoSubClassificacao+"&idSubClassificacao="+idClassificacao, null).pipe();
       }
