@@ -39,6 +39,8 @@ import { AuthModule } from './modulos/auth/auth.module';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 import { NotfoundComponent } from './modulos/notfound/notfound.component';
+import { FinanceiroGuard } from './guards/financeiro.guard';
+import { AdminGuard } from './guards/admin.guard';
 
 // function initializeKeycloak(keycloak: KeycloakService) {
 //   return () =>
@@ -103,7 +105,9 @@ registerLocaleData(ptBr);
     { provide: LOCALE_ID, useValue: 'pt' },
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },
     // *
-    AuthGuard
+    AuthGuard,
+    FinanceiroGuard,
+    AdminGuard
 
   ],
   exports:[
