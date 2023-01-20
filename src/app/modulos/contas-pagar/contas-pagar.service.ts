@@ -9,6 +9,7 @@ import { FiltroAvancado } from './model/filtro';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { ContasPagarUpdateGenerico } from './model/contasPagarUpdateGenerico';
 import { ContasPagarPage } from './page-contas-pagar/contasPagarPage';
+import { CustomLocalStorageService } from 'src/app/services/custom-local-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,8 @@ export class ContasPagarService {
 
   pagePagar: Subject<any> = new Subject();
 
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(private httpClient: HttpClient, private router: Router,
+    private customStorage: CustomLocalStorageService) {}
 
   setListaContasPagar(newValue: any) {
     this.pagePagar.next(newValue);
@@ -36,6 +38,7 @@ export class ContasPagarService {
     }
   }
   salvarContas(record: any): any {
+    console.log(record)
     return this.httpClient
       .post<ContasPagarPage>(`${this.apiUrlResourceServe}`, record)
       .pipe();
@@ -63,22 +66,26 @@ export class ContasPagarService {
       .pipe();
   }
 
-  manterDataPagamento(record: ContasPagarUpdateGenerico) {
+  manterDataPagamento(record: ContasPagarUpdateGenerico): any {
+    record.filtro = this.customStorage.get("filtro") as FiltroAvancado;
     return this.httpClient
       .put(`${this.apiUrlResourceServe}` + '/update-data-pagamento', record)
       .pipe();
   }
-  manterDesconto(record: ContasPagarUpdateGenerico) {
+  manterDesconto(record: ContasPagarUpdateGenerico):any {
+    record.filtro = this.customStorage.get("filtro") as FiltroAvancado;
     return this.httpClient
       .put(`${this.apiUrlResourceServe}` + '/update-desconto', record)
       .pipe();
   }
-  manterLocalPgto(record: ContasPagarUpdateGenerico) {
+  manterLocalPgto(record: ContasPagarUpdateGenerico):any {
+    record.filtro = this.customStorage.get("filtro") as FiltroAvancado;
     return this.httpClient
       .put(`${this.apiUrlResourceServe}` + '/update-local-pagamento', record)
       .pipe();
   }
-  manterJurosMulta(record: ContasPagarUpdateGenerico) {
+  manterJurosMulta(record: ContasPagarUpdateGenerico):any {
+    record.filtro = this.customStorage.get("filtro") as FiltroAvancado;
     return this.httpClient
       .put(`${this.apiUrlResourceServe}` + '/update-juros-multa', record)
       .pipe();
@@ -86,8 +93,16 @@ export class ContasPagarService {
 
   //FILTROS
   filtroAvancadoAvancado(filtro: FiltroAvancado): any {
+    this.customStorage.remove("filtro")
+    this.customStorage.set("filtro",filtro);
     return this.httpClient.post<ContasPagarPage>(
       `${this.apiUrlResourceServe}` + '/filtro-avancadissimo?size=500',
+      filtro
+    );
+  }
+  relatorioContabil(filtro: FiltroAvancado): any {
+    return this.httpClient.post<ContasPagarPage>(
+      `${this.apiUrlResourceServe}` + '/exel-contabil?size=10000',
       filtro
     );
   }

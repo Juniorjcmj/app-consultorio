@@ -2,9 +2,11 @@ import { CustomMensagensService } from './../../../services/mensagens.service';
 import { EmpresaService } from './../../empresa/service/empresa-service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import * as FileSaver from 'file-saver';
@@ -31,6 +33,8 @@ import {
 import { FiltroAvancado } from '../model/filtro';
 import { ContasPagarPage } from './contasPagarPage';
 import { AuthService } from '../../auth/auth.service';
+import { CustomAsyncValidatorDirective } from 'src/app/shared/asyncValidator';
+import { CustomLocalStorageService } from '../../../services/custom-local-storage.service';
 
 
 @Component({
@@ -39,6 +43,8 @@ import { AuthService } from '../../auth/auth.service';
   styleUrls: ['./page-contas-pagar.component.scss'],
   providers: [MessageService, ConfirmationService, CustomMensagensService],
 })
+
+
 export class PageContasPagarComponent implements OnInit {
   filtro: FiltroAvancado = new FiltroAvancado();
 
@@ -97,6 +103,8 @@ export class PageContasPagarComponent implements OnInit {
   valoresPagos!: any;
   valoresApagar!: any;
 
+
+
   constructor(
     private empresaService: EmpresaService,
     private service: ContasPagarService,
@@ -106,7 +114,8 @@ export class PageContasPagarComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
     private authService: AuthService,
-    private classificacaoService: ClassificacaoDespesaService
+    private classificacaoService: ClassificacaoDespesaService,
+    private customLocalStorageService: CustomLocalStorageService
   ) {
     this.ContasPagarDtoXLS = [];
 
@@ -116,14 +125,7 @@ export class PageContasPagarComponent implements OnInit {
     this.editarDescontoDialog = false;
 
     this.pegandoPrimeiroEUltimoDiaDaSemana();
-    this.service.getListaContasPagar().subscribe(
-      (data) => {
-      this.pagina$ = data;
-    },
-      (error:any)=>{
-        this.authService.getRedirect401(error.status);
-      }
-    );
+    this.listAtual();
 
     this.empresaService.getAll().subscribe(
       (data: any) => {
@@ -162,11 +164,21 @@ export class PageContasPagarComponent implements OnInit {
       }
     );
 
-
   }
 
   ngOnInit(): void {
     this.spinner.show();
+  }
+
+  listAtual(){
+    this.service.getListaContasPagar().subscribe(
+      (data) => {
+      this.pagina$ = data;
+    },
+      (error:any)=>{
+        this.authService.getRedirect401(error.status);
+      }
+    );
   }
 
   mostraClassificacao(event: any) {
@@ -198,27 +210,26 @@ export class PageContasPagarComponent implements OnInit {
     );
     this.service.setListaContasPagar(this.pagina$);
   }
-
   openNew() {
-    this.subclassificacaoDespesa = [];
-    this.form = this.formBuilder.group({
-      id:[],
-      empresa_id: [null, Validators.required],
-      valorDuplicata: [null, Validators.required],
-      dataVencimento: [null, Validators.required],
-      formaPagamento: [null, Validators.required],
-      fornecedor: [null, Validators.required],
-      nd: [null, Validators.required],
-      tipoDespesa: [null, Validators.required],
-      numeroParcelas: [null, Validators.required],
-      classificacaoDespesa: [null],
-      subClassificacaoDespesa: [null],
-      observacao: [null],
+      this.subclassificacaoDespesa = [];
+      this.form = this.formBuilder.group({
+        id:[],
+        empresa_id: [null, Validators.required],
+        valorDuplicata: [null, Validators.required],
+        dataVencimento: [null, Validators.required],
+        formaPagamento: [null, Validators.required],
+        fornecedor: [null, Validators.required],
+        nd: [''],
+        tipoDespesa: ['', Validators.required],
+        numeroParcelas: [null, Validators.required],
+        classificacaoDespesa: [''],
+        subClassificacaoDespesa: [null],
+        observacao: [null],
+      });
 
 
-    });
-    this.submitted = false;
-    this.ContasPagarInputDialog = true;
+      this.submitted = false;
+      this.ContasPagarInputDialog = true;
   }
   edit(contas: ContasPagarDTO) {
     this.subclassificacaoDespesa = [];
@@ -229,7 +240,7 @@ export class PageContasPagarComponent implements OnInit {
       dataVencimento: [contas.dataVencimento, Validators.required],
       formaPagamento: [contas.formaPagamento, Validators.required],
       fornecedor: [contas.fornecedor, Validators.required],
-      nd: [contas.nd, Validators.required],
+      nd: [contas.nd],
       tipoDespesa: [contas.tipoDespesa, Validators.required],
       numeroParcelas: [contas.numeroParcelas, Validators.required],
       classificacaoDespesa: [contas.classificacaoDespesa],
@@ -255,30 +266,17 @@ export class PageContasPagarComponent implements OnInit {
           .delete(record.id)
           .pipe(
             tap((s) => {
-              this.spinner.hide();
-              this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: 'Conta Excluida com Sucesso!',
-                life: 2000,
-              });
+             this.customMessage.onMessage("Operação realizada com sucesso", "success");
+             this.listAtual();
             }),
             catchError((erros) => {
               this.spinner.hide();
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Error',
-                detail: 'Error',
-                life: 3000,
-              });
+              this.customMessage.onMessage("Operação não realizada!", "error");
+              this.listAtual();
               return of([]);
             })
           )
-          .subscribe((data: any) => {
-            this.spinner.hide();
-            document.location.reload();
-          });
-      },
+        },
     });
   }
   abrirDeleteEmLote() {
@@ -298,30 +296,15 @@ export class PageContasPagarComponent implements OnInit {
             tap((s) => {
               this.spinner.hide();
               this.formDeleteLOteDialog = false;
-              this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: 'Contas Excluidas com Sucesso!',
-                life: 2000,
-              });
+              this.customMessage.onMessage("Operação realizada com sucesso", "success")
+              this.listAtual();
             }),
             catchError((erros) => {
               this.spinner.hide();
-              this.formDeleteLOteDialog = false;
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Error',
-                detail: 'Error',
-                life: 3000,
-              });
+              this.customMessage.onMessage("Operação não realizada!", "error")
               return of([]);
             })
           )
-          .subscribe((data: any) => {
-            this.spinner.hide();
-            this.formDeleteLOteDialog = false;
-            document.location.reload();
-          });
 
   }
   hideDialog() {
@@ -330,33 +313,26 @@ export class PageContasPagarComponent implements OnInit {
     this.submitted = false;
   }
   manterContaPagar() {
-    this.spinner.show();
-    this.ContasPagarInputDialog = false;
-    this.display = false;
-    this.submitted = true;
+      this.spinner.show();
+      this.ContasPagarInputDialog = false;
+      this.display = false;
+      this.submitted = true;
 
-    this.pagina$ = this.service.manterContasPagar(this.form.value).pipe(
-      tap((s) => {
-        this.spinner.hide();
-        this.customMessage.onSuccessSmall();
-        // this.messageService.add({
-        //   severity: 'success',
-        //   summary: 'Successful',
-        //   detail: 'Conta Salva com Sucesso!',
-        //   life: 2000,
-        // });
-      }),
-      catchError((erros) => {
-        this.spinner.hide();
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Error',
-          life: 3000,
-        });
-        return of([]);
-      })
-    );
+    this.pagina$= this.service.manterContasPagar(this.form.value).pipe(
+        tap((s) => {
+          this.spinner.hide();
+          this.customMessage.onSuccessSmall();
+          this.listAtual();
+           }),
+        catchError((erros) => {
+          this.spinner.hide();
+         this.customMessage.onMessage("Erro ao tentar cadastrar, tente novamente", "error")
+         this.listAtual();
+          return of([]);
+        })
+      );
+
+
   }
   createId(): string {
     let id = '';
@@ -432,36 +408,22 @@ export class PageContasPagarComponent implements OnInit {
     this.editarDtPgtoDialog = false;
     this.display = false;
     this.submitted = true;
-    this.service
+    this.pagina$ =  this.service
       .manterDataPagamento(this.editarDataPgtoform.value)
       .pipe(
         tap((s) => {
           this.spinner.hide();
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Operação realizada com Sucesso!',
-            life: 4000,
-          });
-          document.location.reload();
+          this.customMessage.onMessage("Operação realizada com sucesso", "success")
+
         }),
         catchError((erros) => {
           this.spinner.hide();
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Error',
-            life: 3000,
-          });
+          this.customMessage.onMessage("Operação não realizada!", "error")
+          this.listAtual();
           return of([]);
         })
       )
-      .subscribe((data: any) => {
-        this.pagina$ = data;
-        this.spinner.hide();
-        document.location.reload();
-      });
-  }
+     }
   editarLocalPagamento(conta: ContasPagarDTO) {
     this.editarLocalPgtoform = this.formBuilder.group({
       id: [conta.id],
@@ -475,34 +437,22 @@ export class PageContasPagarComponent implements OnInit {
     this.editarLocalPgtoDialog = false;
     this.display = false;
     this.submitted = true;
-    this.service
+    this.pagina$ = this.service
       .manterLocalPgto(this.editarLocalPgtoform.value)
       .pipe(
         tap((s) => {
           this.spinner.hide();
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Operação realizada com Sucesso!',
-            life: 4000,
-          });
-       //   document.location.reload();
+          this.customMessage.onMessage("Operação realizada com sucesso", "success")
+          this.listAtual();
+          this.displaySideBar =false
         }),
         catchError((erros) => {
           this.spinner.hide();
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Error',
-            life: 3000,
-          });
+          this.customMessage.onMessage("Operação realizada com sucesso", "success")
+          this.listAtual();
           return of([]);
         })
       )
-      .subscribe((data: any) => {
-        this.spinner.hide();
-     //   document.location.reload();
-      });
   }
 
   editarDesconto(conta: ContasPagarDTO) {
@@ -518,34 +468,21 @@ export class PageContasPagarComponent implements OnInit {
     this.editarDescontoDialog = false;
     this.display = false;
     this.submitted = true;
-    this.service
+    this.pagina$ = this.service
       .manterDesconto(this.editarDescontoform.value)
       .pipe(
         tap((s) => {
           this.spinner.hide();
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Operação realizada com Sucesso!',
-            life: 4000,
-          });
-          document.location.reload();
+          this.customMessage.onMessage("Operação realizada com sucesso", "success");
+          this.displaySideBar =false
         }),
         catchError((erros) => {
           this.spinner.hide();
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Error',
-            life: 3000,
-          });
+          this.customMessage.onMessage("Operação não realizada!", "error")
+          this.listAtual();
           return of([]);
         })
       )
-      .subscribe((data: any) => {
-        this.spinner.hide();
-        document.location.reload();
-      });
   }
 
   editarJurosMulta(conta: ContasPagarDTO) {
@@ -561,40 +498,28 @@ export class PageContasPagarComponent implements OnInit {
     this.editarJurosMultaDialog = false;
     this.display = false;
     this.submitted = true;
-    this.service
+    this.pagina$ =  this.service
       .manterJurosMulta(this.editarJurosMultatoform.value)
       .pipe(
         tap((s) => {
           this.spinner.hide();
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Operação realizada com Sucesso!',
-            life: 4000,
-          });
-          document.location.reload();
+          this.customMessage.onMessage("Operação realizada com sucesso", "success");
+          this.displaySideBar =false
+
         }),
         catchError((erros) => {
           this.spinner.hide();
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Error',
-            life: 3000,
-          });
+          this.customMessage.onMessage("Operação não realizada ", "error");
+          this.listAtual();
           return of([]);
         })
       )
-      .subscribe((data: any) => {
-        this.spinner.hide();
-        document.location.reload();
-      });
+
   }
   detalhamentoSidebar(conta: ContasPagarDTO) {
     this.detalheContas = [];
     this.detalheContas.push(conta);
     this.displaySideBar = true;
   }
-
 
 }

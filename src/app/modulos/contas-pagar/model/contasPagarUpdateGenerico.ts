@@ -1,3 +1,4 @@
+import { FiltroAvancado } from './filtro';
 export class ContasPagarUpdateGenerico{
 
   dataPagamento!: any;
@@ -5,5 +6,6 @@ export class ContasPagarUpdateGenerico{
   jurosMulta!: any;
   desconto!: any;
   id!:any;
+  filtro!: FiltroAvancado;
 
 }
