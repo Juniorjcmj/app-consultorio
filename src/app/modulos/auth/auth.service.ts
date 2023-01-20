@@ -60,7 +60,7 @@ loginUser(token: any){
 
     if(error === 401){
     localStorage.clear();
-    return   this.router.navigate(["auth/login"])
+    return   this.router.navigate(["login"])
     }
 
      return null;

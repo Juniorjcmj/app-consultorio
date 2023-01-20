@@ -57,4 +57,11 @@ export class UsuarioServiceService {
     return this.httpClient.get<GrupoModel[]>(`${this.apiGrupos}`)
   }
 
+  novaSenha(id:string, senha: string){
+
+    const url = this.apiUrlResourceServe+"/"+id+"/nova-senha?senha="+senha
+    console.log(url)
+    return this.httpClient.get<any>(`${url}`).pipe();
+  }
+
 }
