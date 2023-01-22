@@ -45,13 +45,10 @@
             <th pSortableColumn="fornecedor">FORNECEDOR <p-sortIcon field="data"></p-sortIcon></th>
             <th pSortableColumn="formaPagamento">FORMA PGTO<p-sortIcon field="numeroPedido"></p-sortIcon></th>
             <th pSortableColumn="dataPagamento">DATA PGTO <p-sortIcon field="valorPedido"></p-sortIcon></th>
-            <!-- <th pSortableColumn="jurosMulta">JUROS/MULTA<p-sortIcon field="tipoOperacao"></p-sortIcon></th>
-            <th pSortableColumn="desconto">DESCONTO <p-sortIcon field="valorReceber"></p-sortIcon></th> -->
             <th pSortableColumn="valorPago">VALOR PGTO <p-sortIcon field="previsaoRecebimento"></p-sortIcon></th>
             <th pSortableColumn="situacao">SITUAÇÃO <p-sortIcon field="dataRecebimento"></p-sortIcon></th>
             <th pSortableColumn="nd">ND <p-sortIcon field="dataRecebimento"></p-sortIcon></th>
             <th pSortableColumn="tipoDespesa">TIPO DESPESA <p-sortIcon field="tipoDespesa"></p-sortIcon></th>
-            <!-- <th pSortableColumn="classificacaoDespesa"> CLASSIFICAÇÃO <p-sortIcon field="dataRecebimento"></p-sortIcon></th> -->
             <th pSortableColumn="parcela">PARCELA <p-sortIcon field="dataRecebimento"></p-sortIcon></th>
 
             <th></th>
@@ -77,8 +74,6 @@
             (click)="editarDataPagamento(contasPagarTable)"></button>
 
             </td>
-            <!-- <td  style="color:blue" (click)="editarJurosMulta(contasPagarTable)">{{contasPagarTable.jurosMulta  | currency }}</td>
-            <td  style="color:blue" (click)="editarDesconto(contasPagarTable)">{{contasPagarTable.desconto  | currency }}</td> -->
             <td>{{contasPagarTable.valorPago  | currency }}</td>
             <td [ngClass]="{
               'pago':contasPagarTable.situacao === 'PAGO',
