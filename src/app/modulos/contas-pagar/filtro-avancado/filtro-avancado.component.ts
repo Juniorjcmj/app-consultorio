@@ -129,11 +129,28 @@ resetarFiltro(){
  onDisabledDataVencimento(event: any){
 
   this.disabledDataVencimento = true;
-  console.log( event.value)
+
  }
  onDisabledDataPagamento(event: any){
   this.disabledDataPagamento = true;
-  console.log( event.value)
+
  }
+
+ relatorioContabil() {
+  this.spinner.show();
+  this.pagina$ = this.service.relatorioContabil(this.formFilterAvancadissimo.value).pipe(
+    tap(s =>{
+      this.spinner.hide();
+      this.subclassificacaoDespesa = []
+    }),
+    catchError(erros => {
+      this.spinner.hide();
+      this.subclassificacaoDespesa = []
+      return of([])
+})
+  )
+
+
+}
 
 }
