@@ -12,6 +12,7 @@ import { NotfoundComponent } from './modulos/notfound/notfound.component';
 import { ManterUsuarioComponent } from './modulos/auth/manter-usuario/manter-usuario.component';
 import { FinanceiroGuard } from './guards/financeiro.guard';
 import { AdminGuard } from './guards/admin.guard';
+import { ListComponent } from './modulos/conciliacao-cartao/page/list.component';
 
 
 
@@ -23,7 +24,7 @@ const routes: Routes =
 
   { path: 'auth', loadChildren: ()=> import('./modulos/auth/auth.module').then(m => m.AuthModule)},
 
-  { path: 'cartao',canActivate: [AuthGuard],loadChildren: ()=> import('./modulos/conciliacao-cartao/conciliacao-cartao.module').then(m => m.ConciliacaoCartaoModule)},
+  { path: 'cartao',canActivate: [AuthGuard],component: ListComponent},
 
   { path: 'contas-pagar',canActivate: [FinanceiroGuard],loadChildren: ()=> import('./modulos/contas-pagar/contas-pagar.module').then(m => m.ContasPagarModule)},
 
