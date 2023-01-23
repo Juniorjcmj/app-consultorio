@@ -174,6 +174,7 @@ export class PageContasPagarComponent implements OnInit {
     this.service.getListaContasPagar().subscribe(
       (data) => {
       this.pagina$ = data;
+
     },
       (error:any)=>{
         this.authService.getRedirect401(error.status);

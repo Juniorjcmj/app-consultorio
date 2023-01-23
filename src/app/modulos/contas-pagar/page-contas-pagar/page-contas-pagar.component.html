@@ -7,14 +7,18 @@
 
       <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-success  p-button-sm" pTooltip="Criar uma nova conta a pagar."
+          <button pButton pRipple label="NOVA" icon="pi pi-plus" class="p-button-raised p-button-text  " pTooltip="Criar uma nova conta a pagar."
             (click)="openNew()"></button>
             <p-divider layout="vertical"></p-divider>
-            <button pButton pRipple label="Delete em Lote" icon="pi pi-trash" class="p-button-danger  p-button-sm" pTooltip="Deletar todas com mesmo número de documento."
+            <button pButton pRipple label="DELETE EM LOTE" icon="pi pi-trash" class="p-button-raised p-button-warning p-button-text " pTooltip="Deletar todas com mesmo número de documento."
             (click)="abrirDeleteEmLote()"></button>
         </ng-template>
 
         <ng-template pTemplate="right">
+          <span class="pago-total">PAGO : {{pagina.totalPago  | currency}}</span>
+          <p-divider layout="vertical"></p-divider>
+          <span class="pendente-total">PENDENTE : {{pagina.totalPendente  | currency}}</span>
+          <p-divider layout="vertical"></p-divider>
           <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcelContas()"
             class="p-button-rounded p-button-text p-button-lg p-button-info mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
             <p-divider layout="vertical"></p-divider>
