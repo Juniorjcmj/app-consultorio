@@ -58,9 +58,8 @@ export class UsuarioServiceService {
   }
 
   novaSenha(id:string, senha: string){
-
-    const url = this.apiUrlResourceServe+"/"+id+"/nova-senha?senha="+senha
-    console.log(url)
+    const url = this.apiUrlResourceServe+"/nova-senha?senha="+senha+"&id="+id
+ console.log(url)
     return this.httpClient.get<any>(`${url}`).pipe();
   }
 

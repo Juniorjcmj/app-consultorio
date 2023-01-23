@@ -51,9 +51,7 @@ export class ContasPagarService {
   }
 
   delete(record: any) {
-    return this.httpClient
-      .delete(`${this.apiUrlResourceServe}` + '?id=' + record)
-      .pipe();
+    return  this.httpClient.delete(`${this.apiUrlResourceServe}`+"?id="+record).pipe();
   }
 
   deleteEmLote(record: any) {

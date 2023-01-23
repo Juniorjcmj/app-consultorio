@@ -104,7 +104,7 @@ export class FiltroAvancadoComponent implements OnInit {
       tap((s: any) =>{
         this.spinner.hide();
         this.subclassificacaoDespesa = []
-        console.log(s)
+
       }),
       catchError(erros => {
         this.spinner.hide();

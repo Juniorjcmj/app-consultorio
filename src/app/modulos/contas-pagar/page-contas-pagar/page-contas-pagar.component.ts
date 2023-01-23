@@ -181,6 +181,23 @@ export class PageContasPagarComponent implements OnInit {
       }
     );
   }
+  buscarComFiltroAtual() {
+   const filtro = this.customLocalStorageService.get("filtro");
+    this.pagina$ = this.service.filtroAvancadoAvancado(filtro).pipe(
+      tap((s: any) =>{
+        this.spinner.hide();
+        this.subclassificacaoDespesa = []
+
+      }),
+      catchError(erros => {
+        this.spinner.hide();
+        this.subclassificacaoDespesa = []
+        return of([])
+  })
+    )
+
+    this.service.setListaContasPagar(this.pagina$)
+}
 
   mostraClassificacao(event: any) {
     let classificacao = this.classificacaoDespesa.filter(
@@ -265,18 +282,17 @@ export class PageContasPagarComponent implements OnInit {
         this.spinner.show();
         this.service
           .delete(record.id)
-          .pipe(
-            tap((s) => {
-             this.customMessage.onMessage("Operação realizada com sucesso", "success");
-             this.listAtual();
-            }),
-            catchError((erros) => {
+          .subscribe(
+            (data) => {
               this.spinner.hide();
-              this.customMessage.onMessage("Operação não realizada!", "error");
-              this.listAtual();
-              return of([]);
-            })
-          )
+             this.customMessage.onMessage("Operação realizada com sucesso!","success")
+             this.buscarComFiltroAtual();
+            },
+            (error) => {
+              this.spinner.hide();
+             this.customMessage.onMessage("Operação não realizada!","error")
+            }
+          );
         },
     });
   }
