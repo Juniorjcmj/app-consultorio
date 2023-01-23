@@ -36,6 +36,8 @@ import { AuthService } from '../../auth/auth.service';
 import { CustomAsyncValidatorDirective } from 'src/app/shared/asyncValidator';
 import { CustomLocalStorageService } from '../../../services/custom-local-storage.service';
 
+import * as XLSX from 'xlsx';
+
 
 @Component({
   selector: 'app-page-contas-pagar',
@@ -103,6 +105,9 @@ export class PageContasPagarComponent implements OnInit {
   valoresPagos!: any;
   valoresApagar!: any;
 
+  //Relatório excel
+  title = 'Relatorio';
+  fileName= 'relatorio.xlsx';
 
 
   constructor(
@@ -537,6 +542,21 @@ export class PageContasPagarComponent implements OnInit {
     this.detalheContas = [];
     this.detalheContas.push(conta);
     this.displaySideBar = true;
+  }
+//Emitindo relatorio em exel
+  exportexcel(): void
+  {
+    /* pass here the table id */
+    let element = document.getElementById('excel-table');
+    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, this.fileName);
+
   }
 
 }

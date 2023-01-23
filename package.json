@@ -7,7 +7,7 @@
     "build": "ng build ",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy:ghdocs":"ng build --output-path docs --base-href /app-gestao/"
+    "deploy:ghdocs": "ng build --output-path docs --base-href /app-gestao/"
   },
   "private": true,
   "dependencies": {
@@ -36,7 +36,7 @@
     "primeicons": "^6.0.1",
     "primeng": "^14.1.2",
     "rxjs": "~7.5.0",
-    "sweetalert2": "^11.6.16",
+    "sweetalert2": "^11.4.8",
     "tslib": "^2.3.0",
     "xlsx": "^0.18.5",
     "zone.js": "~0.11.4"

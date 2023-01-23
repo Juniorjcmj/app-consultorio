@@ -20,3 +20,6 @@ https://www.youtube.com/watch?v=PbgVbCb3zuE
 
 # Video da correção do bug 404 no servidor apache
 https://www.youtube.com/watch?v=PfKiBcfoh34
+
+# Trabalhando com arquivo exel
+https://jsonworld.com/demo/how-to-export-data-to-excel-file-in-angular-application
