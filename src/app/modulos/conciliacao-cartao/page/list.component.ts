@@ -1,12 +1,11 @@
-import { FiltroConciliacao } from '../model/filtroConciliacao';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ConciliacaoCartaoService } from '../service/conciliacao-service';
 import {
   ConciliacaoCartao,
   PageConciliacao,
   Empresa,
-  Operadora,
-  ConciliacaoCartaoInput,
+  Operadora
+
 } from '../model/conciliacaoCartao';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
@@ -16,18 +15,15 @@ import * as FileSaver from 'file-saver';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { EmpresaService } from '../../empresa/service/empresa-service';
 
-
-import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { KeycloakService } from 'keycloak-angular';
-
 import { OperadoraCartaoService } from '../../operadora-cartao/operadora-cartao.service';
 import { AuthService } from '../../auth/auth.service';
-import { Router } from '@angular/router';
+
 import { CustomMensagensService } from '../../../services/mensagens.service';
 import { UpdateGenericoConciliacao } from '../model/updateGenericoConciliacao';
-import { FiltroAvancado } from '../../contas-pagar/model/filtro';
 
+
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-list',
@@ -79,6 +75,10 @@ export class ListComponent implements OnInit {
   formFilter!: FormGroup;
 
  updateUtil: UpdateGenericoConciliacao = new UpdateGenericoConciliacao();
+
+ //Gerar Excel
+ title = 'conciliacão';
+ fileName= 'conciliacao.xlsx';
 
 
   constructor(
@@ -260,17 +260,17 @@ export class ListComponent implements OnInit {
       PDF.save('angular-demo.pdf');
     });
   }
-  exportExcel() {
-    import('xlsx').then((xlsx) => {
-      const worksheet = xlsx.utils.json_to_sheet(this.conciliacaoXLS!);
-      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-      const excelBuffer: any = xlsx.write(workbook, {
-        bookType: 'xlsx',
-        type: 'array',
-      });
-      this.saveAsExcelFile(excelBuffer, 'products');
-    });
-  }
+  // exportExcel() {
+  //   import('xlsx').then((xlsx) => {
+  //     const worksheet = xlsx.utils.json_to_sheet(this.conciliacaoXLS!);
+  //     const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+  //     const excelBuffer: any = xlsx.write(workbook, {
+  //       bookType: 'xlsx',
+  //       type: 'array',
+  //     });
+  //     this.saveAsExcelFile(excelBuffer, 'products');
+  //   });
+  // }
 
   saveAsExcelFile(buffer: any, fileName: string): void {
     let EXCEL_TYPE =
@@ -339,6 +339,20 @@ export class ListComponent implements OnInit {
           return '';
         }
       );
+  }
+  exportexcel(): void
+  {
+    /* pass here the table id */
+    let element = document.getElementById('excel-table');
+    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, this.fileName);
+
   }
 
 

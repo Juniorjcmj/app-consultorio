@@ -105,7 +105,7 @@
         <ng-template pTemplate="right">
 
           <p-divider layout="vertical"></p-divider>
-          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportexcel()"
             class="p-button-rounded p-button-text p-button-lg p-button-info" pTooltip="XLS" tooltipPosition="bottom"></button>
           <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
             class="p-button-rounded p-button-text p-button-lg p-button-danger" pTooltip="PDF" tooltipPosition="bottom"></button>
@@ -113,7 +113,7 @@
       </p-toolbar>
 
 
-      <p-table #dt [value]="pagina" [rows]="100" [paginator]="true" [rowsPerPageOptions]="[10,25,50,100,200]"
+      <p-table #dt [value]="pagina" [rows]="100" [paginator]="true" [rowsPerPageOptions]="[10,25,50,100,200]" id="excel-table"
         [globalFilterFields]="['nomeOperadora','nomeEmpresa','data', 'numeroPedido','tipoOperacao','valorPedido','quemCadastrou','quemConferiu', 'aute']"
         responsiveLayout="scroll" [(selection)]="selectedConciliacao" [rowHover]="true" dataKey="id"
         currentPageReportTemplate="Visualizando {first} a {last} de {totalRecords} boletas" [showCurrentPageReport]="true">
