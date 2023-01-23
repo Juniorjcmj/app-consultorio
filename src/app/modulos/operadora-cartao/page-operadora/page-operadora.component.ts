@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { KeycloakService } from 'keycloak-angular';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { OperadoraCartaoService } from '../operadora-cartao.service';
@@ -8,9 +7,9 @@ import { Operadora } from '../../conciliacao-cartao/model/conciliacaoCartao';
 import * as FileSaver from 'file-saver';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs';
 import { OperadoraPage } from './operadoraPage';
 import { AuthService } from '../../auth/auth.service';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-page-operadora',
@@ -51,6 +50,10 @@ export class PageOperadoraComponent implements OnInit {
   @ViewChild('myDiv') myDiv!: ElementRef;
 
   queryFields = new FormControl();
+
+  //gerar excel
+  title = 'operadora';
+  fileName= 'operadoras.xlsx';
 
   constructor(private service: OperadoraCartaoService,
     private messageService: MessageService,
@@ -287,17 +290,6 @@ export class PageOperadoraComponent implements OnInit {
       PDF.save('angular-demo.pdf');
     });
   }
-  exportExcel() {
-    import('xlsx').then((xlsx) => {
-      const worksheet = xlsx.utils.json_to_sheet(this.operadoraXLS!);
-      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-      const excelBuffer: any = xlsx.write(workbook, {
-        bookType: 'xlsx',
-        type: 'array',
-      });
-      this.saveAsExcelFile(excelBuffer, 'products');
-    });
-  }
 
   saveAsExcelFile(buffer: any, fileName: string): void {
     let EXCEL_TYPE =
@@ -348,6 +340,20 @@ export class PageOperadoraComponent implements OnInit {
       },
       (error) => { }
     );
+  }
+  exportexcel(): void
+  {
+    /* pass here the table id */
+    let element = document.getElementById('excel-table');
+    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, this.fileName);
+
   }
 
 }
