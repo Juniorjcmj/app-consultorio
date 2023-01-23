@@ -313,20 +313,18 @@ export class PageContasPagarComponent implements OnInit {
   deleteEmLote() {
         this.spinner.show();
         this.service
-          .deleteEmLote(this.formDeteleLote.value)
-          .pipe(
-            tap((s) => {
+          .deleteEmLote(this.formDeteleLote.value) .subscribe(
+            (data) => {
+             this.spinner.hide();
+             this.formDeleteLOteDialog = false;
+             this.customMessage.onMessage("Operação realizada com sucesso!","success")
+             this.buscarComFiltroAtual();
+            },
+            (error) => {
               this.spinner.hide();
-              this.formDeleteLOteDialog = false;
-              this.customMessage.onMessage("Operação realizada com sucesso", "success")
-              this.listAtual();
-            }),
-            catchError((erros) => {
-              this.spinner.hide();
-              this.customMessage.onMessage("Operação não realizada!", "error")
-              return of([]);
-            })
-          )
+             this.customMessage.onMessage("Operação não realizada!","error")
+            }
+          );
 
   }
   hideDialog() {
