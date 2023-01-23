@@ -54,4 +54,7 @@ export class LoginComponent implements OnInit {
 isLogado(){
   return !this.authServer.isLoggedIn();
 }
+
+
+
 }

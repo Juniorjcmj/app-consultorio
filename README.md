@@ -17,3 +17,6 @@ npx serve
 
 # Deploy gitHub
 https://www.youtube.com/watch?v=PbgVbCb3zuE
+
+# Video da correção do bug 404 no servidor apache
+https://www.youtube.com/watch?v=PfKiBcfoh34

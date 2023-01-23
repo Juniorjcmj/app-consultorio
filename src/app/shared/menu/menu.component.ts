@@ -44,7 +44,7 @@ export class MenuComponent implements OnInit {
           },
           {
             label:'Classificação',
-            icon:'pi pi-fw pi-list',
+            icon:'pi pi-fw pi-id-card',
             routerLink: '/classificacao',
             },
       ]
@@ -55,7 +55,7 @@ export class MenuComponent implements OnInit {
         {
 
             label:'Conciliação',
-            icon:'pi pi-fw pi-calculator',
+            icon:'pi pi-fw pi-credit-card',
             items:[
                 {
                     label:'Cartão',
@@ -64,14 +64,9 @@ export class MenuComponent implements OnInit {
                 },
                 {
                     label:'Operadora',
-                    icon:'pi pi-fw pi-thumbs-up-fill',
+                    icon:'pi pi-fw pi-shopping-bag',
                     routerLink: '/operadora-cartao'
                 },
-                {
-                  label:'Empresas',
-                  icon:'pi pi-fw pi-building',
-                  routerLink: '/empresa'
-              },
 
             ]
         },
@@ -84,7 +79,12 @@ export class MenuComponent implements OnInit {
                   label:'Usuários',
                   icon:'pi pi-fw pi-users',
                   routerLink: '/usuarios'
-              }
+              },
+              {
+                label:'Empresas',
+                icon:'pi pi-fw pi-building',
+                routerLink: '/empresa'
+            },
           ]
       },
         {

@@ -101,9 +101,10 @@ export class FiltroAvancadoComponent implements OnInit {
   filtroAvancadissimo() {
 
     this.pagina$ = this.service.filtroAvancadoAvancado(this.formFilterAvancadissimo.value).pipe(
-      tap(s =>{
+      tap((s: any) =>{
         this.spinner.hide();
         this.subclassificacaoDespesa = []
+        console.log(s)
       }),
       catchError(erros => {
         this.spinner.hide();

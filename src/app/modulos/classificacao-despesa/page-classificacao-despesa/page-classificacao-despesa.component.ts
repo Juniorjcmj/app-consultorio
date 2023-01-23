@@ -9,6 +9,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { ClassificacaoDespesa, SubClassificacaoDespesa } from '../classificacao-despesa';
 import { ClassificacaoDespesaService } from '../classificacao-despesa.service';
 import { AuthService } from '../../auth/auth.service';
+import { CustomMensagensService } from 'src/app/services/mensagens.service';
 
 @Component({
   selector: 'app-page-classificacao-despesa',
@@ -53,6 +54,7 @@ export class PageClassificacaoDespesaComponent implements OnInit {
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
+    private customMessage: CustomMensagensService,
     private authService: AuthService) {
 
       this.service.getAllClassificacao().subscribe(
@@ -98,12 +100,7 @@ export class PageClassificacaoDespesaComponent implements OnInit {
     this.service.manterClassificacao(this.form.value).subscribe(
       (success:any) => {
         this.spinner.hide();
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Classificacão Salva',
-          life: 2000,
-        });
+        this.customMessage.onMessage("Classificação salva!", "success")
         setTimeout(() => {}, 6000);
         this.form.reset();
         this.findAll();
@@ -112,12 +109,7 @@ export class PageClassificacaoDespesaComponent implements OnInit {
         this.authService.getRedirect401(error.status);
         this.spinner.hide();
         this.form.reset();
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Error',
-          life: 3000,
-        });
+        this.customMessage.onMessage("Error, "+ error, "error")
 
         return '';
       }
@@ -134,23 +126,13 @@ export class PageClassificacaoDespesaComponent implements OnInit {
         this.spinner.show();
         this.service.delete(record.id).subscribe(
           (data) => {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Successful',
-              detail: ' Excluido com sucesso',
-              life: 2000,
-            });
+            this.customMessage.onMessage("Operação realizada", "success")
             return this.findAll();
           },
           (error) => {
             this.authService.getRedirect401(error.status);
             this.spinner.hide();
-            this.messageService.add({
-              severity: error.status,
-              summary: 'Error',
-              detail: 'Error',
-              life: 3000,
-            });
+            this.customMessage.onMessage("Error, "+ error, "error")
           }
         );
       },
@@ -165,12 +147,7 @@ export class PageClassificacaoDespesaComponent implements OnInit {
      (error) => {
        this.spinner.hide();
        this.authService.getRedirect401(error.status);
-       this.messageService.add({
-         severity: error.status,
-         summary: 'Error',
-         detail: 'Error',
-         life: 3000,
-       });
+       this.customMessage.onMessage("Error, "+ error, "error")
      }
     )
    }
@@ -269,18 +246,14 @@ export class PageClassificacaoDespesaComponent implements OnInit {
   manterSubclassificacao(){
 
     this.spinner.show();
-    this.classificacaoDialog = false;
+    this.subclassificacaoDialog = false;
+    this.displaySub = false;
     this.display = false;
     this.submitted = true;
     this.service.manterSub(this.idClassificacao, this.formSubclassificacao.value).subscribe(
       (success:any) => {
         this.spinner.hide();
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'SubClassificacão Salva',
-          life: 2000,
-        });
+        this.customMessage.onMessage("Subclassificação Salva!", "success")
         setTimeout(() => {}, 6000);
         this.formSubclassificacao.reset();
         this.findAll();
@@ -312,13 +285,10 @@ export class PageClassificacaoDespesaComponent implements OnInit {
         this.spinner.show();
         this.service.deleteSub(this.idClassificacao,record.descricao).subscribe(
           (data) => {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Successful',
-              detail: ' Excluido com sucesso',
-              life: 2000,
-            });
+            this.customMessage.onMessage("Exclusão realizada com sucesso!", "success")
+            this.displaySub = false;
             return this.findAll();
+
           },
           (error) => {
             this.spinner.hide();

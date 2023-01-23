@@ -25,6 +25,9 @@ export class ManterUsuarioComponent implements OnInit {
  submitted!: boolean;
  usuarioFormDialog!: boolean;
 
+ formSenha!: FormGroup;
+ senhaDialog!:boolean;
+
  permissoes!: PermissaoModel[];
  grupos!: GrupoModel[];
 
@@ -120,7 +123,30 @@ export class ManterUsuarioComponent implements OnInit {
 
   }
   alterarSenha(usuario: UsuarioModel){
+      this.formSenha = this.formBuilder.group({
+        id:[usuario.id],
+        senha: [null, Validators.required],
+      });
+      this.submitted = false;
+      this.senhaDialog = true;
+    }
 
+  novaSenha(){
+    this.spinner.show();
+  this.senhaDialog = false;
+    this.service.novaSenha(this.formSenha.value['id'], this.formSenha.value['senha']).pipe(
+      tap((s) => {
+        this.spinner.hide();
+        this.message.onMessage("Senha Alterada com sucesso!", "success")
+      }),
+      catchError((erros) => {
+        this.message.onMessage("Não foi possivel realizar a Operação", "error");
+        this.spinner.hide();
+        return of([]);
+      })
+    )
   }
+
+
 
 }

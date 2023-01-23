@@ -2,7 +2,7 @@ import { ContasPagarDTO } from "../model/contasPagarDTO";
 
 export interface ContasPagarPage{
 
-  content: ContasPagarDTO[];
+content: ContasPagarDTO[];
  last: boolean;
  totalPages: number;
  totalElements: number;
@@ -11,4 +11,6 @@ export interface ContasPagarPage{
  first: boolean;
  numberOfElements: number;
  empty: boolean;
+ totalPago: string;
+ totalPendente: string;
 }
