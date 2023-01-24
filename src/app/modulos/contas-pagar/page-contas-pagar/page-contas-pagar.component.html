@@ -45,17 +45,17 @@
         </ng-template>
         <ng-template pTemplate="header">
           <tr>
-            <th pSortableColumn="nomeEmpresa">EMPRESA<p-sortIcon field="aute"></p-sortIcon></th>
-            <th pSortableColumn="dataVencimento">VENCIMENTO <p-sortIcon field="nomeEmpresa"></p-sortIcon></th>
-            <th pSortableColumn="valorDuplicata">DUPLICATA <p-sortIcon field="nomeOperadora"></p-sortIcon></th>
-            <th pSortableColumn="fornecedor">FORNECEDOR <p-sortIcon field="data"></p-sortIcon></th>
-            <th pSortableColumn="formaPagamento">FORMA PGTO<p-sortIcon field="numeroPedido"></p-sortIcon></th>
-            <th pSortableColumn="dataPagamento">DATA PGTO <p-sortIcon field="valorPedido"></p-sortIcon></th>
-            <th pSortableColumn="valorPago">VALOR PGTO <p-sortIcon field="previsaoRecebimento"></p-sortIcon></th>
-            <th pSortableColumn="situacao">SITUAÇÃO <p-sortIcon field="dataRecebimento"></p-sortIcon></th>
-            <th pSortableColumn="nd">ND <p-sortIcon field="dataRecebimento"></p-sortIcon></th>
+            <th pSortableColumn="nomeEmpresa">EMPRESA<p-sortIcon field="nomeEmpresa"></p-sortIcon></th>
+            <th pSortableColumn="dataVencimento">VENCIMENTO <p-sortIcon field="dataVencimento"></p-sortIcon></th>
+            <th pSortableColumn="valorDuplicata">DUPLICATA <p-sortIcon field="valorDuplicata"></p-sortIcon></th>
+            <th pSortableColumn="fornecedor">FORNECEDOR <p-sortIcon field="fornecedor"></p-sortIcon></th>
+            <th pSortableColumn="formaPagamento">FORMA PGTO<p-sortIcon field="formaPagamento"></p-sortIcon></th>
+            <th pSortableColumn="dataPagamento">DATA PGTO <p-sortIcon field="dataPagamento"></p-sortIcon></th>
+            <th pSortableColumn="valorPago">VALOR PGTO <p-sortIcon field="valorPago"></p-sortIcon></th>
+            <th pSortableColumn="situacao">SITUAÇÃO <p-sortIcon field="situacao"></p-sortIcon></th>
+            <th pSortableColumn="nd">ND <p-sortIcon field="nd"></p-sortIcon></th>
             <th pSortableColumn="tipoDespesa">TIPO DESPESA <p-sortIcon field="tipoDespesa"></p-sortIcon></th>
-            <th pSortableColumn="parcela">PARCELA <p-sortIcon field="dataRecebimento"></p-sortIcon></th>
+            <th pSortableColumn="parcela">PARCELA <p-sortIcon field="parcela"></p-sortIcon></th>
 
             <th></th>
             <th></th>
@@ -67,7 +67,8 @@
             <td>{{contasPagarTable.dataVencimento | date : 'dd/MM/yyyy'}}</td>
             <td>{{contasPagarTable.valorDuplicata  | currency}}</td>
             <td>{{contasPagarTable.fornecedor}}</td>
-            <td>{{contasPagarTable.formaPagamento}}</td>
+            <td [ngClass]="{
+              'pedirboleto':contasPagarTable.formaPagamento== 'PEDIR_BOLETO'}">{{contasPagarTable.formaPagamento}}</td>
             <td>
               <div class="col-12" style="color:blue" *ngIf="contasPagarTable.dataPagamento">
                 <div class="p-inputgroup">
