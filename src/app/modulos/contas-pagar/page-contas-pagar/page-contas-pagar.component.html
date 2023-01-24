@@ -215,7 +215,7 @@
   </form>
   </ng-template>
 </p-dialog>
-<p-dialog header="" [(visible)]="editarLocalPgtoDialog">
+<p-dialog header="" [(visible)]="editarLocalPgtoDialog" header="DIGITE O LOCAL">
   <ng-template pTemplate="content">
   <form  [formGroup]="editarLocalPgtoform">
     <div class="col-12 md:col-12">
@@ -230,7 +230,7 @@
   </form>
   </ng-template>
 </p-dialog>
-<p-dialog header="" [(visible)]="editarDescontoDialog">
+<p-dialog header="" [(visible)]="editarDescontoDialog" header="DIGITE O VALOR">
   <ng-template pTemplate="content">
   <form  [formGroup]="editarDescontoform">
     <div class="col-12 md:col-12">
@@ -246,7 +246,7 @@
   </ng-template>
 </p-dialog>
 
-<p-dialog header="" [(visible)]="editarJurosMultaDialog">
+<p-dialog header="" [(visible)]="editarJurosMultaDialog"  header="DIGITE O VALOR">
   <ng-template pTemplate="content">
   <form  [formGroup]="editarJurosMultatoform">
     <div class="col-12 md:col-12">
@@ -300,7 +300,7 @@
   </ng-template>
 </p-sidebar>
 
-<p-dialog header="" [(visible)]="formDeleteLOteDialog">
+<p-dialog header="" [(visible)]="formDeleteLOteDialog" header="DIGITE O Nº DO DOCUMENTO">
   <ng-template pTemplate="content">
   <form  [formGroup]="formDeteleLote">
     <div class="col-12 md:col-12">
