@@ -6,4 +6,9 @@
 :host ::ng-deep .p-button.p-button-lg .p-button-icon {
   font-size: 2.20rem !important;
 }
-
+:host ::ng-deep .p-accordionTab{
+  box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+  border-radius: 20px;
+  background: var(--white);
+  padding: 20px;
+}
