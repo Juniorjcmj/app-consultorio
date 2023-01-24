@@ -5,30 +5,37 @@
   font-size: 25px !important;
 }
 :host ::ng-deep  .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link .p-menuitem-icon {
-  font-size: 1.50rem !important;
+  font-size: 1.25rem !important;
 }
 
 :host ::ng-deep .p-menubar .pi-fw {
-  font-size: 2.20rem !important;
+  font-size: 1.25rem !important;
 }
 :host ::ng-deep .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link .p-menuitem-text {
-  color: #fefefe;
+  color: #fff;
 }
 :host ::ng-deep .p-menubar {
   padding: 0.5rem;
-  background: #18449f;
-  color: #f6f6f6;
+  background: #6200ee;
+  color: #fff;
   border: 1px solid #dee2e6;
   border-radius: 6px;
+  font-weight: 400;
+  line-height: 1.25rem;
+  font-family: Roboto,sans-serif;
+  height: 80px;
+  border-radius: 8px;
+
+
 }
 :host ::ng-deep .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link .p-menuitem-icon {
-  color: #ebedee;
+  color: #fff;
   margin-right: 0.5rem;
 }
 :host ::ng-deep .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link .p-submenu-icon {
-  color: #ffffff;
+  color: #fff;
   margin-left: 0.5rem;
 }
 :host ::ng-deep .p-menubar .p-menuitem-link .p-menuitem-text {
-  font-size: 15px !important;
+  font-size: 1.25rem !important;
 }
