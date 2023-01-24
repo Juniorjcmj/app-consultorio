@@ -28,7 +28,7 @@ import{MultiSelectModule} from 'primeng/multiselect'
 import { PaginatorModule } from 'primeng/paginator';
 import {PanelModule} from 'primeng/panel';
 import {PasswordModule} from 'primeng/password';
-
+import {ImageModule} from 'primeng/image';
 
 
 @NgModule({
@@ -67,7 +67,8 @@ import {PasswordModule} from 'primeng/password';
     MultiSelectModule,
     PaginatorModule,
     PanelModule,
-    PasswordModule
+    PasswordModule,
+    ImageModule
 
 
    ]

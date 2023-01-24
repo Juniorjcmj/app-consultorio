@@ -14,16 +14,18 @@
             (click)="abrirDeleteEmLote()"></button>
         </ng-template>
 
+
         <ng-template pTemplate="right">
           <span class="pago-total">PAGO : {{pagina.totalPago  | currency}}</span>
           <p-divider layout="vertical"></p-divider>
           <span class="pendente-total">PENDENTE : {{pagina.totalPendente  | currency}}</span>
+
           <p-divider layout="vertical"></p-divider>
-          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportexcel()"
-            class="p-button-rounded p-button-text p-button-lg p-button-info mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
-            <p-divider layout="vertical"></p-divider>
-            <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
-            class="p-button-rounded p-button-text p-button-lg p-button-danger mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+
+          <p-image src="assets/icons/xlsx.png" alt="Image" width="50px" pTooltip="Extrair tabela XLS" tooltipPosition="bottom" (click)="exportexcel()"></p-image>
+
+          <p-divider layout="vertical"></p-divider>
+          <p-image src="assets/icons/pdf.png" alt="Image" width="50px" pTooltip="Extrair tabela PDF" tooltipPosition="bottom" (click)="exportPdf()"></p-image>
         </ng-template>
       </p-toolbar>
 
