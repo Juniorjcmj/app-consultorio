@@ -2,7 +2,7 @@ import { ContasPagarPage } from './../page-contas-pagar/contasPagarPage';
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Observable, tap, catchError, of } from 'rxjs';
 import { ContasPagarService } from '../contas-pagar.service';
 import { ContasPagarDTO } from '../model/contasPagarDTO';
@@ -11,19 +11,19 @@ import { EmpresaService } from '../../empresa/service/empresa-service';
 import { Empresa } from '../../conciliacao-cartao/model/conciliacaoCartao';
 import { ClassificacaoDespesaService } from '../../classificacao-despesa/classificacao-despesa.service';
 import { ClassificacaoDespesa, SubClassificacaoDespesa } from '../../classificacao-despesa/classificacao-despesa';
+import { CustomMensagensService } from 'src/app/services/mensagens.service';
 
 @Component({
   selector: 'app-filtro-avancado',
   templateUrl: './filtro-avancado.component.html',
   styleUrls: ['./filtro-avancado.component.scss'],
+  providers: [MessageService, ConfirmationService, CustomMensagensService],
 })
 export class FiltroAvancadoComponent implements OnInit {
 
   formasPgtoOptions!: any[];
   tipoDespesasOptions!: any[];
   situacaoOptions!: any[];
-
-  pagina$!: Observable<ContasPagarPage>;
 
   formFilter!: FormGroup;
 
@@ -42,7 +42,8 @@ export class FiltroAvancadoComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private empresaService: EmpresaService,
     private formBuilder: FormBuilder,
-    private classificacaoService: ClassificacaoDespesaService
+    private classificacaoService: ClassificacaoDespesaService,
+    private customMessage: CustomMensagensService
   ) {
     this.subclassificacaoDespesa = []
 
@@ -99,21 +100,18 @@ export class FiltroAvancadoComponent implements OnInit {
   ngOnInit(): void {}
 
   filtroAvancadissimo() {
+    this.spinner.show();
+   this.service.filtroAvancadoAvancado(this.formFilterAvancadissimo.value).subscribe(
+    (data : ContasPagarPage) =>{
+      this.spinner.hide();
+      this.service.setListaContasPagar(data)
+      this.subclassificacaoDespesa = []
+    }, (error: any)=>{
+     this.customMessage.onMessage("Erro ao realizar pesquisa!", "error")
+    }
+  );
 
-    this.pagina$ = this.service.filtroAvancadoAvancado(this.formFilterAvancadissimo.value).pipe(
-      tap((s: any) =>{
-        this.spinner.hide();
-        this.subclassificacaoDespesa = []
 
-      }),
-      catchError(erros => {
-        this.spinner.hide();
-        this.subclassificacaoDespesa = []
-        return of([])
-  })
-    )
-
-    this.service.setListaContasPagar(this.pagina$)
 }
  carregarSubClassificacao(event: any) {
   let classificacao = this.classificacaoDespesa.filter(
@@ -136,22 +134,5 @@ resetarFiltro(){
   this.disabledDataPagamento = true;
 
  }
-
- relatorioContabil() {
-  this.spinner.show();
-  this.pagina$ = this.service.relatorioContabil(this.formFilterAvancadissimo.value).pipe(
-    tap(s =>{
-      this.spinner.hide();
-      this.subclassificacaoDespesa = []
-    }),
-    catchError(erros => {
-      this.spinner.hide();
-      this.subclassificacaoDespesa = []
-      return of([])
-})
-  )
-
-
-}
 
 }
