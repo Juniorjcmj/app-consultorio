@@ -94,7 +94,7 @@
              <td>
                <button  pButton pRipple (click)="detalhamentoSidebar(contasPagarTable)" icon="pi pi-ellipsis-h"  pTooltip="OBSERVAÇÃO, JUROS/MULTA E DESCONTO"
                class="p-button-rounded p-button-text p-button-lg p-button-primary mr-2" ></button>
-             </td>
+              </td>
             <td>
               <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-lg p-button-primary mr-2" pTooltip="EDITAR OPERADORA"
                 (click)="edit(contasPagarTable)"></button>
@@ -217,7 +217,7 @@
 
   </form>
   </ng-template>
-</p-dialog>
+ </p-dialog>
 <p-dialog header="" [(visible)]="editarLocalPgtoDialog" header="DIGITE O LOCAL">
   <ng-template pTemplate="content">
   <form  [formGroup]="editarLocalPgtoform">
@@ -265,11 +265,12 @@
   </ng-template>
 </p-dialog>
 
-<p-sidebar [(visible)]="displaySideBar" [style]="{height:'20em'}"  position="bottom" >
+<p-sidebar [(visible)]="displaySideBar" [style]="{height:'30em'}"  position="bottom" >
 
   <ng-template pTemplate="content">
 
-    <p-card>
+
+     <p-card>
 
       <p-table [value]="detalheContas">
         <ng-template pTemplate="header">
@@ -279,6 +280,7 @@
           <th>DESCONTO</th>
           <th >LOC PGTO</th>
           <th >CLASSIFICAÇÃO</th>
+          <th ></th>
         </tr>
         </ng-template>
         <ng-template pTemplate="body" let-c>

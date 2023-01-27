@@ -7,10 +7,12 @@ import { FiltroAvancadoComponent } from './filtro-avancado/filtro-avancado.compo
 
 
 
+
 @NgModule({
   declarations: [
     PageContasPagarComponent,
     FiltroAvancadoComponent
+
 
   ],
   imports: [

@@ -1,6 +1,6 @@
 import { CustomMensagensService } from './../../../services/mensagens.service';
 import { EmpresaService } from './../../empresa/service/empresa-service';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -354,65 +354,14 @@ export class PageContasPagarComponent implements OnInit {
 
 
   }
-  createId(): string {
-    let id = '';
-    var chars =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (var i = 0; i < 5; i++) {
-      id += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return id;
-  }
 
   onReload() {
     setTimeout(() => {
       window.location.reload();
     }, 2000);
   }
-  public exportPdf(): void {
-    let DATA: any = document.getElementById('htmlData');
-    html2canvas(DATA).then((canvas) => {
-      let fileWidth = 208;
-      let fileHeight = (canvas.height * fileWidth) / canvas.width;
-      const FILEURI = canvas.toDataURL('image/png');
-      let PDF = new jsPDF('p', 'mm', 'a4');
-      let position = 0;
-      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
-      PDF.save('contas.pdf');
-    });
-  }
-  exportExcelContas() {
-
-    this.pagina$.subscribe(
-      (data: any) => {
-        import('xlsx').then((xlsx) => {
-          const worksheet = xlsx.utils.json_to_sheet(data.content);
-          const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-          const excelBuffer: any = xlsx.write(workbook, {
-            bookType: 'xlsx',
-            type: 'array',
-          });
-          this.saveAsExcelFile(excelBuffer, 'contas');
-        });
-      },
-      (error: any) => {}
-    );
 
 
-  }
-
-  saveAsExcelFile(buffer: any, fileName: string): void {
-    let EXCEL_TYPE =
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-    let EXCEL_EXTENSION = '.xlsx';
-    const data: Blob = new Blob([buffer], {
-      type: EXCEL_TYPE,
-    });
-    FileSaver.saveAs(
-      data,
-      fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
-    );
-  }
 
   editarDataPagamento(conta: ContasPagarDTO) {
     this.editarDataPgtoform = this.formBuilder.group({
@@ -433,7 +382,7 @@ export class PageContasPagarComponent implements OnInit {
       .pipe(
         tap((s) => {
           this.spinner.hide();
-          this.customMessage.onMessage("Operação realizada com sucesso", "success")
+          this.customMessage.onSuccessSmall();
 
         }),
         catchError((erros) => {
@@ -462,9 +411,8 @@ export class PageContasPagarComponent implements OnInit {
       .pipe(
         tap((s) => {
           this.spinner.hide();
-          this.customMessage.onMessage("Operação realizada com sucesso", "success")
+          this.customMessage.onSuccessSmall();
           this.listAtual();
-          this.displaySideBar =false
         }),
         catchError((erros) => {
           this.spinner.hide();
@@ -493,8 +441,7 @@ export class PageContasPagarComponent implements OnInit {
       .pipe(
         tap((s) => {
           this.spinner.hide();
-          this.customMessage.onMessage("Operação realizada com sucesso", "success");
-          this.displaySideBar =false
+          this.customMessage.onSuccessSmall();
         }),
         catchError((erros) => {
           this.spinner.hide();
@@ -523,15 +470,14 @@ export class PageContasPagarComponent implements OnInit {
       .pipe(
         tap((s) => {
           this.spinner.hide();
-          this.customMessage.onMessage("Operação realizada com sucesso", "success");
-          this.displaySideBar =false
+          this.customMessage.onSuccessSmall();
 
         }),
         catchError((erros) => {
           this.spinner.hide();
           this.customMessage.onMessage("Operação não realizada ", "error");
-          this.listAtual();
-          return of([]);
+          //this.listAtual();
+          return of([ this.listAtual()]);
         })
       )
 
@@ -541,7 +487,21 @@ export class PageContasPagarComponent implements OnInit {
     this.detalheContas.push(conta);
     this.displaySideBar = true;
   }
-//Emitindo relatorio em exel
+
+  //MÉTODOS PARA EXPORTAÇÃO DE ARQUIVOS
+  public exportPdf(): void {
+    let DATA: any = document.getElementById('htmlData');
+    html2canvas(DATA).then((canvas) => {
+      let fileWidth = 208;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+      const FILEURI = canvas.toDataURL('image/png');
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+      PDF.save('contas.pdf');
+    });
+  }
+  //Emitindo relatorio em exel
   exportexcel(): void
   {
     /* pass here the table id */

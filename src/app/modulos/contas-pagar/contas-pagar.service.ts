@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { KeycloakService } from 'keycloak-angular';
 import { environment } from 'src/environments/environment';
 import { ContasPagarInput } from './model/contasPagarInput';
-import { ContasPagarDTO } from './model/contasPagarDTO';
 import { FiltroAvancado } from './model/filtro';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { ContasPagarUpdateGenerico } from './model/contasPagarUpdateGenerico';
