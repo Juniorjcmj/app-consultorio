@@ -65,7 +65,7 @@
           <tr>
             <td>{{contasPagarTable.nomeEmpresa}}</td>
             <td>{{contasPagarTable.dataVencimento | date : 'dd/MM/yyyy'}}</td>
-            <td>{{contasPagarTable.valorDuplicata  | currency}}</td>
+            <td (click)="editarValorDuplicata(contasPagarTable)">{{contasPagarTable.valorDuplicata  | currency}}</td>
             <td>{{contasPagarTable.fornecedor}}</td>
             <td [ngClass]="{
               'pedirboleto':contasPagarTable.formaPagamento== 'PEDIR_BOLETO'}">{{contasPagarTable.formaPagamento}}</td>
@@ -242,6 +242,22 @@
           <input type="text" pInputText placeholder="DESCONTO" formControlName="desconto" name="desconto" >
           <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"  [disabled]="!editarDescontoform.valid"
           (click)="manterDesconto()"></button>
+      </div>
+  </div>
+
+  </form>
+  </ng-template>
+</p-dialog>
+
+<p-dialog header="" [(visible)]="editarValorDuplicataDialog" header="DIGITE O NOVO VALOR ">
+  <ng-template pTemplate="content">
+  <form  [formGroup]="editarValorDuplicataform">
+    <div class="col-12 md:col-12">
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon">R$</span>
+          <input type="text" pInputText placeholder="VALOR DUPLICATA" formControlName="valorDuplicata" name="valorDuplicata" >
+          <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"  [disabled]="!editarValorDuplicataform.valid"
+          (click)="manterValorDuplicata()"></button>
       </div>
   </div>
 

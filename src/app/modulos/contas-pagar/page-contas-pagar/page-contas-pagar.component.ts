@@ -98,6 +98,9 @@ export class PageContasPagarComponent implements OnInit {
   editarDescontoDialog: boolean;
   editarDescontoform!: FormGroup;
 
+  editarValorDuplicataDialog: boolean = false;
+  editarValorDuplicataform!: FormGroup;
+
   //STATISTICA
   valoresPagos!: any;
   valoresApagar!: any;
@@ -429,6 +432,35 @@ export class PageContasPagarComponent implements OnInit {
       (error: any) => {
         this.customMessage.onMessage(
           'Erro ao tentar cadastrar, tente novamente',
+          'error'
+        );
+      }
+    );
+  }
+  editarValorDuplicata(conta: ContasPagarDTO) {
+    this.editarValorDuplicataform = this.formBuilder.group({
+      id: [conta.id],
+      valorDuplicata: [conta.valorDuplicata, Validators.required],
+    });
+    this.submitted = false;
+    this.editarValorDuplicataDialog = true;
+  }
+  manterValorDuplicata() {
+    this.spinner.show();
+    this.editarValorDuplicataDialog = false;
+    this.display = false;
+    this.submitted = true;
+    this.service.manterValorDuplicata(this.editarValorDuplicataform.value).subscribe(
+      (data: any) => {
+        this.spinner.hide();
+        this.pagina = data;
+        this.customMessage.onSuccessSmall();
+        this.displaySideBar = false;
+      },
+      (error: any) => {
+        this.spinner.hide();
+        this.customMessage.onMessage(
+          'Erro ao tentar cadastrar,verifique a formatação Ex: 4.000,95',
           'error'
         );
       }
