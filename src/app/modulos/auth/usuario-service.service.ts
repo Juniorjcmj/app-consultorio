@@ -44,7 +44,8 @@ export class UsuarioServiceService {
       .pipe();
   }
   delete(record: any){
-    return  this.httpClient.delete(`${this.apiUrlResourceServe}`+"?id="+record ).pipe();
+
+    return  this.httpClient.delete<any>(`${this.apiUrlResourceServe}`+"?id="+record ).pipe();
   }
   getById(record: any){
     return  this.httpClient.get(`${this.apiUrlResourceServe}`+"/"+record ).pipe();
@@ -58,7 +59,7 @@ export class UsuarioServiceService {
   }
 
   novaSenha(id:string, senha: string){
-    const url = this.apiUrlResourceServe+"/nova-senha?senha="+senha+"&id="+id
+    const url = this.apiUrlResourceServe+"/nova-senha?id="+id+"&senha="+senha
  console.log(url)
     return this.httpClient.get<any>(`${url}`).pipe();
   }

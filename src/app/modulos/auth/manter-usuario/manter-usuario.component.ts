@@ -19,7 +19,7 @@ import { GrupoModel } from '../model/grupoModel';
 export class ManterUsuarioComponent implements OnInit {
 
 
- pagina$: Observable<UsuarioModel[]>;
+ pagina!: UsuarioModel[];
 
  form!: FormGroup;
  submitted!: boolean;
@@ -32,22 +32,20 @@ export class ManterUsuarioComponent implements OnInit {
  grupos!: GrupoModel[];
 
   constructor(private service: UsuarioServiceService,
-     private messageService: MessageService,
     private formBuilder: FormBuilder,
-    private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
     private authService: AuthService,
+    private confirmationService: ConfirmationService,
     private message: CustomMensagensService) {
 
-      this.pagina$ = this.service.getAll().pipe(
-        tap((s) => {
-          this.spinner.hide();
-        }),
-        catchError((erros) => {
-          this.spinner.hide();
-          return of([]);
-        })
-      )
+      this.service.getAll().subscribe(
+        (data: any) => {
+          this.pagina = data;
+        },
+        (error: any) => {
+          this.authService.getRedirect401(error.status);
+        }
+      );
       this.service.getAllPermissoes().subscribe(
         (data: any) => {
           this.permissoes = data;
@@ -75,16 +73,17 @@ export class ManterUsuarioComponent implements OnInit {
   }
   manterUsuario(){
     this.spinner.show();
-    this.service.manter(this.form.value).pipe(
-      tap((s) => {
+    this.service.manter(this.form.value).subscribe(
+      (data: any) => {
         this.spinner.hide();
-      }),
-      catchError((erros) => {
-        this.message.onMessage("Não foi possivel realizar a Operação", "error");
+        this.message.onMessage("Operação realizada com Sucesso", "info")
+        this.pagina = data;
+      },
+      (error: any) => {
         this.spinner.hide();
-        return of([]);
-      })
-    )
+        this.message.onMessage("Ocorreu um erro!", "error")
+      }
+    );
   }
   openNew() {
     this.form = this.formBuilder.group({
@@ -120,6 +119,30 @@ export class ManterUsuarioComponent implements OnInit {
 
 
   delete(usuario: UsuarioModel){
+    console.log(usuario)
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja excluir ' + usuario.login + '?',
+      header: 'Confirmar',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        //codigo para excluir
+        this.spinner.show();
+        this.spinner.show();
+        this.service.delete(usuario.id).subscribe(
+          data => {
+            this.spinner.hide();
+            this.message.onSuccessSmall();
+            this.pagina = data;
+
+          },
+          error =>{
+            this.spinner.hide();
+            this.message.onMessage("Error ao excluir usuário(a)", "error")
+          }
+        )
+      },
+    });
+
 
   }
   alterarSenha(usuario: UsuarioModel){
@@ -134,17 +157,17 @@ export class ManterUsuarioComponent implements OnInit {
   novaSenha(){
     this.spinner.show();
   this.senhaDialog = false;
-    this.service.novaSenha(this.formSenha.value['id'], this.formSenha.value['senha']).pipe(
-      tap((s) => {
+    this.service.novaSenha(this.formSenha.value['id'], this.formSenha.value['senha']).subscribe(
+      (data: any) => {
         this.spinner.hide();
-        this.message.onMessage("Senha Alterada com sucesso!", "success")
-      }),
-      catchError((erros) => {
-        this.message.onMessage("Não foi possivel realizar a Operação", "error");
+        this.message.onMessage("Senha alterada com Sucesso", "info")
+        this.pagina = data;
+      },
+      (error: any) => {
         this.spinner.hide();
-        return of([]);
-      })
-    )
+        this.message.onMessage("Ocorreu um erro!", "error")
+      }
+    );
   }
 
 
