@@ -338,6 +338,7 @@ export class PageContasPagarComponent implements OnInit {
         this.customMessage.onSuccessSmall();
       },
       (error: any) => {
+        this.spinner.hide();
         this.customMessage.onMessage(
           'Erro ao tentar cadastrar, tente novamente',
           'error'
