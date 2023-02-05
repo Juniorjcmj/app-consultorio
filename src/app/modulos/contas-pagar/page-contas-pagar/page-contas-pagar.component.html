@@ -225,7 +225,7 @@
       <div class="p-inputgroup">
           <span pButton class="p-inputgroup-addon"><i class="pi pi-map"></i></span>
           <input type="text" pInputText placeholder="LOCAL PAGAMENTO" formControlName="localPagamento" name="localPagamento" >
-          <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"  [disabled]="!editarLocalPgtoform.valid"
+          <button type="button" pButton pRipple icon="pi pi-save" styleClass="p-button-warn"  [disabled]="!editarLocalPgtoform.valid"
           (click)="manterLocalPgto()"></button>
       </div>
   </div>
@@ -240,7 +240,7 @@
       <div class="p-inputgroup">
         <span class="p-inputgroup-addon">R$</span>
           <input type="text" pInputText placeholder="DESCONTO" formControlName="desconto" name="desconto" >
-          <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"  [disabled]="!editarDescontoform.valid"
+          <button type="button" pButton pRipple icon="pi pi-save" styleClass="p-button-warn"  [disabled]="!editarDescontoform.valid"
           (click)="manterDesconto()"></button>
       </div>
   </div>
@@ -256,7 +256,7 @@
       <div class="p-inputgroup">
         <span class="p-inputgroup-addon">R$</span>
           <input type="text" pInputText placeholder="VALOR DUPLICATA" formControlName="valorDuplicata" name="valorDuplicata" >
-          <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"  [disabled]="!editarValorDuplicataform.valid"
+          <button type="button" pButton pRipple icon="pi pi-save" styleClass="p-button-warn"  [disabled]="!editarValorDuplicataform.valid"
           (click)="manterValorDuplicata()"></button>
       </div>
   </div>
@@ -272,7 +272,7 @@
       <div class="p-inputgroup">
         <span class="p-inputgroup-addon">R$</span>
           <input type="text" pInputText placeholder="JUROS/MULTA" formControlName="jurosMulta" name="jurosMulta" >
-          <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"  [disabled]="!editarJurosMultatoform.valid"
+          <button type="button" pButton pRipple icon="pi pi-save" styleClass="p-button-warn"  [disabled]="!editarJurosMultatoform.valid"
           (click)="manterJurosMulta()"></button>
       </div>
   </div>
@@ -281,7 +281,7 @@
   </ng-template>
 </p-dialog>
 
-<p-sidebar [(visible)]="displaySideBar" [style]="{height:'30em'}"  position="bottom" >
+<p-sidebar [(visible)]="displaySideBar" [style]="{height:'22em'}"  position="bottom" >
 
   <ng-template pTemplate="content">
 

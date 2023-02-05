@@ -399,7 +399,11 @@ export class PageContasPagarComponent implements OnInit {
         this.spinner.hide();
         this.pagina = data;
         this.customMessage.onSuccessSmall();
-        this.displaySideBar = false;
+
+        //atualizar o side bar com a alteração realizada
+        const conta = this.pagina.content.find(conta => conta.id == this.editarLocalPgtoform.value['id'] )
+        this.detalhamentoSidebar(conta);
+
       },
       (error: any) => {
         this.customMessage.onMessage(
@@ -428,7 +432,9 @@ export class PageContasPagarComponent implements OnInit {
         this.spinner.hide();
         this.pagina = data;
         this.customMessage.onSuccessSmall();
-        this.displaySideBar = false;
+        //atualizar o side bar com a alteração realizada
+        const conta = this.pagina.content.find(conta => conta.id == this.editarDescontoform.value['id'] )
+        this.detalhamentoSidebar(conta);
       },
       (error: any) => {
         this.customMessage.onMessage(
@@ -456,7 +462,7 @@ export class PageContasPagarComponent implements OnInit {
         this.spinner.hide();
         this.pagina = data;
         this.customMessage.onSuccessSmall();
-        this.displaySideBar = false;
+
       },
       (error: any) => {
         this.spinner.hide();
@@ -478,6 +484,7 @@ export class PageContasPagarComponent implements OnInit {
   }
   manterJurosMulta() {
     this.spinner.show();
+    this.displaySideBar = false;
     this.editarJurosMultaDialog = false;
     this.display = false;
     this.submitted = true;
@@ -486,7 +493,11 @@ export class PageContasPagarComponent implements OnInit {
         this.spinner.hide();
         this.pagina = data;
         this.customMessage.onSuccessSmall();
-        this.displaySideBar = false;
+
+        //atualizar o side bar com a alteração realizada
+        const conta = this.pagina.content.find(conta => conta.id == this.editarJurosMultatoform.value['id'] )
+        this.detalhamentoSidebar(conta);
+
       },
       (error: any) => {
         this.customMessage.onMessage(
@@ -496,13 +507,12 @@ export class PageContasPagarComponent implements OnInit {
       }
     );
   }
-  detalhamentoSidebar(conta: ContasPagarDTO) {
+  detalhamentoSidebar(conta: any) {
     this.detalheContas = [];
     this.detalheContas.push(conta);
     this.displaySideBar = true;
   }
-
-  //MÉTODOS PARA EXPORTAÇÃO DE ARQUIVOS
+   //MÉTODOS PARA EXPORTAÇÃO DE ARQUIVOS
   public exportPdf(): void {
     let DATA: any = document.getElementById('htmlData');
     html2canvas(DATA).then((canvas) => {
