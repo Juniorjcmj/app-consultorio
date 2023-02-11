@@ -28,22 +28,22 @@ export class MenuComponent implements OnInit {
 
     this.items = [
       {
-        label:'Home',
+        label:'INÍCIO',
         icon:'pi pi-fw pi-home',
         routerLink: '/home',
 
     },
     {
-      label:'Contas a Pagar',
+      label:'FINANCEIRO',
       icon:'pi pi-fw pi-calculator',
       items:[
           {
-          label:'Contas',
+          label:'CONTAS',
           icon:'pi pi-fw pi-credit-card',
           routerLink: '/contas-pagar',
           },
           {
-            label:'Classificação',
+            label:'CLASSIFICAÇÃO',
             icon:'pi pi-fw pi-id-card',
             routerLink: '/classificacao',
             },
@@ -54,16 +54,16 @@ export class MenuComponent implements OnInit {
 
         {
 
-            label:'Conciliação',
+            label:'CONCILIAÇÃO',
             icon:'pi pi-fw pi-credit-card',
             items:[
                 {
-                    label:'Cartão',
+                    label:'CARTÃO',
                     icon:'pi pi-fw pi-credit-card',
                     routerLink: '/cartao'
                 },
                 {
-                    label:'Operadora',
+                    label:'OPERADORA',
                     icon:'pi pi-fw pi-shopping-bag',
                     routerLink: '/operadora-cartao'
                 },
@@ -72,16 +72,16 @@ export class MenuComponent implements OnInit {
         },
         {
 
-          label:'Configuração',
+          label:'CONFIGURAÇÃO',
           icon:'pi pi-fw pi-cog',
           items:[
               {
-                  label:'Usuários',
+                  label:'USUÁRIOS',
                   icon:'pi pi-fw pi-users',
                   routerLink: '/usuarios'
               },
               {
-                label:'Empresas',
+                label:'EMPRESAS',
                 icon:'pi pi-fw pi-building',
                 routerLink: '/empresa'
             },

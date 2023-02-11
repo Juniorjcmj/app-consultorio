@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
@@ -103,9 +103,13 @@ export class ContasPagarService {
     );
   }
   relatorioContabil(filtro: FiltroAvancado): any {
-    return this.httpClient.post<ContasPagarPage>(
-      `${this.apiUrlResourceServe}` + '/exel-contabil?size=10000',
-      filtro
-    );
+
+    let headers =
+    new HttpHeaders({'responseType': 'blob'});
+
+    return this.httpClient.post<Blob>(
+      `${this.apiUrlResourceServe}` + '/xlsx1?size=10000',
+      filtro, { headers: headers }
+    ).pipe();
   }
 }

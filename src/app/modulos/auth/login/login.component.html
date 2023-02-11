@@ -1,32 +1,33 @@
 
 <div class="container" *ngIf="isLogado">
-  <p-panel header="LOGIN">
-<p-card  [style]="{'width': '25rem', 'margin-bottom': '2em'}" styleClass="p-card-shadow"   >
+  <p-panel >
+     <p-image alt="Card" src="../../../../assets/img/login2.webp"width="250"></p-image>
+<p-card  [style]="{'width': '27rem', 'margin-bottom': '2em'}" styleClass="p-card-shadow"   >
     <ng-template pTemplate="header">
 
-        <form [formGroup]="formLogin" novalidate>
-          <input type="text"
-          formControlName = "username"
-          name="username"
-          required
-          minlength="5"
-          email
-          pInputText
-          type="text"
-          placeholder="LOGIN">
-          <br> <br>
-         <input
-         formControlName = "password"
-         name="password"
-         pInputText
-         required
-         minlength="5"
-         type="password" nbInput  placeholder="SENHA">
-         <br> <br>
-         <button pButton pRipple  status="success" [disabled]="!formLogin.valid"  (click)="onSubmit()" class="p-button-plain mr-2 mb-2">Entrar</button>
-
-        </form>
     </ng-template>
+    <form [formGroup]="formLogin" novalidate>
+      <input type="text"
+      formControlName = "username"
+      name="username"
+      required
+      minlength="5"
+      email
+      pInputText
+      type="text"
+      placeholder="LOGIN">
+      <br> <br>
+     <input
+     formControlName = "password"
+     name="password"
+     pInputText
+     required
+     minlength="5"
+     type="password" nbInput  placeholder="SENHA">
+     <br> <br>
+     <button pButton pRipple type="button"  status="success" [disabled]="!formLogin.valid"  (click)="onSubmit()" class="p-button-warning" label="ENTRAR"> </button>
+
+    </form>
 </p-card>
   </p-panel>
 

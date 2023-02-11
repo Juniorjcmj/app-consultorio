@@ -3,3 +3,9 @@
 @import '_spinner';
 
 
+:host ::ng-deep .p-button-label{
+  text-align: center;
+  color: black;
+  font-weight: 900;
+
+}

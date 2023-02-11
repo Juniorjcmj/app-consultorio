@@ -30,6 +30,8 @@ import {PanelModule} from 'primeng/panel';
 import {PasswordModule} from 'primeng/password';
 import {ImageModule} from 'primeng/image';
 
+import {GalleriaModule} from 'primeng/galleria';
+
 
 @NgModule({
   declarations: [
@@ -68,7 +70,8 @@ import {ImageModule} from 'primeng/image';
     PaginatorModule,
     PanelModule,
     PasswordModule,
-    ImageModule
+    ImageModule,
+    GalleriaModule
 
 
    ]

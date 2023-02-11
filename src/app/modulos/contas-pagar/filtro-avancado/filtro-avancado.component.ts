@@ -13,6 +13,7 @@ import { ClassificacaoDespesaService } from '../../classificacao-despesa/classif
 import { ClassificacaoDespesa, SubClassificacaoDespesa } from '../../classificacao-despesa/classificacao-despesa';
 import { CustomMensagensService } from 'src/app/services/mensagens.service';
 
+
 @Component({
   selector: 'app-filtro-avancado',
   templateUrl: './filtro-avancado.component.html',
@@ -44,6 +45,7 @@ export class FiltroAvancadoComponent implements OnInit {
     private formBuilder: FormBuilder,
     private classificacaoService: ClassificacaoDespesaService,
     private customMessage: CustomMensagensService
+
   ) {
     this.subclassificacaoDespesa = []
 
@@ -110,8 +112,22 @@ export class FiltroAvancadoComponent implements OnInit {
      this.customMessage.onMessage("Erro ao realizar pesquisa!", "error")
     }
   );
+}
+emitirRelatorio() {
+  this.spinner.show();
+  this.service.relatorioContabil(this.formFilterAvancadissimo.value).subscribe(
+    (data : Blob) =>{
+      console.log("chamando !")
+      this.spinner.hide();
+      this.subclassificacaoDespesa = []
 
 
+
+    }, (error: any)=>{
+    this.customMessage.onMessage("Preencheu os filtros corretamente?", "error")
+    this.spinner.hide();
+    }
+);
 }
  carregarSubClassificacao(event: any) {
   let classificacao = this.classificacaoDespesa.filter(

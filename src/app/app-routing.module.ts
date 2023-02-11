@@ -18,7 +18,9 @@ import { ListComponent } from './modulos/conciliacao-cartao/page/list.component'
 
 const routes: Routes =
 [
-  { path: '',pathMatch:'full', redirectTo:'cartao' },
+  { path: '',pathMatch:'full', redirectTo:'home' },
+
+  {path:'home', component: HomeComponent },
 
   {path:'login', component: LoginComponent },
 
