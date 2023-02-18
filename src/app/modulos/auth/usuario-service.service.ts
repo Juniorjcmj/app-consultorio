@@ -40,7 +40,7 @@ export class UsuarioServiceService {
   }
   atualizarUsuario(record: UsuarioModel) {
     return this.httpClient
-      .put<any>(`${this.apiUrlResourceServe}`, record)
+      .put<any>(`${this.apiUrlResourceServe}`+"?usuarioId="+record.id, record)
       .pipe();
   }
   delete(record: any){

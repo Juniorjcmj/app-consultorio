@@ -50,3 +50,32 @@
 
   }
 }
+:host ::ng-deep .p-toolbar{
+  .p-button-label {
+   text-align: center;
+   color: #4c5257;
+   font-weight: 900;
+ }
+ .p-button-icon {
+   text-align: center;
+   color: #4c5257;
+   font-weight: 900;
+ }
+ .p-datatable .p-datatable-thead > tr > th {
+   color: #F59E0B;
+ }
+}
+:host ::ng-deep {
+ .p-datatable .p-datatable-thead {
+  border-radius: 7px;
+ }
+ .p-datatable .p-datatable-thead > tr > th {
+   color: #F59E0B;
+   background-color: #32373c;
+ }
+ .p-datatable .p-sortable-column .p-sortable-column-icon{
+   color: #F59E0B;
+   font-weight: 900;
+ }
+ background-color: #4c5257 !important;
+}

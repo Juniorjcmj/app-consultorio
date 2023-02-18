@@ -75,11 +75,13 @@ export class ManterUsuarioComponent implements OnInit {
     this.spinner.show();
     this.service.manter(this.form.value).subscribe(
       (data: any) => {
+        this.usuarioFormDialog = false;
         this.spinner.hide();
         this.message.onMessage("Operação realizada com Sucesso", "info")
         this.pagina = data;
       },
       (error: any) => {
+        this.usuarioFormDialog = false;
         this.spinner.hide();
         this.message.onMessage("Ocorreu um erro!", "error")
       }
@@ -119,14 +121,12 @@ export class ManterUsuarioComponent implements OnInit {
 
 
   delete(usuario: UsuarioModel){
-    console.log(usuario)
+
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja excluir ' + usuario.login + '?',
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        //codigo para excluir
-        this.spinner.show();
+      accept: () => {        //codigo para excluir
         this.spinner.show();
         this.service.delete(usuario.id).subscribe(
           data => {
