@@ -14,6 +14,7 @@ import { FinanceiroGuard } from './guards/financeiro.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { ListComponent } from './modulos/conciliacao-cartao/page/list.component';
 import { PageViaturaComponent } from './modulos/viatura/page-viatura/page-viatura.component';
+import { PageColaboradorComponent } from './modulos/colaborador/page-colaborador/page-colaborador.component';
 
 
 
@@ -40,6 +41,8 @@ const routes: Routes =
   { path:'usuarios', component: ManterUsuarioComponent, canActivate: [AdminGuard],},
 
   { path: 'viaturas',canActivate: [AuthGuard],component: PageViaturaComponent},
+
+  { path: 'colaborador',canActivate: [AuthGuard],component: PageColaboradorComponent},
 
   { path:'**', component: NotfoundComponent}
 

@@ -87,9 +87,9 @@ export class MenuComponent implements OnInit {
                routerLink: '/entregas'
              },
             {
-            label:'COLABORADORES',
+            label:'COLABORADOR',
             //icon:'pi pi-fw pi-user',
-            routerLink: '/colaboradores'
+            routerLink: '/colaborador'
             }
         ],
 
