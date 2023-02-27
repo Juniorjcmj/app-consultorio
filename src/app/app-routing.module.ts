@@ -15,6 +15,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { ListComponent } from './modulos/conciliacao-cartao/page/list.component';
 import { PageViaturaComponent } from './modulos/viatura/page-viatura/page-viatura.component';
 import { PageColaboradorComponent } from './modulos/colaborador/page-colaborador/page-colaborador.component';
+import { PageFuncaoComponent } from './modulos/colaborador/page-funcao/page-funcao.component';
 
 
 
@@ -43,6 +44,8 @@ const routes: Routes =
   { path: 'viaturas',canActivate: [AuthGuard],component: PageViaturaComponent},
 
   { path: 'colaborador',canActivate: [AuthGuard],component: PageColaboradorComponent},
+
+  { path: 'funcao',canActivate: [AdminGuard],component: PageFuncaoComponent},
 
   { path:'**', component: NotfoundComponent}
 

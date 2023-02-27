@@ -11,6 +11,8 @@ import { ColaboradorService } from '../colaborador.service';
 import { Colaborador } from '../model/colaborador';
 
 import * as XLSX from 'xlsx';
+import { FuncaoService } from '../funcao.service';
+import { Funcao } from '../model/funcao';
 
 @Component({
   selector: 'app-page-colaborador',
@@ -45,6 +47,7 @@ export class PageColaboradorComponent implements OnInit {
 
   // conciliacaoCartoes$: Observable<ConciliacaoCartao[]>;
   pagina!: Colaborador[];
+  opcoesFuncao!: Funcao[];
 
   @ViewChild('myDiv') myDiv!: ElementRef;
 
@@ -54,6 +57,7 @@ export class PageColaboradorComponent implements OnInit {
 
 
   constructor(
+    private serviceFuncao: FuncaoService,
     private service: ColaboradorService,
     private customMessage: CustomMensagensService,
     private messageService: MessageService,
@@ -71,6 +75,14 @@ export class PageColaboradorComponent implements OnInit {
         },
         (error) => {
           this.spinner.hide();
+          this.authService.getRedirect401(error.status);
+        }
+      );
+      this.serviceFuncao.getAll().subscribe(
+        (data: any) => {
+          this.opcoesFuncao = data
+        },
+        (error) => {
           this.authService.getRedirect401(error.status);
         }
       );

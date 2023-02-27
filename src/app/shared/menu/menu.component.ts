@@ -109,6 +109,11 @@ export class MenuComponent implements OnInit {
                 //icon:'pi pi-fw pi-building',
                 routerLink: '/empresa'
             },
+            {
+              label:'FUNÇÕES',
+              //icon:'pi pi-fw pi-building',
+              routerLink: '/funcao'
+          },
           ],
 
       }
