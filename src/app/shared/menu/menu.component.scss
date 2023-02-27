@@ -37,8 +37,15 @@
 :host ::ng-deep .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link .p-submenu-icon {
   color: #4c5257;
   margin-left: 0.5rem;
+
 }
 :host ::ng-deep .p-menubar .p-menuitem-link .p-menuitem-text {
+  font-size: 1.15rem !important;
+  font-weight: 800;
+}
+.nome{
+  color: #4c5257;
+  margin-left: 0.5rem;
   font-size: 1.15rem !important;
   font-weight: 800;
 }

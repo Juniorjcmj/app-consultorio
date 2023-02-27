@@ -41,6 +41,9 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { NotfoundComponent } from './modulos/notfound/notfound.component';
 import { FinanceiroGuard } from './guards/financeiro.guard';
 import { AdminGuard } from './guards/admin.guard';
+import { PageViaturaComponent } from './modulos/viatura/page-viatura/page-viatura.component';
+import { ViaturaModule } from './modulos/viatura/viatura.module';
+import { ColaboradorModule } from './modulos/colaborador/colaborador.module';
 
 // function initializeKeycloak(keycloak: KeycloakService) {
 //   return () =>
@@ -73,6 +76,7 @@ registerLocaleData(ptBr);
     NotfoundComponent,
 
 
+
   ],
   imports: [
     AppRoutingModule,
@@ -88,6 +92,8 @@ registerLocaleData(ptBr);
     OperadoraCartaoModule,
     ContasPagarModule,
     ClassificacaoDespesaModule,
+    ViaturaModule,
+    ColaboradorModule,
     AuthModule,
   //novo  sistema-servvico
   ConciliacaoCartaoModule,

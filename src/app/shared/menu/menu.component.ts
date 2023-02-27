@@ -39,12 +39,12 @@ export class MenuComponent implements OnInit {
       items:[
           {
           label:'CONTAS',
-          icon:'pi pi-fw pi-credit-card',
+         // icon:'pi pi-fw pi-credit-card',
           routerLink: '/contas-pagar',
           },
           {
             label:'CLASSIFICAÇÃO',
-            icon:'pi pi-fw pi-id-card',
+          //  icon:'pi pi-fw pi-id-card',
             routerLink: '/classificacao',
             },
       ]
@@ -59,17 +59,41 @@ export class MenuComponent implements OnInit {
             items:[
                 {
                     label:'CARTÃO',
-                    icon:'pi pi-fw pi-credit-card',
+                  //  icon:'pi pi-fw pi-credit-card',
                     routerLink: '/cartao'
                 },
                 {
                     label:'OPERADORA',
-                    icon:'pi pi-fw pi-shopping-bag',
+                   // icon:'pi pi-fw pi-shopping-bag',
                     routerLink: '/operadora-cartao'
                 },
 
             ]
         },
+
+      {
+
+        label:'EXPEDIÇÃO',
+        icon:'pi pi-fw pi-truck',
+        items:[
+            {
+                label:'VIATURAS',
+              //  icon:'pi pi-fw pi-users',
+                routerLink: '/viaturas'
+            },
+            {
+              label:'ENTREGAS',
+            //  icon:'pi pi-fw pi-building',
+               routerLink: '/entregas'
+             },
+            {
+            label:'COLABORADORES',
+            //icon:'pi pi-fw pi-user',
+            routerLink: '/colaboradores'
+            }
+        ],
+
+    },
         {
 
           label:'CONFIGURAÇÃO',
@@ -77,19 +101,17 @@ export class MenuComponent implements OnInit {
           items:[
               {
                   label:'USUÁRIOS',
-                  icon:'pi pi-fw pi-users',
+                 // icon:'pi pi-fw pi-users',
                   routerLink: '/usuarios'
               },
               {
                 label:'EMPRESAS',
-                icon:'pi pi-fw pi-building',
+                //icon:'pi pi-fw pi-building',
                 routerLink: '/empresa'
             },
-          ]
-      },
-        {
-          label:this.nomeUsuario
-      },
+          ],
+
+      }
 
     ];
   }

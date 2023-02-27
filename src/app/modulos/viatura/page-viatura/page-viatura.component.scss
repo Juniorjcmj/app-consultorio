@@ -1,3 +1,11 @@
+:host ::ng-deep .p-dialog .product-image {
+  width: 150px;
+  margin: 0 auto 2rem auto;
+  display: block;
+}
+:host ::ng-deep .p-button.p-button-lg .p-button-icon {
+  font-size: 2.20rem !important;
+}
 :host ::ng-deep .p-toolbar{
   .p-button-label {
    text-align: center;
@@ -25,4 +33,5 @@
    color: #F59E0B;
    font-weight: 900;
  }
+
 }

@@ -1,0 +1,124 @@
+<p-card>
+  <p-toast></p-toast>
+  <div id="htmlData">
+    <div class="card">
+      <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-warning  p-button-sm" pTooltip="CRIAR NOVA OPERADORA"
+            (click)="openNew()"></button>
+            <p-divider layout="vertical"></p-divider>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+          <p-image src="assets/icons/xlsx.png" alt="Image" width="50px" pTooltip="Extrair tabela XLS" tooltipPosition="bottom" (click)="exportexcel()"></p-image>
+
+          <p-divider layout="vertical"></p-divider>
+
+          <p-image src="assets/icons/pdf.png" alt="Image" width="50px" pTooltip="Extrair tabela PDF" tooltipPosition="bottom" (click)="exportPdf()"></p-image>
+        </ng-template>
+      </p-toolbar>
+
+
+      <p-table #dt [value]="pagina" [rows]="100" [paginator]="true" [rowsPerPageOptions]="[25,50]" id="excel-table"
+        [globalFilterFields]="['placa','combustivel','descricao', 'status']"
+        responsiveLayout="scroll" [(selection)]="selectedViatura" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} Viaturas" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+          <div class="flex align-items-center justify-content-between">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                placeholder="Pesquisar..." />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+
+            <th pSortableColumn="id">ID<p-sortIcon field="aute"></p-sortIcon>
+            </th>
+            <th pSortableColumn="placa">PLACA<p-sortIcon field="placa"></p-sortIcon>
+            </th>
+            <th pSortableColumn="descricao">DESCRIÇÃO <p-sortIcon field="descricao"></p-sortIcon>
+            </th>
+            <th pSortableColumn="combustivel">COMBUSTÍVEL <p-sortIcon field="combustivel"></p-sortIcon>
+            </th>
+            <th pSortableColumn="status">STATUS <p-sortIcon field="status"></p-sortIcon>
+            </th>
+
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-viaturaTable>
+          <tr>
+            <td>{{viaturaTable.id}}</td>
+            <td>{{viaturaTable.placa}}</td>
+            <td>{{viaturaTable.descricao}}</td>
+            <td>{{viaturaTable.combustivel}}</td>
+            <td>{{viaturaTable.status}}</td>
+            <td>
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-lg p-button-primary mr-2" pTooltip="EDITAR VIATURA"
+                (click)="edit(viaturaTable)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-lg p-button-danger" pTooltip="EXCLUIR VIATURA"
+                (click)="deleteOperadora(viaturaTable)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <!-- <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          Total de {{pagina.totalElements}} conciliações.
+        </div>
+      </ng-template> -->
+      </p-table>
+    </div>
+  </div>
+
+</p-card>
+
+
+
+<p-dialog [(visible)]="viaturaDialog" [style]="{width: '500px'}" header="CADASTRO DE VIATURAS " [modal]="true"
+  styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <form [formGroup]="form">
+      <div class="grid p-fluid">
+
+      <div class="col-6 ">
+        <label for="float-input">PLACA</label>
+        <input type="text" pInputText id="placa" formControlName="placa" name="placa" />
+      </div>
+      <div class="col-6 ">
+        <label for="float-input">DESCRIÇÃO</label>
+        <input type="text" pInputText id="descricao" formControlName="descricao" name="descricao"/>
+      </div>
+
+      <div class="col-6 ">
+        <label for="float-input">COMBUSTÍVEL</label>
+        <input type="text" pInputText id="combustivel" formControlName="combustivel" name="combustivel"/>
+      </div>
+
+      <div class="col-12 ">
+          <label for="float-input">STATUS</label>
+        <p-selectButton [options]="stateOptions" formControlName="status" id="status"
+          optionLabel="label" optionValue="value" name="status"></p-selectButton>
+        </div>
+
+       </div>
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" [disabled]="!form.valid"
+      (click)="manterOperadora()"></button>
+  </ng-template>
+
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+
+  <p style="font-size: 20px; color: white">Carregando...</p>
+</ngx-spinner>
+
+
+

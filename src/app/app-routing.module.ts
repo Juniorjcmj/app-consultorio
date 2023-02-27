@@ -13,6 +13,7 @@ import { ManterUsuarioComponent } from './modulos/auth/manter-usuario/manter-usu
 import { FinanceiroGuard } from './guards/financeiro.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { ListComponent } from './modulos/conciliacao-cartao/page/list.component';
+import { PageViaturaComponent } from './modulos/viatura/page-viatura/page-viatura.component';
 
 
 
@@ -37,6 +38,8 @@ const routes: Routes =
   { path:'classificacao', component: PageClassificacaoDespesaComponent, canActivate: [FinanceiroGuard],},
 
   { path:'usuarios', component: ManterUsuarioComponent, canActivate: [AdminGuard],},
+
+  { path: 'viaturas',canActivate: [AuthGuard],component: PageViaturaComponent},
 
   { path:'**', component: NotfoundComponent}
 
