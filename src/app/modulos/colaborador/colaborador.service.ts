@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Colaborador } from './model/colaborador';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,7 @@ atualizar(record: any) {
     .pipe();
 }
 getAll() {
-  return this.httpClient.get<any>(
+  return this.httpClient.get<Colaborador>(
     `${this.apiUrl}`
   );
 }

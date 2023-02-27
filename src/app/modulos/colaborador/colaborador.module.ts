@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageColaboradorComponent } from './page-colaborador/page-colaborador.component';
+import { PrimengModule } from '../../shared/primeng.module';
 
 
 
@@ -9,7 +10,8 @@ import { PageColaboradorComponent } from './page-colaborador/page-colaborador.co
     PageColaboradorComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    PrimengModule
   ]
 })
 export class ColaboradorModule { }

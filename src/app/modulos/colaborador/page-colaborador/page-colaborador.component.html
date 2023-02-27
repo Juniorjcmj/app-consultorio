@@ -1,1 +1,146 @@
-<p>page-colaborador works!</p>
+<p-card>
+  <p-toast></p-toast>
+  <div id="htmlData">
+    <div class="card">
+      <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+          <button pButton pRipple label="Novo(a)" icon="pi pi-plus" class="p-button-warning  p-button-sm" pTooltip="CRIAR NOVA OPERADORA"
+            (click)="openNew()"></button>
+            <p-divider layout="vertical"></p-divider>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+          <p-image src="assets/icons/xlsx.png" alt="Image" width="50px" pTooltip="Extrair tabela XLS" tooltipPosition="bottom" (click)="exportexcel()"></p-image>
+
+          <p-divider layout="vertical"></p-divider>
+
+          <p-image src="assets/icons/pdf.png" alt="Image" width="50px" pTooltip="Extrair tabela PDF" tooltipPosition="bottom" (click)="exportPdf()"></p-image>
+        </ng-template>
+      </p-toolbar>
+
+
+      <p-table #dt [value]="pagina" [rows]="100" [paginator]="true" [rowsPerPageOptions]="[25,50]" id="excel-table"
+        [globalFilterFields]="['nome','funcao','identidade', 'ativo']"
+        responsiveLayout="scroll" [(selection)]="selected" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} Viaturas" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+          <div class="flex align-items-center justify-content-between">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                placeholder="Pesquisar..." />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+
+            <th pSortableColumn="id">ID<p-sortIcon field="aute"></p-sortIcon></th>
+            <th pSortableColumn="nome">NOME<p-sortIcon field="nome"></p-sortIcon> </th>
+            <th pSortableColumn="funcao">FUNÇÃO <p-sortIcon field="funcao"></p-sortIcon></th>
+            <th pSortableColumn="identidade">IDENTIDADE <p-sortIcon field="identidade"></p-sortIcon></th>
+            <th pSortableColumn="cnh">CNH <p-sortIcon field="cnh"></p-sortIcon></th>
+            <th pSortableColumn="tipoCnh">CATEGORIA CNH <p-sortIcon field="tipoCnh"></p-sortIcon></th>
+            <th pSortableColumn="cpf">CPF <p-sortIcon field="cpf"></p-sortIcon></th>
+            <th pSortableColumn="dataNascimento">DATA NASCIMENTO <p-sortIcon field="dataNascimento"></p-sortIcon></th>
+            <th pSortableColumn="ativo">ATIVO <p-sortIcon field="ativo"></p-sortIcon></th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-colaboradorTable>
+          <tr>
+            <td>{{colaboradorTable.id}}</td>
+            <td>{{colaboradorTable.nome}}</td>
+            <td>{{colaboradorTable.funcao}}</td>
+            <td>{{colaboradorTable.identidade}}</td>
+            <td>{{colaboradorTable.cnh}}</td>
+            <td>{{colaboradorTable.tipoCnh}}</td>
+            <td>{{colaboradorTable.cpf}}</td>
+            <td>{{colaboradorTable.dataNascimento}}</td>
+            <td>{{colaboradorTable.ativo}}</td>
+            <td>
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-lg p-button-primary mr-2" pTooltip="EDITAR VIATURA"
+                (click)="edit(colaboradorTable)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-lg p-button-danger" pTooltip="EXCLUIR VIATURA"
+                (click)="deleteColaborador(colaboradorTable)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <!-- <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          Total de {{pagina.totalElements}} colaboradores.
+        </div>
+      </ng-template> -->
+      </p-table>
+    </div>
+  </div>
+
+</p-card>
+
+
+
+<p-dialog [(visible)]="dialog" [style]="{width: '500px'}" header="CADASTRO DE COLABORADOR " [modal]="true"
+  styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <form [formGroup]="form">
+      <div class="grid p-fluid">
+
+      <div class="col-12 ">
+        <label for="float-input">NOME</label>
+        <input type="text" pInputText id="nome" formControlName="nome" name="nome" />
+      </div>
+      <div class="col-6 ">
+        <label for="float-input">FUNÇÃO</label>
+        <input type="text" pInputText id="funcao" formControlName="funcao" name="funcao"/>
+      </div>
+
+      <div class="col-6 ">
+        <label for="float-input">IDENTIDADE</label>
+        <input type="text" pInputText id="identidade" formControlName="identidade" name="identidade"/>
+      </div>
+      <div class="col-6 ">
+        <label for="float-input">CNH</label>
+        <input type="text" pInputText id="cnh" formControlName="cnh" name="cnh"/>
+      </div>
+      <div class="col-6 ">
+        <label for="float-input">CATEGORIA CNH</label>
+        <input type="text" pInputText id="tipoCnh" formControlName="tipoCnh" name="tipoCnh"/>
+      </div>
+      <div class="col-6 ">
+        <label for="float-input">CPF</label>
+        <input type="text" pInputText id="cpf" formControlName="cpf" name="cpf"/>
+      </div>
+      <div class="col-6">
+        <label for="float-input">DATA NASCIMENTO</label>
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-calendar"></i></span>
+            <input type="date" pInputText placeholder="DATA NASCIMENTO" formControlName="dataNascimento">
+        </div>
+    </div>
+
+      <div class="col-12 ">
+          <label for="float-input">ATIVO</label>
+        <p-selectButton [options]="stateOptions" formControlName="ativo" id="ativo"
+          optionLabel="label" optionValue="value" name="status"></p-selectButton>
+        </div>
+
+       </div>
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" [disabled]="!form.valid"
+      (click)="manterColaborador()"></button>
+  </ng-template>
+
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+
+  <p style="font-size: 20px; color: white">Carregando...</p>
+</ngx-spinner>
+
+
+
+
