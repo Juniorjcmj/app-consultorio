@@ -11,10 +11,7 @@ export class ColaboradorService {
 
   apiUrl =  environment.apiUrlResourceServer + 'V1/api-colaborador';
 constructor(
-  private httpClient: HttpClient,
-  private router: Router,
-
-) {}
+  private httpClient: HttpClient) {}
 
 manter(record: any) {
   if (record.id == null) {
@@ -37,7 +34,7 @@ atualizar(record: any) {
     .pipe();
 }
 getAll() {
-  return this.httpClient.get<Colaborador>(
+  return this.httpClient.get<any>(
     `${this.apiUrl}`
   );
 }
