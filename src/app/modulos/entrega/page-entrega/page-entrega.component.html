@@ -52,7 +52,7 @@
             <td>{{entregaTable.id}}</td>
             <td>{{entregaTable.dataSaida | date : 'dd/MM/yyyy'}}</td>
             <td>{{entregaTable.horaSaida}}</td>
-            <td>{{entregaTable.horaChegada }}</td>
+            <td>{{entregaTable.horaRetorno }}</td>
             <td>{{entregaTable.responsavel?.nome }}</td>
             <td>{{entregaTable.motorista?.nome }}</td>
             <td>{{entregaTable.status }}</td>
@@ -110,26 +110,26 @@
         <label for="float-input">ODÔMETRO</label>
         <input type="text" pInputText id="odometro" formControlName="odometro" name="odometro"/>
       </div>
-        <div class="col-12 ">
+        <div class="col-6 ">
           <label for="float-input">STATUS</label>
         <p-dropdown [options]="status" formControlName="status" inputId="status" placeholder="STATUS"
           optionLabel="label" optionValue="value" name="status"></p-dropdown>
         </div>
-        <div class="col-12 ">
+        <div class="col-6 ">
           <label for="float-input">RESPONSÁVEL</label>
         <p-dropdown [options]="colaboradores" placeholder="RESPONSÁVEL" formControlName="idColaboradorResponsavel" inputId="idColaboradorResponsavel"
           optionLabel="nome" optionValue="id" name="responsavel"></p-dropdown>
         </div>
-        <div class="col-12 ">
+        <div class="col-6 ">
           <label for="float-input">MOTORISTA</label>
         <p-dropdown [options]="colaboradores" placeholder="MOTORISTA" formControlName="idColaboradorMotorista" inputId="idColaboradorMotorista"
           optionLabel="nome" optionValue="id" name="idColaboradorMotorista"></p-dropdown>
         </div>
 
 
-        <div class="col-12 ">
+        <div class="col-6 ">
           <label for="float-input">DESCRIÇÃO</label>
-          <input type="textArea" pInputText id="descricao" formControlName="descricao" name="descricao"/>
+          <textarea pInputTextarea pInputText id="descricao" formControlName="descricao" name="descricao"></textarea>
         </div>
 
        </div>

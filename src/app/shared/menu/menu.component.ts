@@ -77,23 +77,26 @@ export class MenuComponent implements OnInit {
         icon:'pi pi-fw pi-truck',
         items:[
             {
-                label:'VIATURAS',
-              //  icon:'pi pi-fw pi-users',
-                routerLink: '/viaturas'
-            },
-            {
               label:'ENTREGAS',
             //  icon:'pi pi-fw pi-building',
                routerLink: '/entregas'
-             },
-            {
-            label:'COLABORADOR',
-            //icon:'pi pi-fw pi-user',
-            routerLink: '/colaborador'
-            }
+             }
         ],
 
     },
+    {
+
+      label:'COMPRAS',
+      icon:'pi pi-fw pi-amazon',
+      items:[
+          {
+            label:'LIMITE',
+          //  icon:'pi pi-fw pi-building',
+             routerLink: '/entregas'
+           }
+      ],
+
+  },
         {
 
           label:'CONFIGURAÇÃO',
@@ -113,6 +116,16 @@ export class MenuComponent implements OnInit {
               label:'FUNÇÕES',
               //icon:'pi pi-fw pi-building',
               routerLink: '/funcao'
+          },
+            {
+            label:'COLABORADOR',
+            //icon:'pi pi-fw pi-user',
+            routerLink: '/colaborador'
+            },
+            {
+              label:'VIATURAS',
+            //  icon:'pi pi-fw pi-users',
+              routerLink: '/viaturas'
           },
           ],
 

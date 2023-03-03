@@ -29,6 +29,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import {PanelModule} from 'primeng/panel';
 import {PasswordModule} from 'primeng/password';
 import {ImageModule} from 'primeng/image';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 import {GalleriaModule} from 'primeng/galleria';
 
@@ -71,7 +72,8 @@ import {GalleriaModule} from 'primeng/galleria';
     PanelModule,
     PasswordModule,
     ImageModule,
-    GalleriaModule
+    GalleriaModule,
+    InputTextareaModule
 
 
    ]
