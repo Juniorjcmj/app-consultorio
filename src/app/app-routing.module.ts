@@ -16,6 +16,7 @@ import { ListComponent } from './modulos/conciliacao-cartao/page/list.component'
 import { PageViaturaComponent } from './modulos/viatura/page-viatura/page-viatura.component';
 import { PageColaboradorComponent } from './modulos/colaborador/page-colaborador/page-colaborador.component';
 import { PageFuncaoComponent } from './modulos/colaborador/page-funcao/page-funcao.component';
+import { PageEntregaComponent } from './modulos/entrega/page-entrega/page-entrega.component';
 
 
 
@@ -44,6 +45,8 @@ const routes: Routes =
   { path: 'viaturas',canActivate: [AuthGuard],component: PageViaturaComponent},
 
   { path: 'colaborador',canActivate: [AuthGuard],component: PageColaboradorComponent},
+
+  { path: 'entregas',canActivate: [AuthGuard],component: PageEntregaComponent},
 
   { path: 'funcao',canActivate: [AdminGuard],component: PageFuncaoComponent},
 

@@ -12,7 +12,7 @@ export class ColaboradorInput{
   }
   export class Colaborador{
     id!:number
-    nome!: 	string
+    nome!: 	string;
     identidade!:	string
     funcao!:	Funcao
     cnh!:	string

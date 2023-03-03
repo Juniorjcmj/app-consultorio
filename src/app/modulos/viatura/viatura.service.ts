@@ -11,9 +11,7 @@ export class ViaturaService {
 
   apiUrl =  environment.apiUrlResourceServer + 'V1/api-viaturas';
 constructor(
-  private httpClient: HttpClient,
-  private router: Router,
-
+  private httpClient: HttpClient
 ) {}
 
 manter(record: any) {

@@ -44,6 +44,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { PageViaturaComponent } from './modulos/viatura/page-viatura/page-viatura.component';
 import { ViaturaModule } from './modulos/viatura/viatura.module';
 import { ColaboradorModule } from './modulos/colaborador/colaborador.module';
+import { EntregaModule } from './modulos/entrega/entrega.module';
 
 // function initializeKeycloak(keycloak: KeycloakService) {
 //   return () =>
@@ -94,6 +95,7 @@ registerLocaleData(ptBr);
     ClassificacaoDespesaModule,
     ViaturaModule,
     ColaboradorModule,
+    EntregaModule,
     AuthModule,
   //novo  sistema-servvico
   ConciliacaoCartaoModule,

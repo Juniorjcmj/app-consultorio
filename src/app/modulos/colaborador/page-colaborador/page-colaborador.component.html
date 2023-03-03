@@ -50,12 +50,12 @@
           <tr>
             <td>{{colaboradorTable.id}}</td>
             <td>{{colaboradorTable.nome}}</td>
-            <td>{{colaboradorTable.funcao}}</td>
+            <td>{{colaboradorTable.funcao.descricao}}</td>
             <td>{{colaboradorTable.identidade}}</td>
             <td>{{colaboradorTable.cnh}}</td>
             <td>{{colaboradorTable.tipoCnh}}</td>
             <td>{{colaboradorTable.cpf}}</td>
-            <td>{{colaboradorTable.dataNascimento}}</td>
+            <td>{{colaboradorTable.dataNascimento | date : 'dd/MM/yyyy'}}</td>
             <td>{{colaboradorTable.ativo}}</td>
             <td>
               <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-lg p-button-primary mr-2" pTooltip="EDITAR VIATURA"
