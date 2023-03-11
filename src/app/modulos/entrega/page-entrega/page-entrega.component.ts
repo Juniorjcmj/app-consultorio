@@ -101,6 +101,7 @@ export class PageEntregaComponent implements OnInit {
       this.status = [
         { label: 'AGUARDANDO', value: 'AGUARDANDO' },
         { label: 'CARREGANDO', value: 'CARREGANDO' },
+        { label: 'ENTREGUE', value: 'ENTREGUE' },
         { label: 'SAIU PARA ENTREGA', value: 'SAIU PARA ENTREGA' },
         { label: 'ADIADA', value: 'ADIADA' },
         { label: 'ENTREGA PARCIAL', value: 'ENTREGA PARCIAL' },
@@ -116,14 +117,15 @@ export class PageEntregaComponent implements OnInit {
       id: [null],
       dataSaida: [null,Validators.required],
       horaSaida: [null, Validators.required],
-      horaRetorno: [null, Validators.required],
+      horaRetorno: [null],
       numeroPedido: [null,Validators.required ],
       idViatura: [null, Validators.required],
-      odometro: [null, Validators.required],
+      odometroSaida: [null, Validators.required],
+      odometroEntrada: [null],
       status: [null, Validators.required],
       idColaboradorMotorista: [null, Validators.required],
       idColaboradorResponsavel: [null, Validators.required],
-      descricao: [null, Validators.required],
+      descricao: [null],
     });
     this.submitted = false;
     this.dialog = true;
@@ -133,12 +135,13 @@ export class PageEntregaComponent implements OnInit {
     this.form = this.formBuilder.group({
       id: [entrega.id],
       dataSaida: [entrega.dataSaida, Validators.required],
-      horaRetorno: [entrega.horaRetorno, Validators.required],
+      horaRetorno: [entrega.horaRetorno],
       horaSaida: [entrega.horaSaida, Validators.required],
       status: [entrega.status, Validators.required],
-      odometro: [entrega.odometro, Validators.required],
+      odometroSaida: [entrega.odometroSaida, Validators.required],
+      odometroEntrada: [entrega.odometroEntrada],
       numeroPedido: [entrega.numeroPedido, Validators.required],
-      descricao: [entrega.descricao, Validators.required],
+      descricao: [entrega.descricao],
       idViatura: [entrega.viatura.id, Validators.required],
       idColaboradorMotorista: [entrega.motorista.id, Validators.required],
       idColaboradorResponsavel: [entrega.responsavel.id, Validators.required],

@@ -92,7 +92,7 @@ export class MenuComponent implements OnInit {
           {
             label:'LIMITE',
           //  icon:'pi pi-fw pi-building',
-             routerLink: '/entregas'
+             routerLink: '/limite'
            }
       ],
 

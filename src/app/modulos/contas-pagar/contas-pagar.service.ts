@@ -61,6 +61,15 @@ export class ContasPagarService {
       )
       .pipe();
   }
+  deleteSituacaoPendente(record: any) {
+    return this.httpClient
+      .delete(
+        `${this.apiUrlResourceServe}` +
+          '/delete-em-aberto?numeroDocumento=' +
+          record['numeroDocumento']
+      )
+      .pipe();
+  }
 
   manterDataPagamento(record: ContasPagarUpdateGenerico): any {
     record.filtro = this.customStorage.get("filtro") as FiltroAvancado;

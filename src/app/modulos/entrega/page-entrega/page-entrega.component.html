@@ -41,7 +41,9 @@
             <th pSortableColumn="responsavel">RESPONSÁVEL <p-sortIcon field="responsavel"></p-sortIcon></th>
             <th pSortableColumn="motorista">MOTORISTA <p-sortIcon field="motorista"></p-sortIcon></th>
             <th pSortableColumn="status">STATUS <p-sortIcon field="status"></p-sortIcon></th>
-            <th pSortableColumn="odometro">ODÔMETRO <p-sortIcon field="odometro"></p-sortIcon></th>
+            <th pSortableColumn="odometroSaida">ODÔMETRO SAÍDA <p-sortIcon field="odometroSaida"></p-sortIcon></th>
+            <th pSortableColumn="odometroChegada">ODÔMETRO CHEGADA <p-sortIcon field="odometroChegada"></p-sortIcon></th>
+            <th pSortableColumn="kmRodados">KM RODADO <p-sortIcon field="kmRodados"></p-sortIcon></th>
             <th pSortableColumn="descricao">DESCRIÇÃO <p-sortIcon field="descricao"></p-sortIcon></th>
 
             <th></th>
@@ -56,7 +58,9 @@
             <td>{{entregaTable.responsavel?.nome }}</td>
             <td>{{entregaTable.motorista?.nome }}</td>
             <td>{{entregaTable.status }}</td>
-            <td>{{entregaTable.odometro}}</td>
+            <td>{{entregaTable.odometroSaida}}</td>
+            <td>{{entregaTable.odometroEntrada}}</td>
+            <td>{{entregaTable.kmRodados}}</td>
             <td>{{entregaTable.descricao }}</td>
             <td>
               <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-lg p-button-primary mr-2" pTooltip="EDITAR VIATURA"
@@ -79,55 +83,57 @@
 
 
 
-<p-dialog [(visible)]="dialog" [style]="{width: '500px'}" header="CADASTRO DE ENTREGAS " [modal]="true"
+<p-dialog [(visible)]="dialog" [style]="{width: '700px'}" header="CADASTRO DE ENTREGAS " [modal]="true"
   styleClass="p-fluid">
   <ng-template pTemplate="content">
     <form [formGroup]="form">
       <div class="grid p-fluid">
 
-      <div class="col-6 ">
+      <div class="col-4 ">
         <label for="float-input">DATA </label>
         <input type="date" pInputText id="dataSaida" formControlName="dataSaida" name="dataSaida" />
       </div>
-      <div class="col-6 ">
+      <div class="col-4 ">
         <label for="float-input">HORA SAÍDA</label>
         <input type="text" pInputText id="horaSaida" formControlName="horaSaida" name="horaSaida"/>
       </div>
-      <div class="col-6 ">
+      <div class="col-4 ">
         <label for="float-input">HORA CHEGADA</label>
         <input type="text" pInputText id="horaRetorno" formControlName="horaRetorno" name="horaRetorno"/>
       </div>
       <div class="col-6 ">
-        <label for="float-input">Nº PEDIDO</label>
-        <input type="text" pInputText id="numeroPedido" formControlName="numeroPedido" name="numeroPedido"/>
+        <label for="float-input">STATUS</label>
+      <p-dropdown [options]="status" formControlName="status" inputId="status" placeholder="STATUS"
+        optionLabel="label" optionValue="value" name="status"></p-dropdown>
+      </div>
+      <div class="col-6 ">
+        <label for="float-input">RESPONSÁVEL</label>
+      <p-dropdown [options]="colaboradores" placeholder="RESPONSÁVEL" formControlName="idColaboradorResponsavel" inputId="idColaboradorResponsavel"
+        optionLabel="nome" optionValue="id" name="responsavel"></p-dropdown>
+      </div>
+      <div class="col-6 ">
+        <label for="float-input">MOTORISTA</label>
+      <p-dropdown [options]="colaboradores" placeholder="MOTORISTA" formControlName="idColaboradorMotorista" inputId="idColaboradorMotorista"
+        optionLabel="nome" optionValue="id" name="idColaboradorMotorista"></p-dropdown>
       </div>
       <div class="col-6 ">
         <label for="float-input">VIATURA</label>
       <p-dropdown [options]="viaturas" formControlName="idViatura" inputId="idViatura" placeholder="VIATURA"
         optionLabel="placa" optionValue="id" name="idViatura"></p-dropdown>
       </div>
-      <div class="col-6 ">
-        <label for="float-input">ODÔMETRO</label>
-        <input type="text" pInputText id="odometro" formControlName="odometro" name="odometro"/>
+      <div class="col-4 ">
+        <label for="float-input">Nº PEDIDO</label>
+        <input type="text" pInputText id="numeroPedido" formControlName="numeroPedido" name="numeroPedido"/>
       </div>
-        <div class="col-6 ">
-          <label for="float-input">STATUS</label>
-        <p-dropdown [options]="status" formControlName="status" inputId="status" placeholder="STATUS"
-          optionLabel="label" optionValue="value" name="status"></p-dropdown>
-        </div>
-        <div class="col-6 ">
-          <label for="float-input">RESPONSÁVEL</label>
-        <p-dropdown [options]="colaboradores" placeholder="RESPONSÁVEL" formControlName="idColaboradorResponsavel" inputId="idColaboradorResponsavel"
-          optionLabel="nome" optionValue="id" name="responsavel"></p-dropdown>
-        </div>
-        <div class="col-6 ">
-          <label for="float-input">MOTORISTA</label>
-        <p-dropdown [options]="colaboradores" placeholder="MOTORISTA" formControlName="idColaboradorMotorista" inputId="idColaboradorMotorista"
-          optionLabel="nome" optionValue="id" name="idColaboradorMotorista"></p-dropdown>
-        </div>
-
-
-        <div class="col-6 ">
+      <div class="col-4 ">
+        <label for="float-input">ODÔMETRO SAÍDA</label>
+        <input type="text" pInputText id="odometrosaida" formControlName="odometroSaida" name="odometrosaida"/>
+      </div>
+      <div class="col-4 ">
+        <label for="float-input">ODÔMETRO ENTRADA</label>
+        <input type="text" pInputText id="odometroEntrada" formControlName="odometroEntrada" name="odometroEntrada"/>
+      </div>
+        <div class="col-12 ">
           <label for="float-input">DESCRIÇÃO</label>
           <textarea pInputTextarea pInputText id="descricao" formControlName="descricao" name="descricao"></textarea>
         </div>

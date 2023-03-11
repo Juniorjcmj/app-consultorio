@@ -1,0 +1,26 @@
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 30px;
+}
+
+@media (min-width: 501px) {
+  .form-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .form-group label {
+    width: 30%;
+    margin-right: 5%;
+  }
+
+  .form-group input {
+    width: 65%;
+  }
+}

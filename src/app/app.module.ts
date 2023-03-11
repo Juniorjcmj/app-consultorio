@@ -45,6 +45,9 @@ import { PageViaturaComponent } from './modulos/viatura/page-viatura/page-viatur
 import { ViaturaModule } from './modulos/viatura/viatura.module';
 import { ColaboradorModule } from './modulos/colaborador/colaborador.module';
 import { EntregaModule } from './modulos/entrega/entrega.module';
+import { ProdutosModule } from './modulos/produtos/produtos.module';
+import { ProductCardComponent } from './modulos/produtos/product-card/product-card.component';
+import { ExpedicaoGuard } from './guards/expedicao.guard';
 
 // function initializeKeycloak(keycloak: KeycloakService) {
 //   return () =>
@@ -74,7 +77,8 @@ registerLocaleData(ptBr);
     DashboardComponent,
     //novo sistemaServico
     MenuComponent,
-    NotfoundComponent,
+    NotfoundComponent
+    ,
 
 
 
@@ -97,6 +101,7 @@ registerLocaleData(ptBr);
     ColaboradorModule,
     EntregaModule,
     AuthModule,
+    ProdutosModule,
   //novo  sistema-servvico
   ConciliacaoCartaoModule,
   KeycloakAngularModule,
@@ -115,7 +120,8 @@ registerLocaleData(ptBr);
     // *
     AuthGuard,
     FinanceiroGuard,
-    AdminGuard
+    AdminGuard,
+    ExpedicaoGuard
 
   ],
   exports:[

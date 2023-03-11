@@ -1,39 +1,31 @@
 import { CustomMensagensService } from './../../../services/mensagens.service';
 import { EmpresaService } from './../../empresa/service/empresa-service';
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
-  FormControl,
   FormGroup,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
-import * as FileSaver from 'file-saver';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { KeycloakService } from 'keycloak-angular';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { catchError, of, tap, Observable, delay, map } from 'rxjs';
 import { ContasPagarService } from '../contas-pagar.service';
 import { ContasPagarDTO } from '../model/contasPagarDTO';
 import { ContasPagarInput } from '../model/contasPagarInput';
 
 import { Empresa } from '../../conciliacao-cartao/model/conciliacaoCartao';
 
-import { format, compareAsc } from 'date-fns';
+import { format} from 'date-fns';
 
 import { ClassificacaoDespesaService } from '../../classificacao-despesa/classificacao-despesa.service';
 
 import {
   SubClassificacaoDespesa,
-  ClassificacaoDespesa,
 } from '../../classificacao-despesa/classificacao-despesa';
 import { FiltroAvancado } from '../model/filtro';
 import { ContasPagarPage } from './contasPagarPage';
 import { AuthService } from '../../auth/auth.service';
-import { CustomAsyncValidatorDirective } from 'src/app/shared/asyncValidator';
 import { CustomLocalStorageService } from '../../../services/custom-local-storage.service';
 
 
@@ -74,7 +66,10 @@ export class PageContasPagarComponent implements OnInit {
 
   form!: FormGroup;
   formDeteleLote!: FormGroup;
+  formDeleteSituacaoPendente!: FormGroup;
   formDeleteLOteDialog: boolean = false;
+  formDeleteSituacaoPendenteDialog: boolean = false;
+
 
   display: boolean = false;
 
@@ -304,6 +299,14 @@ export class PageContasPagarComponent implements OnInit {
     this.submitted = false;
     this.formDeleteLOteDialog = true;
   }
+  abrirDeleteSituacaoPendente() {
+    this.formDeleteSituacaoPendente = this.formBuilder.group({
+      numeroDocumento: [null, Validators.required],
+    });
+
+    this.submitted = false;
+    this.formDeleteSituacaoPendenteDialog = true;
+  }
 
   deleteEmLote() {
     this.spinner.show();
@@ -311,6 +314,24 @@ export class PageContasPagarComponent implements OnInit {
       (data) => {
         this.spinner.hide();
         this.formDeleteLOteDialog = false;
+        this.customMessage.onMessage(
+          'Operação realizada com sucesso!',
+          'success'
+        );
+        this.buscarComFiltroAtual();
+      },
+      (error) => {
+        this.spinner.hide();
+        this.customMessage.onMessage('Operação não realizada!', 'error');
+      }
+    );
+  }
+  deleteSituacaoPendente() {
+    this.spinner.show();
+    this.service.deleteSituacaoPendente(this.formDeleteSituacaoPendente.value).subscribe(
+      (data) => {
+        this.spinner.hide();
+        this.formDeleteSituacaoPendenteDialog = false;
         this.customMessage.onMessage(
           'Operação realizada com sucesso!',
           'success'

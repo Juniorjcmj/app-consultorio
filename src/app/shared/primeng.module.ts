@@ -32,6 +32,7 @@ import {ImageModule} from 'primeng/image';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 
 import {GalleriaModule} from 'primeng/galleria';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import {GalleriaModule} from 'primeng/galleria';
   ],
    exports:
    [
+
     ButtonModule,
     MenubarModule,
     CardModule,

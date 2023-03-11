@@ -129,7 +129,7 @@ export class PageOperadoraComponent implements OnInit {
       taxaPadraoCredito: [operadora.taxaPadraoCredito, Validators.required],
       taxaPadraoDebito:[operadora.taxaPadraoDebito, Validators.required],
       inicio:[operadora.inicio, Validators.required],
-      fim:[operadora.fim, Validators.required]
+      fim:[operadora.fim]
     });
     this.submitted = false;
     this.operadoraDialog = true;
@@ -150,7 +150,7 @@ export class PageOperadoraComponent implements OnInit {
       taxaPadraoCredito: [operadora.taxaPadraoCredito, Validators.required],
       taxaPadraoDebito:[operadora.taxaPadraoDebito, Validators.required],
       inicio:[operadora.inicio, Validators.required],
-      fim:[operadora.fim, Validators.required]
+      fim:[operadora.fim]
     });
     this.submitted = false;
     this.operadoraDialog = true;

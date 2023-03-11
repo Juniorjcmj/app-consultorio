@@ -9,7 +9,8 @@ export class EntregaInput{
   horaSaida!:string;
   numeroPedido!:string;
   status!:string;
-  odometro!:string;
+  odometroEntrada!:string;
+  odometroSaida!:string;
   descricao!:string;
   idViatura!:number;
   idColaboradorMotorista!:number;
@@ -22,7 +23,8 @@ export class EntregaInput{
     horaSaida!:string;
     numeroPedido!:string;
     status!:string;
-    odometro!:string;
+    odometroEntrada!:string;
+    odometroSaida!:string;
     descricao!:string;
     viatura!:Viatura;
     motorista:Colaborador = new Colaborador();

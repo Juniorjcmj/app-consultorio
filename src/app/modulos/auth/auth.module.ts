@@ -12,6 +12,7 @@ import { AuthRoutingModule } from './auth.route';
 
 import { PrimengModule } from 'src/app/shared/primeng.module';
 import { AuthAppComponent } from './auth.app.component';
+import { LoginV1Component } from './login-v1/login-v1.component';
 
 
 
@@ -19,7 +20,8 @@ import { AuthAppComponent } from './auth.app.component';
   declarations: [
     LoginComponent,
     ManterUsuarioComponent,
-    AuthAppComponent
+    AuthAppComponent,
+    LoginV1Component
   ],
   imports: [
     CommonModule,

@@ -17,6 +17,9 @@ import { PageViaturaComponent } from './modulos/viatura/page-viatura/page-viatur
 import { PageColaboradorComponent } from './modulos/colaborador/page-colaborador/page-colaborador.component';
 import { PageFuncaoComponent } from './modulos/colaborador/page-funcao/page-funcao.component';
 import { PageEntregaComponent } from './modulos/entrega/page-entrega/page-entrega.component';
+import { LoginV1Component } from './modulos/auth/login-v1/login-v1.component';
+import { ProductListComponent } from './modulos/produtos/product-list/product-list.component';
+import { ExpedicaoGuard } from './guards/expedicao.guard';
 
 
 
@@ -27,6 +30,8 @@ const routes: Routes =
   {path:'home', component: HomeComponent },
 
   {path:'login', component: LoginComponent },
+
+  {path:'login-teste', component: ProductListComponent },
 
   { path: 'auth', loadChildren: ()=> import('./modulos/auth/auth.module').then(m => m.AuthModule)},
 
@@ -46,7 +51,7 @@ const routes: Routes =
 
   { path: 'colaborador',canActivate: [AuthGuard],component: PageColaboradorComponent},
 
-  { path: 'entregas',canActivate: [AuthGuard],component: PageEntregaComponent},
+  { path: 'entregas',canActivate: [ExpedicaoGuard],component: PageEntregaComponent},
 
   { path: 'funcao',canActivate: [AdminGuard],component: PageFuncaoComponent},
 
