@@ -49,6 +49,10 @@ import { ProdutosModule } from './modulos/produtos/produtos.module';
 import { ProductCardComponent } from './modulos/produtos/product-card/product-card.component';
 import { ExpedicaoGuard } from './guards/expedicao.guard';
 
+
+
+
+
 // function initializeKeycloak(keycloak: KeycloakService) {
 //   return () =>
 //     keycloak.init({
@@ -105,6 +109,8 @@ registerLocaleData(ptBr);
   //novo  sistema-servvico
   ConciliacaoCartaoModule,
   KeycloakAngularModule,
+  
+
 
   ],
   providers: [

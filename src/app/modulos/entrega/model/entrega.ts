@@ -30,3 +30,14 @@ export class EntregaInput{
     motorista:Colaborador = new Colaborador();
     responsavel:Colaborador = new Colaborador();;
     }
+
+
+export class FiltroAvancadoEntrega{
+  dataSaidaInicial	!: string;
+  dataSaidaFinal!: string;
+  idViatura!:string[];
+  idColaboradorMotorista!:string[];
+  idColaboradorResponsavel!:string[];
+  numeroPedido!:string;
+
+  }

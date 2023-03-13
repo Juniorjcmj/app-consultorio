@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Entrega } from './model/entrega';
+import { Entrega, FiltroAvancadoEntrega } from './model/entrega';
 import { Colaborador } from '../colaborador/model/colaborador';
 
 @Injectable({
@@ -41,6 +41,13 @@ export class EntregaService {
 
   delete(record: any){
     return  this.httpClient.delete(`${this.apiUrl}`+"?id="+record ).pipe();
+  }
+
+  filtroAvancadoAvancado(filtro: FiltroAvancadoEntrega): any {
+    return this.httpClient.post<Entrega>(
+      `${this.apiUrl}` + '/filtro-avancadissimo?size=500',
+      filtro
+    );
   }
 
 

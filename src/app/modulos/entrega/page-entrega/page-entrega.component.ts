@@ -48,7 +48,7 @@ export class PageEntregaComponent implements OnInit {
 
   display: boolean = false;
 
-  formFilter!: FormGroup;
+  formdataChegadaDialog: boolean = false;
 
   // conciliacaoCartoes$: Observable<ConciliacaoCartao[]>;
   pagina!: Entrega[];
@@ -58,6 +58,12 @@ export class PageEntregaComponent implements OnInit {
   //gerar excel
   title = 'entrega';
   fileName= 'entregas.xlsx';
+
+
+  //PROPRIEDADES PARA COMPOR FILTRO
+  viaturaOptions!: any[];
+  colaboradorOptions!: any[];
+  formFilter!: FormGroup;
 
   constructor(
     private viaturaService: ViaturaService,
@@ -74,7 +80,6 @@ export class PageEntregaComponent implements OnInit {
         (data: any) => {
           this.spinner.hide();
           this.pagina = data
-          console.log(data)
           this.entregaXLS = data
         },
         (error) => {
@@ -107,6 +112,16 @@ export class PageEntregaComponent implements OnInit {
         { label: 'ENTREGA PARCIAL', value: 'ENTREGA PARCIAL' },
         { label: 'CANCELADA', value: 'CANCELADA' },
       ];
+
+      this.formFilter = this.formBuilder.group({
+        dataSaidaInicial: null,
+        dataSaidaFinal: null,
+        idViatura: null,
+        idColaboradorMotorista: null,
+        idColaboradorResponsavel: null,
+        numeroPedido: null,
+
+      })
      }
 
   ngOnInit(): void {
@@ -132,6 +147,7 @@ export class PageEntregaComponent implements OnInit {
   }
 
   edit(entrega: Entrega) {
+    console.log(entrega)
     this.form = this.formBuilder.group({
       id: [entrega.id],
       dataSaida: [entrega.dataSaida, Validators.required],
@@ -149,6 +165,26 @@ export class PageEntregaComponent implements OnInit {
     this.submitted = false;
     this.dialog = true;
   }
+
+  editChegada(entrega: Entrega) {
+    this.form = this.formBuilder.group({
+      id: [entrega.id],
+      dataSaida: [entrega.dataSaida],
+      horaRetorno: [entrega.horaRetorno, Validators.required],
+      horaSaida: [entrega.horaSaida],
+      status: [entrega.status],
+      odometroSaida: [entrega.odometroSaida],
+      odometroEntrada: [entrega.odometroEntrada],
+      numeroPedido: [entrega.numeroPedido],
+      descricao: [entrega.descricao],
+      idViatura: [entrega.viatura.id],
+      idColaboradorMotorista: [entrega.motorista.id],
+      idColaboradorResponsavel: [entrega.responsavel.id],
+    });
+    this.submitted = false;
+    this.formdataChegadaDialog = true;
+  }
+
 
   delete(record: Entrega) {
 
@@ -200,10 +236,10 @@ export class PageEntregaComponent implements OnInit {
     this.submitted = false;
   }
   manter() {
-
     this.spinner.show();
     this.dialog = false;
     this.display = false;
+    this.formdataChegadaDialog = false;
     this.submitted = true;
     this.service.manter(this.form.value).subscribe(
       (success:any) => {
@@ -277,5 +313,26 @@ export class PageEntregaComponent implements OnInit {
     XLSX.writeFile(wb, this.fileName);
 
   }
+
+
+  //MÉTODOS PARA FILTRO AVANÇADO
+
+  resetarFiltro(){
+    this.formFilter.reset()
+  }
+  filtroAvancadissimo() {
+    this.spinner.show();
+   this.service.filtroAvancadoAvancado(this.formFilter.value).subscribe(
+    (data : Entrega[]) =>{
+      this.spinner.hide();
+          this.pagina = data
+          this.entregaXLS = data
+    }, (error: any)=>{
+      this.spinner.hide();
+     this.customMessage.onMessage("Erro ao realizar pesquisa!", "error")
+    }
+  );
+}
+
 
 }
