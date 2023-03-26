@@ -104,6 +104,8 @@
           <tr>
 
             <th pSortableColumn="id">ID<p-sortIcon field="aute"></p-sortIcon></th>
+            <th pSortableColumn="numeroPedido">Nº PEDIDO<p-sortIcon field="numeroPedido"></p-sortIcon></th>
+            <th pSortableColumn="viatura.placa">VIATURA<p-sortIcon field="viatura.placa"></p-sortIcon></th>
             <th pSortableColumn="dataSaida">DATA SAÍDA<p-sortIcon field="dataSaida"></p-sortIcon></th>
             <th pSortableColumn="horaSaida">HORA SAÍDA <p-sortIcon field="horaSaida"></p-sortIcon></th>
             <th pSortableColumn="horaChegada">HORA CHEGADA <p-sortIcon field="horaChegada"></p-sortIcon></th>
@@ -121,6 +123,8 @@
         <ng-template pTemplate="body" let-entregaTable>
           <tr>
             <td>{{entregaTable.id}}</td>
+            <td>{{entregaTable.numeroPedido}}</td>
+            <td>{{entregaTable.viatura.placa}}</td>
             <td>{{entregaTable.dataSaida | date : 'dd/MM/yyyy'}}</td>
             <td>{{entregaTable.horaSaida}}</td>
             <td  (click)="editChegada(entregaTable)" >{{entregaTable.horaRetorno }}</td>

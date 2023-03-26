@@ -53,6 +53,7 @@ import { ExpedicaoGuard } from './guards/expedicao.guard';
 
 
 
+
 // function initializeKeycloak(keycloak: KeycloakService) {
 //   return () =>
 //     keycloak.init({
@@ -109,7 +110,7 @@ registerLocaleData(ptBr);
   //novo  sistema-servvico
   ConciliacaoCartaoModule,
   KeycloakAngularModule,
-  
+
 
 
   ],
