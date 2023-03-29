@@ -20,6 +20,8 @@ import { PageEntregaComponent } from './modulos/entrega/page-entrega/page-entreg
 import { LoginV1Component } from './modulos/auth/login-v1/login-v1.component';
 import { ProductListComponent } from './modulos/produtos/product-list/product-list.component';
 import { ExpedicaoGuard } from './guards/expedicao.guard';
+import { FinanceiroComponent } from './modulos/contas-pagar/financeiro/financeiro.component';
+import { PageComprasComponent } from './modulos/compras/page-compras/page-compras.component';
 
 
 
@@ -45,6 +47,8 @@ const routes: Routes =
 
   { path:'classificacao', component: PageClassificacaoDespesaComponent, canActivate: [FinanceiroGuard],},
 
+  { path:'financeiro', component: FinanceiroComponent, canActivate: [FinanceiroGuard],},
+
   { path:'usuarios', component: ManterUsuarioComponent, canActivate: [AdminGuard],},
 
   { path: 'viaturas',canActivate: [AuthGuard],component: PageViaturaComponent},
@@ -54,6 +58,8 @@ const routes: Routes =
   { path: 'entregas',canActivate: [ExpedicaoGuard],component: PageEntregaComponent},
 
   { path: 'funcao',canActivate: [AdminGuard],component: PageFuncaoComponent},
+
+  { path:'limite', canActivate:[AuthGuard], component: PageComprasComponent},
 
   { path:'**', component: NotfoundComponent}
 

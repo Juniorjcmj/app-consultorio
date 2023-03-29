@@ -121,4 +121,12 @@ export class ContasPagarService {
       filtro, { headers: headers }
     ).pipe();
   }
+
+  getDespesasUltimosSeisMeses() {
+    return  this.httpClient.get<any>(`${this.apiUrlResourceServe}`+"/total-seis-meses").pipe();
+  }
+  getDespesasUltimosSeisMesesPorTipo(record: any) {
+    return  this.httpClient.get<any>(`${this.apiUrlResourceServe}`+"/total-seis-meses-tipo?tipoDespesa="+record).pipe();
+  }
+
 }

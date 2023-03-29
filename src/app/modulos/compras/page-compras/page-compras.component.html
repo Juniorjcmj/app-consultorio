@@ -1,0 +1,112 @@
+<p-card>
+  <p-toast></p-toast>
+  <div id="htmlData">
+    <div class="card">
+
+
+      <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-primary  p-button-sm" pTooltip="CRIAR LIMITE DE CRÉDITO"
+            (click)="openNew()"></button>
+
+        </ng-template>
+
+        <ng-template pTemplate="right">
+          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+            class="p-button-rounded p-button-text p-button-info p-button-lg" pTooltip="XLS" tooltipPosition="bottom"></button>
+          <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
+            class="p-button-rounded p-button-text p-button-danger p-button-lg" pTooltip="PDF" tooltipPosition="bottom"></button>
+        </ng-template>
+      </p-toolbar>
+
+
+      <p-table #dt [value]="pagina" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,25,50,100,200]"
+        responsiveLayout="scroll" [(selection)]="selectedCredito" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+          <div class="flex align-items-center justify-content-between">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                placeholder="Pesquisar..." />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+
+            <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
+            <th pSortableColumn="vigencia">MÊS VIGÊNCIA<p-sortIcon field="vigencia"></p-sortIcon></th>
+            <th pSortableColumn="credito">CRÉDITO  <p-sortIcon field="credito"></p-sortIcon></th>
+            <th pSortableColumn="debito">DÉBITO ATUAL<p-sortIcon field="debito"></p-sortIcon></th>
+            <th pSortableColumn="saldo">LIMITE ATUAL <p-sortIcon field="saldo"></p-sortIcon></th>
+
+
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-creditoTable>
+          <tr>
+            <td>{{creditoTable.id}}</td>
+            <td>{{creditoTable.periodo}}</td>
+            <td>{{creditoTable.credito  | currency}}</td>
+            <td ngClass="negativo">{{creditoTable.debito  | currency}}</td>
+            <td [ngClass]="{
+              'positivo':creditoTable.situacao ==='POSITIVO',
+              'negativo':creditoTable.situacao === 'NEGATIVO'}">
+              {{creditoTable.saldo | currency}}
+            </td>
+            <td>
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-primary p-button-lg " pTooltip="EDITAR LIMITE DE CRÉDITO"
+                (click)="openEdit(creditoTable)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger p-button-lg" pTooltip="EXCLUIR LIMITE DE CRÉDITO"
+                (click)="delete(creditoTable)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <!-- <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          Total de {{pagina.totalElements}} conciliações.
+        </div>
+      </ng-template> -->
+      </p-table>
+    </div>
+  </div>
+
+</p-card>
+
+
+
+<p-dialog [(visible)]="creditoDialog" [style]="{width: '500px'}" header="Cadastro de Empresa " [modal]="true"
+  styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <form [formGroup]="form">
+
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon"><i class="pi pi-calendar"></i></span>
+        <input type="date" pInputText placeholder="VIGÊNCIA" formControlName="inicio">
+    </div>
+
+      <div class="field col">
+        <input type="text" pInputText id="credito" formControlName="credito" name="credito" placeholder="CRÉDITO"/>
+      </div>
+
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" [disabled]="!form.valid"
+      (click)="manterCredito()"></button>
+  </ng-template>
+
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+
+  <p style="font-size: 20px; color: white">Carregando...</p>
+</ngx-spinner>
+
+
+
+

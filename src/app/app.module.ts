@@ -48,6 +48,7 @@ import { EntregaModule } from './modulos/entrega/entrega.module';
 import { ProdutosModule } from './modulos/produtos/produtos.module';
 import { ProductCardComponent } from './modulos/produtos/product-card/product-card.component';
 import { ExpedicaoGuard } from './guards/expedicao.guard';
+import { ComprasModule } from './modulos/compras/compras.module';
 
 
 
@@ -107,12 +108,10 @@ registerLocaleData(ptBr);
     EntregaModule,
     AuthModule,
     ProdutosModule,
+    ComprasModule,
   //novo  sistema-servvico
   ConciliacaoCartaoModule,
   KeycloakAngularModule,
-
-
-
   ],
   providers: [
 
@@ -122,7 +121,7 @@ registerLocaleData(ptBr);
        multi:true
       },
       // **********Para formatar moeda para real brasileiro**************************
-    { provide: LOCALE_ID, useValue: 'pt' },
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },
     // *
     AuthGuard,

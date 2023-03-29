@@ -34,6 +34,8 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
 import {GalleriaModule} from 'primeng/galleria';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { ChartModule } from 'primeng/chart';
+
 
 
 
