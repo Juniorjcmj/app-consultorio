@@ -22,6 +22,7 @@ import { ProductListComponent } from './modulos/produtos/product-list/product-li
 import { ExpedicaoGuard } from './guards/expedicao.guard';
 import { FinanceiroComponent } from './modulos/contas-pagar/financeiro/financeiro.component';
 import { PageComprasComponent } from './modulos/compras/page-compras/page-compras.component';
+import { ComprasGuard } from './guards/compras.guard';
 
 
 
@@ -59,7 +60,7 @@ const routes: Routes =
 
   { path: 'funcao',canActivate: [AdminGuard],component: PageFuncaoComponent},
 
-  { path:'limite', canActivate:[AuthGuard], component: PageComprasComponent},
+  { path:'limite', canActivate:[ComprasGuard], component: PageComprasComponent},
 
   { path:'**', component: NotfoundComponent}
 

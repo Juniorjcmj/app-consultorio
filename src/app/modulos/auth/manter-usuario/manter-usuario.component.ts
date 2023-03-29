@@ -109,9 +109,10 @@ export class ManterUsuarioComponent implements OnInit {
       id:[usuario.id],
       nome: [usuario.nome, Validators.required],
       login: [usuario.login, Validators.required],
+      senha: [null, Validators.required],
       cpf: [usuario.cpf, Validators.required],
       cargo: [usuario.cargo, Validators.required],
-      teleforne: [usuario.telefone, Validators.required],
+      telefone: [usuario.telefone, Validators.required],
       idade: [usuario.idade, Validators.required],
       identidade: [usuario.identidade, Validators.required],
     });
