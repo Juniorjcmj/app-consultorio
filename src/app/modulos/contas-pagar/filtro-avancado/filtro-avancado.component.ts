@@ -151,4 +151,32 @@ resetarFiltro(){
 
  }
 
+ public downloadXls(): void {
+  this.service.getUserXls(this.formFilterAvancadissimo.value).subscribe(
+    (response: any) => {
+      const filename = this.getFilenameFromContentDisposition(response.headers.get('Content-Disposition'));
+      this.downloadFile(response.body, filename);
+    },
+    (error: any) => console.log(error)
+  );
+
+}
+private downloadFile(data: Blob, filename: string): void {
+  const url = window.URL.createObjectURL(data);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  link.click();
+  window.URL.revokeObjectURL(url);
+  link.remove();
+}
+
+private getFilenameFromContentDisposition(contentDisposition: string): string {
+  const filenameRegex = /filename[^;=\n]*=(['"]?)([^"';\n]*)\1?/;
+  const matches = filenameRegex.exec(contentDisposition);
+  return matches != null && matches.length > 2 ? matches[2] : 'download.xls';
+}
+
+
+
 }

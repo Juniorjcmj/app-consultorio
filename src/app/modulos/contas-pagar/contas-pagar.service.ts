@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
@@ -127,6 +127,18 @@ export class ContasPagarService {
   }
   getDespesasUltimosSeisMesesPorTipo(record: any) {
     return  this.httpClient.get<any>(`${this.apiUrlResourceServe}`+"/total-seis-meses-tipo?tipoDespesa="+record).pipe();
+  }
+
+  public getUserXls(filtro: FiltroAvancado): Observable<HttpResponse<Blob>> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/vnd.ms-excel'
+    });
+    return this.httpClient.post<Blob>(`${environment.apiUrlResourceServer}pdf/contas/xls?size=10000`,filtro, {
+      headers: headers,
+      responseType: 'blob' as 'json',
+      observe: 'response'
+    });
   }
 
 }

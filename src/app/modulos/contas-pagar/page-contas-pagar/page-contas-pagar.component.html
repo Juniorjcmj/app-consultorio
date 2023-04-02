@@ -3,7 +3,7 @@
   <div id="htmlData">
     <div class="card">
 
-       <app-financeiro></app-financeiro>
+       <!-- <app-financeiro></app-financeiro> -->
        <app-filtro-avancado></app-filtro-avancado>
 
       <p-toolbar styleClass="mb-4">
@@ -28,6 +28,7 @@
 
           <p-image src="assets/icons/xlsx.png" alt="Image" width="50px" pTooltip="Extrair tabela XLS" tooltipPosition="bottom" (click)="exportexcel()"></p-image>
 
+          <p-divider layout="vertical"></p-divider>
           <p-divider layout="vertical"></p-divider>
           <p-image src="assets/icons/pdf.png" alt="Image" width="50px" pTooltip="Extrair tabela PDF" tooltipPosition="bottom" (click)="exportPdf()"></p-image>
         </ng-template>

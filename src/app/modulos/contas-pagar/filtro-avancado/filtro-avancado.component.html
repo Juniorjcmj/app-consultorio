@@ -106,10 +106,16 @@
       ></button>
   </div>
 </div>
-
-
+<div class="col-12 md:col-3">
+  <div class="p-inputgroup" style="margin-top:20px ;">
+      <button label="GERAR MOV CONTÁBIL" type="button" pButton pRipple icon="pi pi-file-excel" class="p-button-raised p-button-warning p-button-text" (click)="downloadXls()"
+      [disabled]="!formFilterAvancadissimo.valid"
+      ></button>
+  </div>
+</div>
     </div>
     </form>
+
   </p-accordionTab>
 </p-accordion>
 
