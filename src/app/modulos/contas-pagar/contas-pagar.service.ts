@@ -141,4 +141,17 @@ export class ContasPagarService {
     });
   }
 
+
+  public getContasAgrupasdasXls(filtro: FiltroAvancado): Observable<HttpResponse<Blob>> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/vnd.ms-excel'
+    });
+    return this.httpClient.post<Blob>(`${environment.apiUrlResourceServer}pdf/contas-agrupadas/xls?size=10000`,filtro, {
+      headers: headers,
+      responseType: 'blob' as 'json',
+      observe: 'response'
+    });
+  }
+
 }

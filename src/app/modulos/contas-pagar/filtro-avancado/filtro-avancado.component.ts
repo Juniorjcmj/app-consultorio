@@ -154,7 +154,17 @@ resetarFiltro(){
  public downloadXls(): void {
   this.service.getUserXls(this.formFilterAvancadissimo.value).subscribe(
     (response: any) => {
-      const filename = this.getFilenameFromContentDisposition(response.headers.get('Content-Disposition'));
+      const filename = this.getFilenameFromContentDisposition(response.headers.get('Content-Disposition'), "mov-cont");
+      this.downloadFile(response.body, filename);
+    },
+    (error: any) => console.log(error)
+  );
+
+}
+public downloadContasAgrupadasXls(): void {
+  this.service.getContasAgrupasdasXls(this.formFilterAvancadissimo.value).subscribe(
+    (response: any) => {
+      const filename = this.getFilenameFromContentDisposition(response.headers.get('Content-Disposition'), "contas-agrupadas");
       this.downloadFile(response.body, filename);
     },
     (error: any) => console.log(error)
@@ -171,10 +181,10 @@ private downloadFile(data: Blob, filename: string): void {
   link.remove();
 }
 
-private getFilenameFromContentDisposition(contentDisposition: string): string {
+private getFilenameFromContentDisposition(contentDisposition: string, nome: string): string {
   const filenameRegex = /filename[^;=\n]*=(['"]?)([^"';\n]*)\1?/;
   const matches = filenameRegex.exec(contentDisposition);
-  return matches != null && matches.length > 2 ? matches[2] : 'download.xls';
+  return matches != null && matches.length > 2 ? matches[2] : nome+'.xls';
 }
 
 
