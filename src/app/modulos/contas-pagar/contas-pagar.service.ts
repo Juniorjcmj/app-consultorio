@@ -77,6 +77,14 @@ export class ContasPagarService {
       .put(`${this.apiUrlResourceServe}` + '/update-data-pagamento', record)
       .pipe();
   }
+  manterDataVencimento(record: ContasPagarUpdateGenerico): any {
+    record.filtro = this.customStorage.get("filtro") as FiltroAvancado;
+    return this.httpClient
+      .put(`${this.apiUrlResourceServe}` + '/update-data-vencimento', record)
+      .pipe();
+  }
+
+
   manterDesconto(record: ContasPagarUpdateGenerico):any {
     record.filtro = this.customStorage.get("filtro") as FiltroAvancado;
     return this.httpClient

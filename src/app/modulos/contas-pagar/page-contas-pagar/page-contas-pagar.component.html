@@ -24,13 +24,13 @@
           <p-divider layout="vertical"></p-divider>
           <span class="pendente-total">PENDENTE : {{pagina.totalPendente  | currency}}</span>
 
-          <p-divider layout="vertical"></p-divider>
+          <!-- <p-divider layout="vertical"></p-divider>
 
           <p-image src="assets/icons/xlsx.png" alt="Image" width="50px" pTooltip="Extrair tabela XLS" tooltipPosition="bottom" (click)="exportexcel()"></p-image>
 
           <p-divider layout="vertical"></p-divider>
           <p-divider layout="vertical"></p-divider>
-          <p-image src="assets/icons/pdf.png" alt="Image" width="50px" pTooltip="Extrair tabela PDF" tooltipPosition="bottom" (click)="exportPdf()"></p-image>
+          <p-image src="assets/icons/pdf.png" alt="Image" width="50px" pTooltip="Extrair tabela PDF" tooltipPosition="bottom" (click)="exportPdf()"></p-image> -->
         </ng-template>
       </p-toolbar>
 
@@ -69,7 +69,7 @@
         <ng-template pTemplate="body" let-contasPagarTable>
           <tr>
             <td>{{contasPagarTable.nomeEmpresa}}</td>
-            <td>{{contasPagarTable.dataVencimento | date : 'dd/MM/yyyy'}}</td>
+            <td  (click)="editarDataVencimento(contasPagarTable)">{{contasPagarTable.dataVencimento | date : 'dd/MM/yyyy'}}</td>
             <td (click)="editarValorDuplicata(contasPagarTable)">{{contasPagarTable.valorDuplicata  | currency}}</td>
             <td>{{contasPagarTable.fornecedor}}</td>
             <td [ngClass]="{
@@ -217,6 +217,21 @@
           <input type="date" pInputText placeholder="VENCIMENTO" formControlName="dataPagamento" name="dataPagamento" >
           <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"  [disabled]="!editarDataPgtoform.valid"
           (click)="manterDataPagamento()"></button>
+      </div>
+  </div>
+
+  </form>
+  </ng-template>
+ </p-dialog>
+ <p-dialog header="" [(visible)]="editarDtVencDialog">
+  <ng-template pTemplate="content">
+  <form  [formGroup]="editarDataVencform">
+    <div class="col-12 md:col-12">
+      <div class="p-inputgroup">
+          <span pButton class="p-inputgroup-addon"><i class="pi pi-calendar"></i></span>
+          <input type="date" pInputText placeholder="VENCIMENTO" formControlName="dataVencimento" name="dataVencimento" >
+          <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"  [disabled]="!editarDataVencform.valid"
+          (click)="manterDataVencimento()"></button>
       </div>
   </div>
 

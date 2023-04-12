@@ -117,7 +117,7 @@ emitirRelatorio() {
   this.spinner.show();
   this.service.relatorioContabil(this.formFilterAvancadissimo.value).subscribe(
     (data : Blob) =>{
-      console.log("chamando !")
+
       this.spinner.hide();
       this.subclassificacaoDespesa = []
 
@@ -152,22 +152,34 @@ resetarFiltro(){
  }
 
  public downloadXls(): void {
+  this.spinner.show();
   this.service.getUserXls(this.formFilterAvancadissimo.value).subscribe(
     (response: any) => {
-      const filename = this.getFilenameFromContentDisposition(response.headers.get('Content-Disposition'), "mov-cont");
+      this.spinner.hide();
+      const filename = this.getFilenameFromContentDisposition(response.headers.get('Content-Disposition'), "contabil");
       this.downloadFile(response.body, filename);
     },
-    (error: any) => console.log(error)
+    (error: any) => {
+      this.customMessage.onMessage("Preencheu os filtros corretamente?", "error")
+      this.spinner.hide();
+
+    }
+
   );
 
 }
 public downloadContasAgrupadasXls(): void {
+  this.spinner.show();
   this.service.getContasAgrupasdasXls(this.formFilterAvancadissimo.value).subscribe(
     (response: any) => {
+      this.spinner.hide();
       const filename = this.getFilenameFromContentDisposition(response.headers.get('Content-Disposition'), "contas-agrupadas");
       this.downloadFile(response.body, filename);
     },
-    (error: any) => console.log(error)
+    (error: any) => {
+      this.customMessage.onMessage("Preencheu os filtros corretamente?", "error")
+      this.spinner.hide();
+    }
   );
 
 }

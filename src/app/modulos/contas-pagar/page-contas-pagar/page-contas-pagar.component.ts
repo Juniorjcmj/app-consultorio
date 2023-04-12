@@ -87,6 +87,9 @@ export class PageContasPagarComponent implements OnInit {
   editarDtPgtoDialog: boolean;
   editarDataPgtoform!: FormGroup;
 
+  editarDtVencDialog: boolean;
+  editarDataVencform!: FormGroup;
+
   editarLocalPgtoDialog: boolean;
   editarLocalPgtoform!: FormGroup;
 
@@ -122,6 +125,7 @@ export class PageContasPagarComponent implements OnInit {
     this.ContasPagarDtoXLS = [];
 
     this.editarDtPgtoDialog = false;
+    this.editarDtVencDialog = false;
     this.editarLocalPgtoDialog = false;
     this.editarJurosMultaDialog = false;
     this.editarDescontoDialog = false;
@@ -392,6 +396,34 @@ export class PageContasPagarComponent implements OnInit {
     this.display = false;
     this.submitted = true;
     this.service.manterDataPagamento(this.editarDataPgtoform.value).subscribe(
+      (data: any) => {
+        this.spinner.hide();
+        this.pagina = data;
+        this.customMessage.onSuccessSmall();
+      },
+      (error: any) => {
+        this.customMessage.onMessage(
+          'Erro ao tentar cadastrar, tente novamente',
+          'error'
+        );
+      }
+    );
+  }
+  editarDataVencimento(conta: ContasPagarDTO) {
+    this.editarDataVencform = this.formBuilder.group({
+      id: [conta.id],
+      dataVencimento: [conta.dataVencimento, Validators.required],
+    });
+    this.submitted = false;
+
+    this.editarDtVencDialog = true;
+  }
+  manterDataVencimento() {
+    this.spinner.show();
+    this.editarDtVencDialog = false;
+    this.display = false;
+    this.submitted = true;
+    this.service.manterDataVencimento(this.editarDataVencform.value).subscribe(
       (data: any) => {
         this.spinner.hide();
         this.pagina = data;
