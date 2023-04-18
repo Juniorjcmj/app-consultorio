@@ -147,7 +147,7 @@ export class PageEntregaComponent implements OnInit {
   }
 
   edit(entrega: Entrega) {
-    console.log(entrega)
+
     this.form = this.formBuilder.group({
       id: [entrega.id],
       dataSaida: [entrega.dataSaida, Validators.required],

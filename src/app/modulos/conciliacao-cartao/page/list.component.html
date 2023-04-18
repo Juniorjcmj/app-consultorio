@@ -171,8 +171,9 @@
             <td>{{conciliacaoTable.tipoOperacao}}</td>
             <td>{{conciliacaoTable.valorReceber | currency }}</td>
             <td>{{conciliacaoTable.previsaoRecebimento | date : 'dd/MM/yyyy'}}</td>
-            <td (click)="openDialogDataRecebimento(conciliacaoTable)">{{conciliacaoTable.dataRecebimento | date : 'dd/MM/yyyy'}}
-               <i   class="pi pi-calendar" style="font-size: 2rem"></i>
+            <td (click)="openDialogDataRecebimento(conciliacaoTable)">
+              {{conciliacaoTable.dataRecebimento | date : 'dd/MM/yyyy'}}
+               <i *ngIf="conciliacaoTable.dataRecebimento == undefined"   class="pi pi-calendar" style="font-size: 2rem"></i>
             </td>
 
             <td>{{conciliacaoTable.isAntecipa}}</td>

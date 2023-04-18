@@ -23,6 +23,8 @@ import { ExpedicaoGuard } from './guards/expedicao.guard';
 import { FinanceiroComponent } from './modulos/contas-pagar/financeiro/financeiro.component';
 import { PageComprasComponent } from './modulos/compras/page-compras/page-compras.component';
 import { ComprasGuard } from './guards/compras.guard';
+import { PageBancoComponent } from './modulos/banco/page-banco/page-banco.component';
+import { PageComprovanteComponent } from './modulos/comprovante/page-comprovante/page-comprovante.component';
 
 
 
@@ -61,6 +63,10 @@ const routes: Routes =
   { path: 'funcao',canActivate: [AdminGuard],component: PageFuncaoComponent},
 
   { path:'limite', canActivate:[ComprasGuard], component: PageComprasComponent},
+
+  { path:'banco', canActivate:[FinanceiroGuard], component: PageBancoComponent},
+
+  { path:'comprovante', canActivate:[FinanceiroGuard], component: PageComprovanteComponent},
 
   { path:'**', component: NotfoundComponent}
 

@@ -47,6 +47,11 @@ export class MenuComponent implements OnInit {
           //  icon:'pi pi-fw pi-id-card',
             routerLink: '/classificacao',
             },
+            {
+              label:'COMPROVANTES',
+             // icon:'pi pi-fw pi-shopping-bag',
+              routerLink: '/comprovante'
+          },
       ]
 
 
@@ -127,6 +132,11 @@ export class MenuComponent implements OnInit {
             //  icon:'pi pi-fw pi-users',
               routerLink: '/viaturas'
           },
+          {
+            label:'BANCO',
+          //  icon:'pi pi-fw pi-users',
+            routerLink: '/banco'
+        },
           ],
 
       }

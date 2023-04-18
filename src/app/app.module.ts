@@ -49,6 +49,8 @@ import { ProdutosModule } from './modulos/produtos/produtos.module';
 import { ProductCardComponent } from './modulos/produtos/product-card/product-card.component';
 import { ExpedicaoGuard } from './guards/expedicao.guard';
 import { ComprasModule } from './modulos/compras/compras.module';
+import { BancoModule } from './modulos/banco/banco.module';
+import { ComprovanteModule } from './modulos/comprovante/comprovante.module';
 
 
 
@@ -109,6 +111,8 @@ registerLocaleData(ptBr);
     AuthModule,
     ProdutosModule,
     ComprasModule,
+    BancoModule,
+    ComprovanteModule,
   //novo  sistema-servvico
   ConciliacaoCartaoModule,
   KeycloakAngularModule,
