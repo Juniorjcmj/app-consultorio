@@ -27,7 +27,7 @@ export class FinanceiroGuard implements CanActivate {
         this.message.onMessage("Você não tem previlégio de acesso!", "error")
         return false;
       }
-      this.router.navigate(['login'])
+      this.router.navigate(['acesso-negado'])
 
 
 

@@ -27,7 +27,7 @@ export class AdminGuard implements CanActivate {
         this.message.onMessage("Você não tem previlégio de acesso, Fale com administrador!", "warning")
         return false;
       }
-      this.router.navigate(['login'])
+      this.router.navigate(['acesso-negado'])
 
 
 

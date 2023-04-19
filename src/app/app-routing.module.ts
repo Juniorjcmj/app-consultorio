@@ -27,6 +27,7 @@ import { ComprasGuard } from './guards/compras.guard';
 import { PageBancoComponent } from './modulos/banco/page-banco/page-banco.component';
 import { PageComprovanteComponent } from './modulos/comprovante/page-comprovante/page-comprovante.component';
 import { AppLayoutComponent } from './layout/app.layout.component';
+import { AcessoNegadoComponent } from './modulos/auth/acesso-negado/acesso-negado.component';
 
 
 const routes: Routes =
@@ -36,9 +37,7 @@ const routes: Routes =
     children: [
       { path: '',pathMatch:'full', redirectTo:'home' },
 
-  {path:'home', component: HomeComponent },
-
-  {path:'login', component: LoginComponent },
+  {path:'home',canActivate: [AuthGuard], component: HomeComponent },
 
   {path:'login-teste', component: ProductListComponent },
 
@@ -72,10 +71,15 @@ const routes: Routes =
 
   { path:'comprovante', canActivate:[FinanceiroGuard], component: PageComprovanteComponent},
 
-  { path:'**', component: NotfoundComponent}
+
+
 
     ]
-  }
+  },
+  { path: 'login', component: LoginComponent},
+  { path:'**', component: NotfoundComponent},
+  { path:'acesso-negado', canActivate:[AuthGuard], component: AcessoNegadoComponent},
+
 
 
 ];

@@ -13,6 +13,7 @@ import { AuthRoutingModule } from './auth.route';
 import { PrimengModule } from 'src/app/shared/primeng.module';
 import { AuthAppComponent } from './auth.app.component';
 import { LoginV1Component } from './login-v1/login-v1.component';
+import { AcessoNegadoComponent } from './acesso-negado/acesso-negado.component';
 
 
 
@@ -21,7 +22,8 @@ import { LoginV1Component } from './login-v1/login-v1.component';
     LoginComponent,
     ManterUsuarioComponent,
     AuthAppComponent,
-    LoginV1Component
+    LoginV1Component,
+    AcessoNegadoComponent
   ],
   imports: [
     CommonModule,

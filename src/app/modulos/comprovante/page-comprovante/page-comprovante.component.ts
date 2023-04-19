@@ -201,8 +201,14 @@ manter() {
       this.customMessage.onMessage("Operação realizada com sucesso! ", "success")
     },
     (error) => {
+
+      if(error.status == "422"){
+        this.customMessage.onMessage("Comprovante já cadastrado", "error")
+      }else{
+         this.customMessage.onMessage("Error ao cadastrar", "error")
+      }
       this.spinner.hide();
-      this.customMessage.onMessage("Erro ao tentar cadastrar! ", "error")
+
 
       return '';
     }

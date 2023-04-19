@@ -53,7 +53,7 @@
   </div>
   <div class="col-12 md:col-3">
     <div class="p-inputgroup" style="margin-top:20px ;">
-        <button label="FILTRAR" type="button" pButton pRipple icon="pi pi-filter" (click)="filtroAvancadissimo()"
+        <button label="FILTRAR" type="button" pButton pRipple icon="pi pi-filter"  class="p-button-success mb-2" (click)="filtroAvancadissimo()"
         [disabled]="!formFilter.valid"
         ></button>
     </div>
@@ -73,7 +73,7 @@
     <div class="card">
       <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-warning  p-button-sm" pTooltip="CRIAR NOVA OPERADORA"
+          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-success  p-button-sm" pTooltip="CRIAR NOVA OPERADORA"
             (click)="openNew()"></button>
         </ng-template>
 

@@ -8,14 +8,16 @@
 
       <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-          <button pButton pRipple label="NOVA" icon="pi pi-plus" class="p-button-raised p-button-text  " pTooltip="Criar uma nova conta a pagar."
+          <div class="grid">
+          <button class="col" pButton pRipple label="NOVA" icon="pi pi-plus" class="p-button-raised p-button-text  mr-2" pTooltip="Criar uma nova conta a pagar."
             (click)="openNew()"></button>
             <p-divider layout="vertical"></p-divider>
-            <button pButton pRipple label="DELETE EM LOTE" icon="pi pi-trash" class="p-button-raised p-button-warning p-button-text " pTooltip="Deletar todas com mesmo número de documento."
+            <button class="col" pButton pRipple label="DELETE EM LOTE" icon="pi pi-trash" class="p-button-raised p-button-warning p-button-text mr-2 " pTooltip="Deletar todas com mesmo número de documento."
             (click)="abrirDeleteEmLote()"></button>
             <p-divider layout="vertical"></p-divider>
-            <button pButton pRipple label="EXCLUIR PENDENTE" icon="pi pi-trash" class="p-button-raised p-button-warning p-button-text " pTooltip="Deletar todas que ainda não foram pagas."
+            <button class="col" pButton pRipple label="EXCLUIR PENDENTE" icon="pi pi-trash" class="p-button-raised p-button-warning p-button-text mr-2 " pTooltip="Deletar todas que ainda não foram pagas."
             (click)="abrirDeleteSituacaoPendente()"></button>
+          </div>
         </ng-template>
 
 
@@ -40,7 +42,7 @@
         responsiveLayout="scroll" [(selection)]="selectedContasPagar" [rowHover]="true" dataKey="id"
         currentPageReportTemplate="Visualizando {first} a {last} de {totalRecords} contas" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
-          <div class="flex align-items-center justify-content-between">
+          <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
             <span class="p-input-icon-left">
               <i class="pi pi-search"></i>
               <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"

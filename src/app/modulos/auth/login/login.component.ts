@@ -3,11 +3,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomMensagensService } from 'src/app/services/mensagens.service';
 import { AuthService } from '../auth.service';
+import { LayoutService } from 'src/app/layout/service/app.layout.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styles: [`
+  :host ::ng-deep .pi-eye,
+  :host ::ng-deep .pi-eye-slash {
+      transform:scale(1.6);
+      margin-right: 1rem;
+      color: var(--primary-color) !important;
+  }
+`]
 })
 export class LoginComponent implements OnInit {
 
@@ -16,9 +24,12 @@ export class LoginComponent implements OnInit {
     password:""
   }
   formLogin!: FormGroup;
+  valCheck: string[] = ['remember'];
 
   mostrarLoginOuSenhaInvalidos = false ;
-  constructor(private authServer : AuthService,
+  constructor(
+              public layoutService: LayoutService,
+              private authServer : AuthService,
               private router: Router,
               private formBuilder: FormBuilder,
               private message: CustomMensagensService) {

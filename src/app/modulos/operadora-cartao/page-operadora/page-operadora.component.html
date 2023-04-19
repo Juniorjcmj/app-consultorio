@@ -33,7 +33,7 @@
 
               <div class="col-12 md:col-3">
                 <div class="p-inputgroup" style="margin-top:20px ;">
-                    <button label="FILTRAR" type="button" pButton pRipple icon="pi pi-filter" (click)="filtroAvancado()"
+                    <button label="FILTRAR" type="button" pButton pRipple icon="pi pi-filter" class="p-button-success  p-button-sm"(click)="filtroAvancado()"
                     [disabled]="!formFilter.valid"
                     ></button>
                 </div>
@@ -45,7 +45,7 @@
 
       <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-primary  p-button-sm" pTooltip="CRIAR NOVA OPERADORA"
+          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-success  p-button-sm" pTooltip="CRIAR NOVA OPERADORA"
             (click)="openNew()"></button>
             <p-divider layout="vertical"></p-divider>
             <button pButton pRipple label="INATIVAS" icon="pi pi-unlock" class="p-button-danger  p-button-sm" pTooltip="BUSCAR OPERADORAS INATIVAS"

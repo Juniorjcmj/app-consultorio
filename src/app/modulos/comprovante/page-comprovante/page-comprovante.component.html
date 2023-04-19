@@ -82,7 +82,7 @@
 
       <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-          <button pButton pRipple label="CADASTRAR" icon="pi pi-plus" class="p-button-warning  p-button-sm"
+          <button pButton pRipple label="CADASTRAR" icon="pi pi-plus" class="p-button-success  p-button-sm"
             (click)="openNew()"></button>
 
           <!-- <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteacompanhamento()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
@@ -166,14 +166,14 @@
       <div class="grid p-fluid">
       <div class="col-6">
         <label  for="empresaId">EMPRESA</label>
-        <p-dropdown formControlName="empresaId" inputId="empresaId" [options]="empresas" placeholder="Empresa" name="empresaId"
+        <p-dropdown formControlName="empresaId" inputId="empresaId" [options]="empresas" placeholder="EMPRESA" name="empresaId"
           optionValue="id" optionLabel="nome">
         </p-dropdown>
       </div>
 
       <div class="col-6">
         <label for="bancoId">BANCO</label>
-        <p-dropdown formControlName="bancoId" inputId="bancoId" [options]="bancos" placeholder="banco" name="bancoId" id="bancoId"
+        <p-dropdown formControlName="bancoId" inputId="bancoId" [options]="bancos" placeholder="BANCO" name="bancoId" id="bancoId"
           optionValue="id" optionLabel="nome" name="bancoId">
         </p-dropdown>
       </div>
@@ -184,7 +184,7 @@
       </div>
       <div class="col-6">
         <label for="numeroPedido">DATA</label>
-        <p-calendar   formControlName="data" ></p-calendar>
+        <input pInputText type="date" id="data" name="data"  formControlName="data" />
       </div>
 
       <div class="formgrid grid">

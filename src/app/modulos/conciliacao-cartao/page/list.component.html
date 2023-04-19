@@ -78,13 +78,13 @@
             <div class="col-12 md:col-3">
               <div class="p-inputgroup" style="margin-top:20px ;">
                   <button label="FILTRAR" type="button" pButton pRipple icon="pi pi-filter" (click)="filtroAvancado()"
-                  [disabled]="!formFilter.valid" class="p-button-warning"
+                  [disabled]="!formFilter.valid" class="p-button-success"
                   ></button>
               </div>
             </div>
             <div class="col-12 md:col-3">
               <div class="p-inputgroup" style="margin-top:20px ;">
-                  <button label="LIMPAR" type="button" pButton pRipple icon="pi pi-eraser" (click)="resetarFiltro()" class="p-button-secondary mb-2"
+                  <button label="LIMPAR" type="button" pButton pRipple icon="pi pi-eraser" (click)="resetarFiltro()" class="p-button-warning mb-2"
                   ></button>
               </div>
             </div>
@@ -95,7 +95,7 @@
 
       <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-warning  p-button-sm"
+          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-success  p-button-sm"
             (click)="openNew()"></button>
 
           <!-- <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteacompanhamento()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
