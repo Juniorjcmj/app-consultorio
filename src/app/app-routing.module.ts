@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -25,12 +26,15 @@ import { PageComprasComponent } from './modulos/compras/page-compras/page-compra
 import { ComprasGuard } from './guards/compras.guard';
 import { PageBancoComponent } from './modulos/banco/page-banco/page-banco.component';
 import { PageComprovanteComponent } from './modulos/comprovante/page-comprovante/page-comprovante.component';
-
+import { AppLayoutComponent } from './layout/app.layout.component';
 
 
 const routes: Routes =
 [
-  { path: '',pathMatch:'full', redirectTo:'home' },
+  {
+    path: '', component: AppLayoutComponent,
+    children: [
+      { path: '',pathMatch:'full', redirectTo:'home' },
 
   {path:'home', component: HomeComponent },
 
@@ -69,6 +73,9 @@ const routes: Routes =
   { path:'comprovante', canActivate:[FinanceiroGuard], component: PageComprovanteComponent},
 
   { path:'**', component: NotfoundComponent}
+
+    ]
+  }
 
 
 ];

@@ -51,7 +51,7 @@ import { ExpedicaoGuard } from './guards/expedicao.guard';
 import { ComprasModule } from './modulos/compras/compras.module';
 import { BancoModule } from './modulos/banco/banco.module';
 import { ComprovanteModule } from './modulos/comprovante/comprovante.module';
-
+import { AppLayoutModule} from './layout/app.layout.module';
 
 
 
@@ -113,6 +113,7 @@ registerLocaleData(ptBr);
     ComprasModule,
     BancoModule,
     ComprovanteModule,
+    AppLayoutModule,
   //novo  sistema-servvico
   ConciliacaoCartaoModule,
   KeycloakAngularModule,
