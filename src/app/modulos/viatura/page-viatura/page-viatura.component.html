@@ -4,18 +4,12 @@
     <div class="card">
       <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-warning  p-button-sm" pTooltip="CRIAR NOVA OPERADORA"
+          <button pButton pRipple label="NOVA" icon="pi pi-plus" class="p-button-success  p-button-sm" pTooltip="CRIAR NOVA OPERADORA"
             (click)="openNew()"></button>
             <p-divider layout="vertical"></p-divider>
         </ng-template>
 
-        <ng-template pTemplate="right">
-          <p-image src="assets/icons/xlsx.png" alt="Image" width="50px" pTooltip="Extrair tabela XLS" tooltipPosition="bottom" (click)="exportexcel()"></p-image>
 
-          <p-divider layout="vertical"></p-divider>
-
-          <p-image src="assets/icons/pdf.png" alt="Image" width="50px" pTooltip="Extrair tabela PDF" tooltipPosition="bottom" (click)="exportPdf()"></p-image>
-        </ng-template>
       </p-toolbar>
 
 

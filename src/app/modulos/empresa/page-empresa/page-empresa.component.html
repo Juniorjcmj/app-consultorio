@@ -6,16 +6,9 @@
 
       <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-primary  p-button-sm" pTooltip="CRIAR NOVA EMPRESA"
+          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-success  p-button-sm" pTooltip="CRIAR NOVA EMPRESA"
             (click)="openNew()"></button>
 
-        </ng-template>
-
-        <ng-template pTemplate="right">
-          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
-            class="p-button-rounded p-button-text p-button-info p-button-lg" pTooltip="XLS" tooltipPosition="bottom"></button>
-          <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
-            class="p-button-rounded p-button-text p-button-danger p-button-lg" pTooltip="PDF" tooltipPosition="bottom"></button>
         </ng-template>
       </p-toolbar>
 

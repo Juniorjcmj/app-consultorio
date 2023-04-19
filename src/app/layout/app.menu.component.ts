@@ -43,34 +43,39 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Entregas', icon: 'pi pi-fw pi-prime', routerLink: ['/entregas'] },
                 ]
             },
-            {
-                label: 'CONFIGURAÇÃO',
-                icon: 'pi pi-fw pi-briefcase',
-                items: [
-                    {
-                        label: 'Usuários',
-                        icon: 'pi pi-fw pi-globe',
-                        routerLink: ['/']
-                    },
-                    {
-                        label: 'Empresas',
-                        icon: 'pi pi-fw pi-globe',
-                        routerLink: ['/']
-                    },
-                    {
-                        label: 'Colaboradores',
-                        icon: 'pi pi-fw pi-globe',
-                        routerLink: ['/']
-                    },
-                    {
-                        label: 'Viaturas',
-                        icon: 'pi pi-fw pi-globe',
-                        routerLink: ['/']
-                    },
 
-                ]
+             {
+              label: 'CONFIGURAÇÕES',
+              items: [
+                  {
+                      label: 'Menu', icon: 'pi pi-fw pi-bookmark',
+                      items: [
+                          {
+                              label: 'Usuários', icon: 'pi pi-fw pi-bookmark',routerLink: ['/usuarios']
 
-            }
+                          },
+                          {
+                              label: 'Viatura', icon: 'pi pi-fw pi-bookmark',routerLink: ['/viaturas']
+
+                          },
+                          {
+                            label: 'Empresas', icon: 'pi pi-fw pi-bookmark',routerLink: ['/empresa']
+
+                        },
+                        {
+                          label: 'Colaboradores', icon: 'pi pi-fw pi-bookmark',routerLink: ['/colaborador']
+
+                      },
+                      {
+                        label: 'Funções', icon: 'pi pi-fw pi-bookmark',routerLink: ['/funcao']
+
+                    },
+                      ]
+                  },
+
+              ]
+
+          },
         ];
     }
 }
