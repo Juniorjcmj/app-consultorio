@@ -122,7 +122,7 @@
             </th>
             <th pSortableColumn="tipo">TIPOS DE OPERAÇÃO <p-sortIcon field="tipo"></p-sortIcon>
             </th>
-
+            <th>PDF</th>
             <th></th>
           </tr>
         </ng-template>
@@ -137,6 +137,11 @@
             <td>{{comprovante.numeroDocumento}}</td>
             <td>{{comprovante.valor | currency}}</td>
             <td>{{comprovante.tipo}}</td>
+            <td>
+              <!-- <a href="selectedFileBLOB" (click)="openPdfInNewTab(comprovante.file)">Visualizar PDF</a> -->
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-lg p-button-secondary"
+                (click)="dowload(comprovante.file)"></button>
+            </td>
 
             <td>
               <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-lg p-button-secondary"
@@ -163,28 +168,28 @@
   styleClass="p-fluid">
   <ng-template pTemplate="content">
     <form [formGroup]="form">
-      <div class="grid p-fluid">
-      <div class="col-6">
+     <div class="grid p-fluid">
+     <div class="col-6">
         <label  for="empresaId">EMPRESA</label>
         <p-dropdown formControlName="empresaId" inputId="empresaId" [options]="empresas" placeholder="EMPRESA" name="empresaId"
-          optionValue="id" optionLabel="nome">
+          optionValue="id" optionLabel="nome" [ngClass]="aplicaCssErro('empresaId')">
         </p-dropdown>
       </div>
 
       <div class="col-6">
         <label for="bancoId">BANCO</label>
         <p-dropdown formControlName="bancoId" inputId="bancoId" [options]="bancos" placeholder="BANCO" name="bancoId" id="bancoId"
-          optionValue="id" optionLabel="nome" name="bancoId">
+          optionValue="id" optionLabel="nome" name="bancoId" [ngClass]="aplicaCssErro('bancoId')">
         </p-dropdown>
       </div>
       <div class="col-6">
         <label for="numeroPedido">TIPO DE TRANSAÇÃO</label>
         <p-selectButton [options]="tipo" formControlName="tipo" id="tipo"
-          placeholder="TIPO DE OPERAÇÃO" optionLabel="label" optionValue="value" name="tipo"></p-selectButton>
+          placeholder="TIPO DE OPERAÇÃO" optionLabel="label" optionValue="value" name="tipo" [ngClass]="aplicaCssErro('tipo')"></p-selectButton>
       </div>
       <div class="col-6">
         <label for="numeroPedido">DATA</label>
-        <input pInputText type="date" id="data" name="data"  formControlName="data" />
+        <input pInputText type="date" id="data" name="data"  formControlName="data" [ngClass]="aplicaCssErro('data')" />
       </div>
 
       <div class="formgrid grid">
@@ -193,30 +198,46 @@
         <label for="valor">VALOR</label>
         <div class="p-inputgroup">
           <span class="p-inputgroup-addon">R$</span>
-          <input pInputText type="text" id="valor" formControlName="valor" name="valor"
+          <input pInputText type="text" id="valor" formControlName="valor" name="valor" [ngClass]="aplicaCssErro('valor')"
             placeholder="VALOR" />
         </div>
       </div>
       <div class=" col-6">
         <label for="numeroDocumento">Nº DO DOC</label>
-        <input  pInputText type="text"  id="numeroDocumento" formControlName="numeroDocumento" name="numeroDocumento" placeholder="NÚMERO DOC" />
+        <input  pInputText type="text"  id="numeroDocumento" formControlName="numeroDocumento" [ngClass]="aplicaCssErro('numeroDocumento')" name="numeroDocumento" placeholder="NÚMERO DOC" />
       </div>
       <div class=" col-6">
         <label for="numeroPedido">Nº DO PEDIDO</label>
-        <p-inputNumber id="numeroPedido" formControlName="numeroPedido" placeholder="Nº PEDIDO"></p-inputNumber>
+        <p-inputNumber id="numeroPedido" formControlName="numeroPedido" name="numeroPedido" placeholder="Nº PEDIDO" [ngClass]="aplicaCssErro('numeroPedido')"></p-inputNumber>
       </div>
       <div class=" col-6">
         <label for="nomeCliente">NOME DO CLIENTE</label>
-        <input  pInputText type="text" id="nomeCliente" formControlName="nomeCliente" placeholder="NOME CLIENTE"/>
+        <input  pInputText type="text" id="nomeCliente" formControlName="nomeCliente" name="nomeCliente" placeholder="NOME CLIENTE" [ngClass]="aplicaCssErro('nomeCliente')"/>
       </div>
     </div>
+    <div class="form-group">
+      <label for="file">COMPROVANTE</label>
+      <input (change)="onFileSelected($event)"
+      accept=".pdf"
+      pInputText
+      type="file"
+      formControlName="file"
+      id="file"
+       class="form-control-file p-button-success  p-button-sm"
+       name="file" required
+       [ngClass]="aplicaCssErro('file')">
+    </div>
+
     </form>
   </ng-template>
   <ng-template pTemplate="footer">
     <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" [disabled]="!form.valid"
-      (click)="manter()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+    [disabled]="!form.valid"
+      (click)="onUpload()"></button>
   </ng-template>
+
+
 
 </p-dialog>
 

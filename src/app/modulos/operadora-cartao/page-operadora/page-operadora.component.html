@@ -45,7 +45,7 @@
 
       <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-success  p-button-sm" pTooltip="CRIAR NOVA OPERADORA"
+          <button pButton pRipple label="NOVA" icon="pi pi-plus" class="p-button-success  p-button-sm" pTooltip="CRIAR NOVA OPERADORA"
             (click)="openNew()"></button>
             <p-divider layout="vertical"></p-divider>
             <button pButton pRipple label="INATIVAS" icon="pi pi-unlock" class="p-button-danger  p-button-sm" pTooltip="BUSCAR OPERADORAS INATIVAS"
@@ -66,11 +66,11 @@
           (click)="nextPage()"></button>
           <p-divider layout="vertical"></p-divider> -->
 
-          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportexcel()"
+          <!-- <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportexcel()"
             class="p-button-rounded p-button-text p-button-lg p-button-info mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
             <p-divider layout="vertical"></p-divider>
           <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
-            class="p-button-rounded p-button-text p-button-lg p-button-danger mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+            class="p-button-rounded p-button-text p-button-lg p-button-danger mr-2" pTooltip="PDF" tooltipPosition="bottom"></button> -->
         </ng-template>
       </p-toolbar>
 
@@ -129,12 +129,12 @@
             <td>{{operadoraTable.taxaPadraoDebito }}%</td>
             <td>{{operadoraTable.inicio | date : 'dd/MM/yyyy'}}</td>
             <td>{{operadoraTable.fim | date : 'dd/MM/yyyy'}} </td>
-            <td>
-              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-lg p-button-primary mr-2" pTooltip="EDITAR OPERADORA"
+            <td class="grid">
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-lg p-button-primary mr-2 col" pTooltip="EDITAR OPERADORA"
                 (click)="edit(operadoraTable)"></button>
-                <button pButton pRipple icon="pi pi-clone" class="p-button-rounded p-button-text p-button-lg p-button-success mr-2" pTooltip="CLONAR OPERADORA"
+                <button pButton pRipple icon="pi pi-clone" class="p-button-rounded p-button-text p-button-lg p-button-success mr-2 col" pTooltip="CLONAR OPERADORA"
                 (click)="clone(operadoraTable)"></button>
-              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-lg p-button-danger" pTooltip="EXCLUIR OPERADORA"
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-lg p-button-danger col" pTooltip="EXCLUIR OPERADORA"
                 (click)="deleteOperadora(operadoraTable)"></button>
             </td>
           </tr>

@@ -12,6 +12,7 @@ export class ComprovanteInput{
   data!: LocalDate;
   valor!: string;
   tipo!: string;
+  file!: File
 
 }
 export class ComprovanteFiltro{
@@ -37,5 +38,6 @@ export class Comprovante{
   data!: Date;
   valor!: string;
   tipo!: string;
+  file!: File
 
 }

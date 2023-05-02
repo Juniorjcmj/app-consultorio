@@ -52,6 +52,8 @@ import { ComprasModule } from './modulos/compras/compras.module';
 import { BancoModule } from './modulos/banco/banco.module';
 import { ComprovanteModule } from './modulos/comprovante/comprovante.module';
 import { AppLayoutModule} from './layout/app.layout.module';
+import { ExamplePdfViewerComponent } from './example-pdf-viewer/example-pdf-viewer.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 
 
@@ -85,7 +87,8 @@ registerLocaleData(ptBr);
     DashboardComponent,
     //novo sistemaServico
     MenuComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    ExamplePdfViewerComponent
     ,
 
 
@@ -117,6 +120,7 @@ registerLocaleData(ptBr);
   //novo  sistema-servvico
   ConciliacaoCartaoModule,
   KeycloakAngularModule,
+  NgxExtendedPdfViewerModule,
   ],
   providers: [
 

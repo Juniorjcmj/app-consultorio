@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { Comprovante, ComprovanteFiltro, ComprovanteInput } from './comprovante';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -38,5 +39,13 @@ export class ComprovanteService {
     return this.httpClient.post<Comprovante>(`${this.apiUrlResourceServe}`+ "/filtro-avancado?size="+5000, filtro);
   }
 
+  cadastrarComprovante(formData: FormData): Observable<any> {
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+
+    console.log(formData)
+
+    return this.httpClient.post(`${this.apiUrlResourceServe}/comprovante`, formData, { headers: headers });
+  }
 
 }

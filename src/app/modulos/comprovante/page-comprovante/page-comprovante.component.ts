@@ -3,7 +3,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Comprovante } from '../comprovante';
 import { Banco } from '../../banco/banco';
 import { Empresa } from '../../conciliacao-cartao/model/conciliacaoCartao';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ValidationErrors } from '@angular/forms';
 import { ComprovanteService } from '../comprovante.service';
 import { BancoService } from '../../banco/banco.service';
 import { EmpresaService } from '../../empresa/service/empresa-service';
@@ -11,6 +11,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { CustomMensagensService } from 'src/app/services/mensagens.service';
 import { AuthService } from '../../auth/auth.service';
 import { format } from 'date-fns';
+import { HttpClient } from '@angular/common/http';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-page-comprovante',
@@ -48,6 +51,10 @@ export class PageComprovanteComponent implements OnInit {
   empresas!: Empresa[];
   tipo!: any[];
   formFilter!: FormGroup;
+
+  comprovanteForm!: FormGroup;
+  formData: FormData = new FormData();
+
   constructor( private service: ComprovanteService,
     private bancoService: BancoService,
     private empresaService: EmpresaService,
@@ -56,7 +63,10 @@ export class PageComprovanteComponent implements OnInit {
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private httpClient: HttpClient,
+    private sanitizer: DomSanitizer,
+    ) {
 
       this.valorInicialFiltro();
        this.findAll();
@@ -99,6 +109,10 @@ export class PageComprovanteComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
+
+    this.comprovanteForm = this.formBuilder.group({
+      files: ['', Validators.required]
+    });
   }
 
   valorInicialFiltro(){
@@ -116,12 +130,44 @@ export class PageComprovanteComponent implements OnInit {
       numeroDocumento: null,
       dataInicial: format(primeiroDia, 'yyyy-MM-dd'),
       dataFinal: format(ultimoDia, 'yyyy-MM-dd'),
-      tipo: null
+      tipo: null,
+
 
     })
 
   }
+  onSubmit() {
+    const formValue = this.form.value;
+
+    this.formData.append('file', formValue.file);
+    this.formData.append('bancoId', formValue.bancoId);
+    this.formData.append('empresaId', formValue.empresaId);
+    this.formData.append('numeroPedido', formValue.numeroPedido);
+    this.formData.append('nomeCliente',formValue.nomeCliente);
+    this.formData.append('numeroDocumento', formValue.numeroDocumento);
+    this.formData.append('data', formValue.data);
+    this.formData.append('valor', formValue.Valor);
+    this.formData.append('tipo', formValue.tipo);
+
+
+    this.service.cadastrarComprovante(this.formData).subscribe(
+      response => {
+
+        this.customMessage.onMessage("Operação realizada com sucesso! ", "success")
+      },
+      error => {
+        this.customMessage.onMessage("Operação não  realizada ! ", "error")
+
+      }
+    );
+  }
+  onFileChange(event: any) {
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    const file = fileInput.files![0];
+    this.form.get('file')!.setValue(file);
+  }
   openNew(){
+
 
     this.form= this.formBuilder.group({
     bancoId: [null, Validators.required],
@@ -132,6 +178,7 @@ export class PageComprovanteComponent implements OnInit {
     data:  [null, Validators.required],
     valor:  [null, Validators.required],
     tipo:  [null, Validators.required],
+    file: [null]
 
   });
   this.submitted = false;
@@ -139,15 +186,19 @@ export class PageComprovanteComponent implements OnInit {
 }
 edit(comprovante:Comprovante){
 
+  var formatData = comprovante.data.getDate() - comprovante.data.getDay();
+  let dataFormat = new Date(comprovante.data.setDate(formatData));
+
   this.form= this.formBuilder.group({
   bancoId: [comprovante.banco.id, Validators.required],
   empresaId: [comprovante.empresa.id, Validators.required],
   numeroPedido: [comprovante.numeroPedido, Validators.required],
   nomeCliente:  [comprovante.nomeCliente, Validators.required],
   numeroDocumento:  [comprovante.numeroDocumento, Validators.required],
-  data:  [comprovante.data, Validators.required],
+  data:  [format(dataFormat, 'yyyy-MM-dd'), Validators.required],
   valor:  [comprovante.valor, Validators.required],
   tipo:  [comprovante.tipo, Validators.required],
+  file: [null]
 
 });
 this.submitted = false;
@@ -191,6 +242,7 @@ hideDialog() {
   this.submitted = false;
 }
 manter() {
+
   this.spinner.show();
   this.dialog = false;
   this.display = false;
@@ -214,6 +266,7 @@ manter() {
     }
   );
 }
+
 //MÉTODOS PARA FILTRO AVANÇADO
 
 resetarFiltro(){
@@ -233,5 +286,96 @@ filtroAvancado() {
 );
 }
 
+selectedFile!: File;
+onFileSelected(event: any) {
 
+   if (event.target.files[0].type !== 'application/pdf') {
+    alert('Por favor, selecione um arquivo PDF.');
+    return;
+  }else{
+     this.selectedFile = event.target.files[0];
+  }
+}
+
+onUpload() {
+  const formData = new FormData();
+  const formValue = this.form.value;
+  formData.append('file', this.selectedFile, this.selectedFile.name);
+  formData.append('nomeCliente',formValue.nomeCliente.toString());
+  formData.append('empresaId',formValue.empresaId.toString());
+  formData.append('bancoId',formValue.bancoId.toString());
+  formData.append('tipo',formValue.tipo.toString());
+  formData.append('data',formValue.data.toString());
+  formData.append('valor',formValue.valor.toString());
+  formData.append('numeroPedido',formValue.numeroPedido.toString());
+  formData.append('numeroDocumento',formValue.numeroDocumento.toString());
+
+
+  this.httpClient.post('http://localhost:98/V1/api-comprovante/comprovante', formData).subscribe(
+    (success:any) => {
+      this.findAll()
+      this.customMessage.onMessage("Operação realizada com sucesso! ", "success")
+    },
+    (error) => {
+
+      if(error.status == "422"){
+        this.customMessage.onMessage("Comprovante já cadastrado", "error")
+      }else{
+         this.customMessage.onMessage("Error ao cadastrar", "error")
+      }
+      this.spinner.hide();
+      return '';
+    }
+  );
+}
+verificarValidTouched(campo: any){
+    return !this.form.get(campo)!.valid &&  this.form.get(campo)!.touched
+}
+aplicaCssErro(campo: any){
+  return {
+    'ng-invalid ng-dirty': this.verificarValidTouched(campo)
+  }
+}
+
+createSafeUrlFromBlob(blob: Blob): SafeUrl  {
+  //
+  const url = URL.createObjectURL(blob);
+  const safeUrl = this.sanitizer.bypassSecurityTrustUrl(url);
+  // revogue o URL assim que não precisar mais dele
+  URL.revokeObjectURL(url);
+  return safeUrl;
+}
+openPdfInNewTab(blob: Blob) {
+  const url = this.createSafeUrlFromBlob(blob) as string;
+  window.open(url, '_blank');
+}
+
+ selectedFileBLOB!: any;
+fileChangeEvent(fileInput: any) {
+
+  if (fileInput.target.files && fileInput.target.files[0]) {
+
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+
+  let blob = new Blob(fileInput.target.files, { type: fileInput.target.files[0].type });
+      let url = window.URL.createObjectURL(blob);
+
+      this.selectedFileBLOB = this.sanitizer.bypassSecurityTrustUrl(url);
+
+    };
+    reader.readAsDataURL(fileInput.target.files[0]);
+
+  }
+
+}
+  dowload(blob: Blob): void {
+    let url = window.URL.createObjectURL(blob);
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = 'Download PDF';
+    a.click();
+    window.URL.revokeObjectURL(url);
+    a.remove()
+  }
 }

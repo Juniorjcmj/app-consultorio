@@ -33,6 +33,7 @@
     "keycloak-angular": "^12.2.0",
     "keycloak-js": "^20.0.1",
     "ngx-date-fns": "^10.0.1",
+    "ngx-extended-pdf-viewer": "^17.0.0-alpha.3",
     "ngx-spinner": "^14.0.0",
     "primeflex": "^3.2.1",
     "primeicons": "^6.0.1",

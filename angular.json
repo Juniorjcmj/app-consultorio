@@ -25,16 +25,21 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
-
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/ngx-extended-pdf-viewer/assets/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/ngx-spinner/animations/ball-scale-multiple.css",
               "src/assets/styles/styles.scss"
             ],
-            "scripts": ["./node_modules/chart.js/dist/chart.js"]
-
+            "scripts": [
+              "./node_modules/chart.js/dist/chart.js"
+            ]
           },
           "configurations": {
             "production": {

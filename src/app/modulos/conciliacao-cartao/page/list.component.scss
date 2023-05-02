@@ -19,12 +19,12 @@
    color:  #FA8072;
  }
 
-:host ::ng-deep {
-  .p-dialog .product-image {
-    width: 150px;
-    margin: 0 auto 2rem auto;
-    display: block;
-  }
+ :host ::ng-deep {
+//   .p-dialog .product-image {
+//     width: 150px;
+//     margin: 0 auto 2rem auto;
+//     display: block;
+//   }
   .p-button.p-button-lg .p-button-icon {
     font-size: 2.20rem !important;
   }
@@ -32,50 +32,33 @@
     font-size: 1.20rem !important;
     font-weight: 700;
   }
-  .p-toolbar{
-    box-shadow: 0 7px 25px rgba(0,0,0,0.08);
-    border-radius: 20px;
-    background: var(--white);
-    padding: 20px;
-  }
-  .p-button-label {
-    text-align: center;
-    color: #4c5257;
-    font-weight: 900;
-  }
-  .p-button-icon {
-    text-align: center;
-    color: #4c5257;
-    font-weight: 900;
+//   .p-toolbar{
+//     box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+//     border-radius: 20px;
+//     background: var(--white);
+//     padding: 20px;
+//   }
+//   .p-button-label {
+//     text-align: center;
+//     color: #4c5257;
+//     font-weight: 900;
+//   }
+//   .p-button-icon {
+//     text-align: center;
+//     color: #4c5257;
+//     font-weight: 900;
 
-  }
-}
-:host ::ng-deep .p-toolbar{
-  .p-button-label {
-   text-align: center;
-   color: #4c5257;
-   font-weight: 900;
+//   }
  }
- .p-button-icon {
-   text-align: center;
-   color: #4c5257;
-   font-weight: 900;
- }
- .p-datatable .p-datatable-thead > tr > th {
-   color: #F59E0B;
- }
-}
-// :host ::ng-deep {
-//  .p-datatable .p-datatable-thead {
-//   border-radius: 7px;
-//  }
-//  .p-datatable .p-datatable-thead > tr > th {
-//    color: #F59E0B;
-//    background-color: #32373c;
-//  }
-//  .p-datatable .p-sortable-column .p-sortable-column-icon{
-//    color: #F59E0B;
+// :host ::ng-deep .p-toolbar{
+//   .p-button-label {
+//    text-align: center;
+//    color: #4c5257;
 //    font-weight: 900;
 //  }
-//  background-color: #4c5257 !important;
+
+//  .p-datatable .p-datatable-thead > tr > th {
+//    color: #F59E0B;
+//  }
 // }
+
