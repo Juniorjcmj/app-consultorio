@@ -39,13 +39,13 @@ export class ComprovanteService {
     return this.httpClient.post<Comprovante>(`${this.apiUrlResourceServe}`+ "/filtro-avancado?size="+5000, filtro);
   }
 
-  cadastrarComprovante(formData: FormData): Observable<any> {
-    const headers = new HttpHeaders();
-    headers.append('Content-Type', 'multipart/form-data');
+  cadastrarComprovante(formData: FormData) {
 
-    console.log(formData)
+    return this.httpClient.post(`${this.apiUrlResourceServe}/comprovante`, formData);
+  }
+  updateComprovante(formData: FormData) {
 
-    return this.httpClient.post(`${this.apiUrlResourceServe}/comprovante`, formData, { headers: headers });
+    return this.httpClient.post(`${this.apiUrlResourceServe}/comprovante-update`, formData);
   }
 
 }

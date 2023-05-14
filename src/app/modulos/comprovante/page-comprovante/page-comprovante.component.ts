@@ -25,6 +25,9 @@ export class PageComprovanteComponent implements OnInit {
   @ViewChild('htmlData') htmlData!: ElementRef;
   dialog!: boolean;
 
+  dialogFile!: boolean;
+  dialogProp!: boolean;
+
   Comprovante!: Comprovante;
 
   selected!: Comprovante[];
@@ -55,6 +58,8 @@ export class PageComprovanteComponent implements OnInit {
   comprovanteForm!: FormGroup;
   formData: FormData = new FormData();
 
+  blob!: Blob;
+
   constructor( private service: ComprovanteService,
     private bancoService: BancoService,
     private empresaService: EmpresaService,
@@ -76,7 +81,7 @@ export class PageComprovanteComponent implements OnInit {
           this.bancos = data;
         },
         (error: any)=> {
-             this.customMessage.onMessage("Não foi possivel carregar a lista de bancos","error");
+
         });
 
         this.empresaService.getAll().subscribe(
@@ -84,7 +89,7 @@ export class PageComprovanteComponent implements OnInit {
           this.empresas = data;
         }
        ,(error: any)=> {
-        this.customMessage.onMessage("Não foi possivel carregar a lista de empresas","error");
+
        }
         );
      }
@@ -184,26 +189,35 @@ export class PageComprovanteComponent implements OnInit {
   this.submitted = false;
   this.dialog = true;
 }
+
 edit(comprovante:Comprovante){
 
-  var formatData = comprovante.data.getDate() - comprovante.data.getDay();
-  let dataFormat = new Date(comprovante.data.setDate(formatData));
-
   this.form= this.formBuilder.group({
+  id: [comprovante.id],
   bancoId: [comprovante.banco.id, Validators.required],
   empresaId: [comprovante.empresa.id, Validators.required],
   numeroPedido: [comprovante.numeroPedido, Validators.required],
   nomeCliente:  [comprovante.nomeCliente, Validators.required],
   numeroDocumento:  [comprovante.numeroDocumento, Validators.required],
-  data:  [format(dataFormat, 'yyyy-MM-dd'), Validators.required],
+  data:  [comprovante.data, Validators.required],
   valor:  [comprovante.valor, Validators.required],
   tipo:  [comprovante.tipo, Validators.required],
-  file: [null]
+});
+this.submitted = false;
+this.dialogProp = true;
+}
+
+updateArquivo(comprovante:Comprovante){
+
+  this.form= this.formBuilder.group({
+    id:[comprovante.id],
+    file: [],
 
 });
 this.submitted = false;
-this.dialog = true;
+this.dialogFile = true;
 }
+
 delete(record: Comprovante) {
 
   this.confirmationService.confirm({
@@ -238,6 +252,8 @@ delete(record: Comprovante) {
 }
 hideDialog() {
   this.dialog = false;
+  this.dialogFile = false;
+  this.dialogProp = false;
   this.display = false;
   this.submitted = false;
 }
@@ -279,6 +295,7 @@ filtroAvancado() {
         this.spinner.hide();
         this.pagina = data
 
+
   }, (error: any)=>{
     this.spinner.hide();
    this.customMessage.onMessage("Erro ao realizar pesquisa!", "error")
@@ -297,10 +314,20 @@ onFileSelected(event: any) {
   }
 }
 
+
 onUpload() {
+  this.spinner.show();
+  this.dialog = false;
+  this.display = false;
+  this.submitted = true;
   const formData = new FormData();
   const formValue = this.form.value;
+
+  if(this.selectedFile!= undefined) {
   formData.append('file', this.selectedFile, this.selectedFile.name);
+  }
+
+
   formData.append('nomeCliente',formValue.nomeCliente.toString());
   formData.append('empresaId',formValue.empresaId.toString());
   formData.append('bancoId',formValue.bancoId.toString());
@@ -310,24 +337,54 @@ onUpload() {
   formData.append('numeroPedido',formValue.numeroPedido.toString());
   formData.append('numeroDocumento',formValue.numeroDocumento.toString());
 
+    this.service.cadastrarComprovante(formData).subscribe(
+      (success:any) => {
+          this.findAll()
+          this.customMessage.onMessage("Operação realizada com sucesso! ", "success")
+        },
+        (error) => {
 
-  this.httpClient.post('http://localhost:98/V1/api-comprovante/comprovante', formData).subscribe(
-    (success:any) => {
-      this.findAll()
-      this.customMessage.onMessage("Operação realizada com sucesso! ", "success")
-    },
-    (error) => {
-
-      if(error.status == "422"){
-        this.customMessage.onMessage("Comprovante já cadastrado", "error")
-      }else{
-         this.customMessage.onMessage("Error ao cadastrar", "error")
-      }
-      this.spinner.hide();
-      return '';
-    }
-  );
+          if(error.status == "422"){
+            this.customMessage.onMessage("Esse comprovante já foi usado!", "info")
+          }else{
+             this.customMessage.onMessage("Error ao cadastrar", "error")
+          }
+          this.spinner.hide();
+          return '';
+        }
+      );
 }
+
+editFile() {
+  this.spinner.show();
+  this.dialogFile = false;
+  this.display = false;
+  this.submitted = true;
+  const formData = new FormData();
+  const formValue = this.form.value;
+
+  if(this.selectedFile!= undefined) {
+  formData.append('file', this.selectedFile, this.selectedFile.name);
+  }
+  formData.append('id',formValue.id.toString());
+    this.service.updateComprovante(formData).subscribe(
+      (success:any) => {
+          this.findAll()
+          this.customMessage.onMessage("Arquivo atualizado com sucesso! ", "success")
+        },
+        (error) => {
+          this.customMessage.onMessage("Error ao atualizar arquivo!", "error")
+          this.spinner.hide();
+          return '';
+        }
+      );
+
+}
+
+
+
+
+
 verificarValidTouched(campo: any){
     return !this.form.get(campo)!.valid &&  this.form.get(campo)!.touched
 }
@@ -369,13 +426,32 @@ fileChangeEvent(fileInput: any) {
   }
 
 }
-  dowload(blob: Blob): void {
+  dowload(record: any): void {
+
+  let base64Data = record.file.data
+    // Decodifica o Base64
+  let binaryData = atob(base64Data);
+  // Cria um array de bytes a partir dos dados decodificados
+  let bytes = new Uint8Array(binaryData.length);
+  for (let i = 0; i < binaryData.length; i++) {
+    bytes[i] = binaryData.charCodeAt(i);
+  }
+  // Cria o objeto Blob a partir dos bytes
+  let blob = new Blob([bytes], { type: 'application/pdf' });
+
+  // Verifica se o objeto Blob é válido
+  if (blob && blob.size > 0) {
+    // O objeto Blob é válido, continuar com a função de download
     let url = window.URL.createObjectURL(blob);
     let a = document.createElement('a');
     a.href = url;
-    a.download = 'Download PDF';
+    a.download = record.numeroDocumento;
     a.click();
     window.URL.revokeObjectURL(url);
-    a.remove()
+    a.remove();
+  } else {
+    // O objeto Blob é inválido, exibir uma mensagem de erro ou fazer outra ação adequada
+    this.customMessage.onMessage("Error ao tentar baixar arquivo!", "error")
+  }
   }
 }
