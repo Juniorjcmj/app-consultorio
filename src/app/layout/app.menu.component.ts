@@ -27,8 +27,8 @@ export class AppMenuComponent implements OnInit {
 
                           { label: 'Contas a Pagar', icon: 'pi pi-fw pi-money-bill', routerLink: ['/contas-pagar'] },
                           { label: 'Classificação', icon: 'pi pi-fw pi-check-square', routerLink: ['/classificacao'] },
-                          // { label: 'Comprovantes', icon: 'pi pi-fw pi-bookmark', routerLink: ['/comprovante'] },
-                          // { label: 'Bancos', icon: 'pi pi-fw pi-bookmark', routerLink: ['/banco'] },
+                           { label: 'Comprovantes', icon: 'pi pi-fw pi-bookmark', routerLink: ['/comprovante'] },
+                           { label: 'Bancos', icon: 'pi pi-fw pi-bookmark', routerLink: ['/banco'] },
 
 
 
