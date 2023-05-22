@@ -28,6 +28,7 @@ import { PageBancoComponent } from './modulos/banco/page-banco/page-banco.compon
 import { PageComprovanteComponent } from './modulos/comprovante/page-comprovante/page-comprovante.component';
 import { AppLayoutComponent } from './layout/app.layout.component';
 import { AcessoNegadoComponent } from './modulos/auth/acesso-negado/acesso-negado.component';
+import { ComprasRelatorioComponent } from './modulos/compras/compras-relatorio/compras-relatorio.component';
 
 
 const routes: Routes =
@@ -66,6 +67,9 @@ const routes: Routes =
   { path: 'funcao',canActivate: [AdminGuard],component: PageFuncaoComponent},
 
   { path:'limite', canActivate:[ComprasGuard], component: PageComprasComponent},
+
+  { path:'relatorio-compras', canActivate:[ComprasGuard], component: ComprasRelatorioComponent},
+
 
   { path:'banco', canActivate:[FinanceiroGuard], component: PageBancoComponent},
 

@@ -146,13 +146,24 @@
             <td>
               <!-- <a href="selectedFileBLOB" (click)="openPdfInNewTab(comprovante.file)">Visualizar PDF</a> -->
               <div class="grid">
-                <div class="col"> <button *ngIf="comprovante.file != undefined" pButton pRipple
+                <div class="col" *ngIf="comprovante.path != ''">
+                   <button  pButton pRipple
                   pTooltip="DOWNLOAD"
-                    icon="pi pi-download" class=" pdf p-button-text p-button-lg p-button-success "
-                    (click)="dowload(comprovante)"></button></div>
-                <div class="col"> <button pButton pRipple icon="pi pi-upload"
+                    icon="pi pi-download" class=" pdf  p-button-text p-button-lg p-button-success p-button-raised "
+                    (click)="downloadFile(comprovante.id)"></button>
+
+                  </div>
+                  <div class="col" *ngIf="comprovante.path != ''">
+                    <button  pButton pRipple
+                    pTooltip="EXCLUIR ARQUIVO"
+                      icon="pi pi-file-excel" class=" pdf  p-button-text p-button-lg p-button-danger p-button-raised"
+                      (click)="deleteFile(comprovante.id)"></button>
+                  </div>
+                <div class="col">
+                   <button pButton pRipple icon="pi pi-upload"
                   pTooltip="UPLOAD"  (click)="updateArquivo(comprovante)"
-                    class=" p-button-text p-button-lg p-button-help"></button></div>
+                    class=" p-button-text p-button-lg p-button-help p-button-raised"></button>
+                  </div>
 
               </div>
 
@@ -160,11 +171,12 @@
 
             <td>
               <button pButton pRipple icon="pi pi-file-edit"
-              pTooltip="EDITAR"
-              class="p-button-rounded p-button-text p-button-lg p-button-warning"
+              pTooltip="EDITAR COMPROVANTE"
+              class=" p-button-text p-button-lg p-button-warning p-button-raised"
                 (click)="edit(comprovante)"></button>
               <button pButton pRipple icon="pi pi-trash"
-                class="p-button-rounded p-button-text p-button-lg p-button-danger"
+              pTooltip="EXCLUIR COMPROVANTE"
+                class=" p-button-text p-button-lg p-button-danger p-button-raised"
                 (click)="delete(comprovante)"></button>
             </td>
           </tr>

@@ -47,5 +47,11 @@ export class ComprovanteService {
 
     return this.httpClient.post(`${this.apiUrlResourceServe}/comprovante-update`, formData);
   }
+  downloadFile(formData: FormData){
+    return this.httpClient.post(`${this.apiUrlResourceServe}/download`+"?idComprovante=",formData, {responseType:'blob'});
+  }
+  deleteFile(formData: FormData){
+    return this.httpClient.post(`${this.apiUrlResourceServe}/deleteFile`+"?idComprovante=",formData);
+  }
 
-}
+  }

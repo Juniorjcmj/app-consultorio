@@ -53,12 +53,19 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Entregas', icon: 'pi pi-fw pi-car', routerLink: ['/entregas'] },
                 ]
             },
+            {
+              label: 'COMPRAS',
+              items: [
+                  { label: 'Limite', icon: 'pi pi-fw pi-cart-plus', routerLink: ['/limite'] },
+                  { label: 'Relatório Compras', icon: 'pi pi-fw pi-tablet', routerLink: ['/relatorio-compras'] },
+              ]
+          },
 
              {
               label: 'CONFIGURAÇÕES',
               items: [
                   {
-                      label: 'Menu', icon: 'pi pi-fw pi-bookmark',
+                      label: 'Opções', icon: 'pi pi-fw pi-bookmark',
                       items: [
                           {
                               label: 'Usuários', icon: 'pi pi-fw pi-bookmark',routerLink: ['/usuarios']
