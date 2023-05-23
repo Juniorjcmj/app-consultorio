@@ -31,9 +31,9 @@
 
 
         <ng-template pTemplate="right">
-          <span class="pago-total">PAGO : {{pagina.totalPago  | currency}}</span>
+          <span class="pago-total p-button-raised">PAGO : {{pagina.totalPago  | currency}}</span>
           <p-divider layout="vertical"></p-divider>
-          <span class="pendente-total">PENDENTE : {{pagina.totalPendente  | currency}}</span>
+          <span class="pendente-total p-button-raised">PENDENTE : {{pagina.totalPendente  | currency}}</span>
 
           <!-- <p-divider layout="vertical"></p-divider>
 
@@ -109,13 +109,13 @@
 
              <td>
                <button  pButton pRipple (click)="detalhamentoSidebar(contasPagarTable)" icon="pi pi-ellipsis-h"  pTooltip="OBSERVAÇÃO, JUROS/MULTA E DESCONTO"
-               class="p-button-rounded p-button-text p-button-lg p-button-primary mr-2" ></button>
+               class=" p-button-raised p-button-text p-button-lg p-button-primary mr-2" ></button>
               </td>
             <td>
-              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-lg p-button-primary mr-2" pTooltip="EDITAR OPERADORA"
+              <button pButton pRipple icon="pi pi-pencil" class=" p-button-raised p-button-text p-button-lg p-button-primary mr-2" pTooltip="EDITAR OPERADORA"
                 (click)="edit(contasPagarTable)"></button>
 
-              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-lg p-button-danger" pTooltip="EXCLUIR OPERADORA"
+              <button pButton pRipple icon="pi pi-trash" class=" p-button-raised p-button-text p-button-lg p-button-danger" pTooltip="EXCLUIR OPERADORA"
                 (click)="delete(contasPagarTable)"></button>
             </td>
           </tr>
@@ -206,8 +206,8 @@
     </form>
   </ng-template>
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" [disabled]="!form.valid"
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text p-button-raised" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text p-button-raised" [disabled]="!form.valid"
       (click)="manterContaPagar()"></button>
   </ng-template>
 
@@ -226,7 +226,7 @@
       <div class="p-inputgroup">
           <span pButton class="p-inputgroup-addon"><i class="pi pi-calendar"></i></span>
           <input type="date" pInputText placeholder="VENCIMENTO" formControlName="dataPagamento" name="dataPagamento" >
-          <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"  [disabled]="!editarDataPgtoform.valid"
+          <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn p-button-raised"  [disabled]="!editarDataPgtoform.valid"
           (click)="manterDataPagamento()"></button>
       </div>
   </div>
@@ -241,7 +241,7 @@
       <div class="p-inputgroup">
           <span pButton class="p-inputgroup-addon"><i class="pi pi-calendar"></i></span>
           <input type="date" pInputText placeholder="VENCIMENTO" formControlName="dataVencimento" name="dataVencimento" >
-          <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"  [disabled]="!editarDataVencform.valid"
+          <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn p-button-raised"  [disabled]="!editarDataVencform.valid"
           (click)="manterDataVencimento()"></button>
       </div>
   </div>
@@ -256,7 +256,7 @@
       <div class="p-inputgroup">
           <span pButton class="p-inputgroup-addon"><i class="pi pi-map"></i></span>
           <input type="text" pInputText placeholder="LOCAL PAGAMENTO" formControlName="localPagamento" name="localPagamento" >
-          <button type="button" pButton pRipple icon="pi pi-save" styleClass="p-button-warn"  [disabled]="!editarLocalPgtoform.valid"
+          <button type="button" pButton pRipple icon="pi pi-save" styleClass="p-button-warn p-button-raised p-button-text"  [disabled]="!editarLocalPgtoform.valid"
           (click)="manterLocalPgto()"></button>
       </div>
   </div>
@@ -271,7 +271,7 @@
       <div class="p-inputgroup">
         <span class="p-inputgroup-addon">R$</span>
           <input type="text" pInputText placeholder="DESCONTO" formControlName="desconto" name="desconto" >
-          <button type="button" pButton pRipple icon="pi pi-save" styleClass="p-button-warn"  [disabled]="!editarDescontoform.valid"
+          <button type="button" pButton pRipple icon="pi pi-save" styleClass="p-button-warn p-button-raised p-button-text"  [disabled]="!editarDescontoform.valid"
           (click)="manterDesconto()"></button>
       </div>
   </div>
@@ -287,7 +287,7 @@
       <div class="p-inputgroup">
         <span class="p-inputgroup-addon">R$</span>
           <input type="text" pInputText placeholder="VALOR DUPLICATA" formControlName="valorDuplicata" name="valorDuplicata" >
-          <button type="button" pButton pRipple icon="pi pi-save" styleClass="p-button-warn"  [disabled]="!editarValorDuplicataform.valid"
+          <button type="button" pButton pRipple icon="pi pi-save" styleClass="p-button-warn p-button-raised p-button-text"  [disabled]="!editarValorDuplicataform.valid"
           (click)="manterValorDuplicata()"></button>
       </div>
   </div>
@@ -303,7 +303,7 @@
       <div class="p-inputgroup">
         <span class="p-inputgroup-addon">R$</span>
           <input type="text" pInputText placeholder="JUROS/MULTA" formControlName="jurosMulta" name="jurosMulta" >
-          <button type="button" pButton pRipple icon="pi pi-save" styleClass="p-button-warn"  [disabled]="!editarJurosMultatoform.valid"
+          <button type="button" pButton pRipple icon="pi pi-save" styleClass="p-button-warn p-button-raised p-button-text"  [disabled]="!editarJurosMultatoform.valid"
           (click)="manterJurosMulta()"></button>
       </div>
   </div>
@@ -334,7 +334,7 @@
            <td  style="color:blue" (click)="editarDesconto(c)">{{c.desconto  | currency }}</td>
            <td  style="color:blue" (click)="editarLocalPagamento(c)">
             <div *ngIf="c.localPagamento"> {{c.localPagamento }}</div>
-            <button *ngIf="!c.localPagamento" pButton pRipple icon="pi pi-map" class="p-button-rounded p-button-text p-button-lg p-button-primary"
+            <button *ngIf="!c.localPagamento" pButton pRipple icon="pi pi-map" class="p-button-rounded p-button-text p-button-lg p-button-primary p-button-raised"
           (click)="editarLocalPagamento(c)"></button>
            </td>
            <td>{{c.classificacaoDespesa }} / {{c.subClassificacaoDespesa }}</td>
@@ -355,7 +355,7 @@
     <div class="col-12 md:col-12">
       <div class="p-inputgroup">
           <input type="text" pInputText placeholder="Nº Documento" formControlName="numeroDocumento" name="numeroDocumento" >
-          <button type="button" pButton pRipple icon="pi pi-trash" class="p-button-danger"  [disabled]="!formDeteleLote.valid"
+          <button type="button" pButton pRipple icon="pi pi-trash" class="p-button-danger p-button-raised p-button-text"  [disabled]="!formDeteleLote.valid"
           (click)="deleteEmLote()"></button>
       </div>
   </div>
@@ -370,7 +370,7 @@
     <div class="col-12 md:col-12">
       <div class="p-inputgroup">
           <input type="text" pInputText placeholder="Nº Documento" formControlName="numeroDocumento" name="numeroDocumento" >
-          <button type="button" pButton pRipple icon="pi pi-trash" class="p-button-danger"  [disabled]="!formDeleteSituacaoPendente.valid"
+          <button type="button" pButton pRipple icon="pi pi-trash" class="p-button-danger p-button-raised p-button-text"  [disabled]="!formDeleteSituacaoPendente.valid"
           (click)="deleteSituacaoPendente()"></button>
       </div>
   </div>

@@ -6,7 +6,7 @@
 
       <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-success  p-button-sm" pTooltip="CRIAR NOVA EMPRESA"
+          <button pButton pRipple label="NOVA" icon="pi pi-plus" class="p-button-success  p-button p-button-raised p-button-text" pTooltip="CRIAR NOVA EMPRESA"
             (click)="openNew()"></button>
 
         </ng-template>
@@ -42,14 +42,14 @@
             <td>{{classificacao.id}}</td>
             <td>{{classificacao.descricao}}</td>
             <td>
-            <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-text p-button-info p-button-lg" pTooltip="MOSTRAR SUBCLASSIFICAÇÃO"
+            <button pButton pRipple icon="pi pi-list" class=" p-button-text p-button-info p-button-lg p-button-raised " pTooltip="MOSTRAR SUBCLASSIFICAÇÃO"
             (click)="exibirSubClassificacoes(classificacao)"></button>
            </td>
 
             <td>
-              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-primary p-button-lg " pTooltip="EDITAR CLASSIFICACÃO"
+              <button pButton pRipple icon="pi pi-pencil" class=" p-button-text p-button-primary p-button-lg p-button-raised " pTooltip="EDITAR CLASSIFICACÃO"
                 (click)="edit(classificacao)"></button>
-              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger p-button-lg" pTooltip="EXCLUIR CLASSIFICAÇÃO"
+              <button pButton pRipple icon="pi pi-trash" class=" p-button-text p-button-danger p-button-lg p-button-raised" pTooltip="EXCLUIR CLASSIFICAÇÃO"
                 (click)="delete(classificacao)"></button>
             </td>
           </tr>
@@ -74,8 +74,8 @@
     </form>
   </ng-template>
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" [disabled]="!form.valid"
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text p-button-raised p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text p-button-raised p-button-text" [disabled]="!form.valid"
       (click)="manterClassificacao()"></button>
   </ng-template>
 
@@ -94,7 +94,7 @@
 
 
     <p-card>
-          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-primary  p-button-sm" pTooltip="CRIAR NOVA EMPRESA"
+          <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-primary  p-button-sm p-button-raised p-button-text" pTooltip="CRIAR NOVA EMPRESA"
             (click)="adicionarSubClassificacao()" style="margin-bottom: 15px;"></button>
 
       <p-table [value]="listaSubClassificacao">
@@ -111,9 +111,9 @@
             <td  style="color:blue">{{subclassificacao.id}}</td>
            <td  style="color:blue">{{subclassificacao.descricao}}</td>
            <td>
-            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-primary p-button-lg " pTooltip="EDITAR CLASSIFICACÃO"
+            <button pButton pRipple icon="pi pi-pencil" class="p-button-raised p-button-text p-button-primary p-button-lg " pTooltip="EDITAR CLASSIFICACÃO"
               (click)="editSubClassificacao(subclassificacao)"></button>
-            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger p-button-lg" pTooltip="EXCLUIR CLASSIFICAÇÃO"
+            <button pButton pRipple icon="pi pi-trash" class="p-button-raised  p-button-text p-button-danger p-button-lg" pTooltip="EXCLUIR CLASSIFICAÇÃO"
               (click)="deleteSub(subclassificacao)"></button>
           </td>
         </tr>
@@ -139,8 +139,8 @@
     </form>
   </ng-template>
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" [disabled]="!formSubclassificacao.valid"
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text p-button-raised" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text p-button-raised" [disabled]="!formSubclassificacao.valid"
       (click)="manterSubclassificacao()"></button>
   </ng-template>
 

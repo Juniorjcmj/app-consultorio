@@ -71,13 +71,13 @@
               <div class="col-12 md:col-3">
                 <div class="p-inputgroup" style="margin-top:20px ;">
                   <button label="FILTRAR" type="button" pButton pRipple icon="pi pi-filter" (click)="filtroAvancado()"
-                    [disabled]="!formFilter.valid" class="p-button-warning"></button>
+                    [disabled]="!formFilter.valid" class="p-button-warning p-button-raised  p-button-text"></button>
                 </div>
               </div>
               <div class="col-12 md:col-3">
                 <div class="p-inputgroup" style="margin-top:20px ;">
                   <button label="LIMPAR" type="button" pButton pRipple icon="pi pi-eraser" (click)="resetarFiltro()"
-                    class="p-button-secondary mb-2"></button>
+                    class="p-button-secondary mb-2 p-button-raised  p-button-text"></button>
                 </div>
               </div>
             </div>
@@ -87,7 +87,9 @@
 
       <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-          <button pButton pRipple label="CADASTRAR" icon="pi pi-plus" class="p-button-success  p-button-sm"
+          <button pButton pRipple
+          label="NOVO" icon="pi pi-plus"
+           class="p-button-success  p-button-raised  p-button-text"
             (click)="openNew()"></button>
 
           <!-- <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteacompanhamento()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
@@ -149,7 +151,7 @@
                 <div class="col" *ngIf="comprovante.path != ''">
                    <button  pButton pRipple
                   pTooltip="DOWNLOAD"
-                    icon="pi pi-download" class=" pdf  p-button-text p-button-lg p-button-success p-button-raised "
+                    icon="pi pi-download" class=" pdf  p-button-lg p-button-success p-button-raised  p-button-text "
                     (click)="downloadFile(comprovante.id)"></button>
 
                   </div>
@@ -329,7 +331,7 @@
   <ng-template pTemplate="footer">
     <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
     <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" [disabled]="!form.valid"
-      (click)="onUpload()"></button>
+      (click)="editComprovante()"></button>
   </ng-template>
 
 

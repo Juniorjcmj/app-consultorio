@@ -9,7 +9,7 @@ export class ComprovanteInput{
   numeroPedido!: string;
   nomeCliente!: string;
   numeroDocumento!: string;
-  data!: LocalDate;
+  data!: Date;
   valor!: string;
   tipo!: string;
   file!: File
@@ -35,7 +35,7 @@ export class Comprovante{
   numeroPedido!: string;
   nomeCliente!: string;
   numeroDocumento!: string;
-  data!: Date;
+  data!: string;
   valor!: string;
   tipo!: string;
   file!: File

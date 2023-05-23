@@ -47,13 +47,15 @@
 
   <div class="col-12 md:col-3">
     <div class="p-inputgroup" style="margin-top:20px ;">
-        <button label="LIMPAR" type="button" pButton pRipple icon="pi pi-eraser" (click)="resetarFiltro()" class="p-button-secondary mb-2"
+        <button label="LIMPAR" type="button" pButton pRipple icon="pi pi-eraser" (click)="resetarFiltro()"
+        class="p-button-secondary mb-2  p-button p-button-raised p-button-text"
         ></button>
     </div>
   </div>
   <div class="col-12 md:col-3">
     <div class="p-inputgroup" style="margin-top:20px ;">
-        <button label="FILTRAR" type="button" pButton pRipple icon="pi pi-filter"  class="p-button-success mb-2" (click)="filtroAvancadissimo()"
+        <button label="FILTRAR" type="button" pButton pRipple icon="pi pi-filter"
+        class="p-button-success mb-2  p-button p-button-raised p-button-text" (click)="filtroAvancadissimo()"
         [disabled]="!formFilter.valid"
         ></button>
     </div>
@@ -73,7 +75,8 @@
     <div class="card">
       <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-          <button pButton pRipple label="NOVA" icon="pi pi-plus" class="p-button-success  p-button-sm" pTooltip="CRIAR NOVA OPERADORA"
+          <button pButton pRipple label="NOVA" icon="pi pi-plus"
+          class="p-button-success  p-button-sm  p-button p-button-raised p-button-text" pTooltip="CRIAR NOVA OPERADORA"
             (click)="openNew()"></button>
         </ng-template>
 
@@ -130,9 +133,9 @@
             <td>{{entregaTable.kmRodados}}</td>
             <td>{{entregaTable.descricao }}</td>
             <td>
-              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-lg p-button-primary mr-2" pTooltip="EDITAR VIATURA"
+              <button pButton pRipple icon="pi pi-pencil" class=" p-button p-button-raised p-button-text p-button-lg p-button-primary mr-2" pTooltip="EDITAR VIATURA"
                 (click)="edit(entregaTable)"></button>
-              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-lg p-button-danger" pTooltip="EXCLUIR VIATURA"
+              <button pButton pRipple icon="pi pi-trash" class=" p-button p-button-raised p-button-text p-button-lg p-button-danger" pTooltip="EXCLUIR VIATURA"
                 (click)="delete(entregaTable)"></button>
             </td>
           </tr>
@@ -209,8 +212,8 @@
     </form>
   </ng-template>
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" [disabled]="!form.valid"
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class=" p-button p-button-raised p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class=" p-button p-button-raised p-button-text" [disabled]="!form.valid"
       (click)="manter()"></button>
   </ng-template>
 
@@ -228,7 +231,7 @@
     <div class="col-12 md:col-12">
       <div class="p-inputgroup">
           <input type="text" pInputText placeholder="00:00" formControlName="horaRetorno" name="horaRetorno" >
-          <button type="button" pButton pRipple icon="pi pi-check" class="p-button-success"  [disabled]="!form.valid"
+          <button type="button" pButton pRipple icon="pi pi-check" class="p-button-success  p-button p-button-raised p-button-text"  [disabled]="!form.valid"
           (click)="manter()"></button>
       </div>
   </div>

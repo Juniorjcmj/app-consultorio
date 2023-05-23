@@ -78,13 +78,14 @@
             <div class="col-12 md:col-3">
               <div class="p-inputgroup" style="margin-top:20px ;">
                   <button label="FILTRAR" type="button" pButton pRipple icon="pi pi-filter" (click)="filtroAvancado()"
-                  [disabled]="!formFilter.valid" class="p-button-success"
+                  [disabled]="!formFilter.valid" class="p-button-success  p-button-raised p-button-text"
                   ></button>
               </div>
             </div>
             <div class="col-12 md:col-3">
               <div class="p-inputgroup" style="margin-top:20px ;">
-                  <button label="LIMPAR" type="button" pButton pRipple icon="pi pi-eraser" (click)="resetarFiltro()" class="p-button-warning mb-2"
+                  <button label="LIMPAR" type="button" pButton pRipple icon="pi pi-eraser" (click)="resetarFiltro()"
+                  class="p-button-warning mb-2  p-button p-button-raised p-button-text"
                   ></button>
               </div>
             </div>
@@ -95,7 +96,7 @@
 
       <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-          <button pButton pRipple label="NOVA" icon="pi pi-plus" class="p-button-success  p-button-sm"
+          <button pButton pRipple label="NOVA" icon="pi pi-plus" class="p-button-success  p-button-sm  p-button p-button-raised p-button-text"
             (click)="openNew()"></button>
 
           <!-- <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteacompanhamento()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
@@ -178,9 +179,9 @@
                (click)="isConferido(conciliacaoTable)" pTooltip={{conciliacaoTable.quemConferiu}}>
               {{conciliacaoTable.foiConferido}}</td>
             <td>
-              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-lg p-button"
+              <button pButton pRipple icon="pi pi-pencil" class=" p-button-raised p-button-text  p-button"
                 (click)="editConciliacao(conciliacaoTable)"></button>
-              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-lg p-button-danger"
+              <button pButton pRipple icon="pi pi-trash" class=" p-button-raised p-button-text  p-button-danger"
                 (click)="deleteConciliacao(conciliacaoTable)"></button>
             </td>
           </tr>
@@ -249,8 +250,8 @@
     </form>
   </ng-template>
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" [disabled]="!form.valid"
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class=" p-button-raised p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="  p-button-raised p-button-text" [disabled]="!form.valid"
       (click)="manterConciliacao()"></button>
   </ng-template>
 
@@ -273,8 +274,8 @@
     </form>
   </ng-template>
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="  p-button-raised p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class=" p-button-raised p-button-text"
       [disabled]="!formDataRecebimento.valid" (click)="manterDataRecebimentoConciliacao()"></button>
   </ng-template>
 

@@ -33,7 +33,8 @@
 
               <div class="col-12 md:col-3">
                 <div class="p-inputgroup" style="margin-top:20px ;">
-                    <button label="FILTRAR" type="button" pButton pRipple icon="pi pi-filter" class="p-button-success  p-button-sm"(click)="filtroAvancado()"
+                    <button label="FILTRAR" type="button" pButton pRipple icon="pi pi-filter"
+                     class="p-button-success  p-button  p-button p-button-raised p-button-text"(click)="filtroAvancado()"
                     [disabled]="!formFilter.valid"
                     ></button>
                 </div>
@@ -45,10 +46,12 @@
 
       <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-          <button pButton pRipple label="NOVA" icon="pi pi-plus" class="p-button-success  p-button-sm" pTooltip="CRIAR NOVA OPERADORA"
+          <button pButton pRipple label="NOVA" icon="pi pi-plus"
+          class="p-button-success  p-button  p-button-sm p-button-raised p-button-text" pTooltip="CRIAR NOVA OPERADORA"
             (click)="openNew()"></button>
             <p-divider layout="vertical"></p-divider>
-            <button pButton pRipple label="INATIVAS" icon="pi pi-unlock" class="p-button-danger  p-button-sm" pTooltip="BUSCAR OPERADORAS INATIVAS"
+            <button pButton pRipple label="INATIVAS" icon="pi pi-unlock"
+            class="p-button-danger  p-button-sm  p-button p-button-raised p-button-text" pTooltip="BUSCAR OPERADORAS INATIVAS"
             (click)="getAllDesativadas()"></button>
 
           <!-- <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteacompanhamento()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
@@ -130,11 +133,11 @@
             <td>{{operadoraTable.inicio | date : 'dd/MM/yyyy'}}</td>
             <td>{{operadoraTable.fim | date : 'dd/MM/yyyy'}} </td>
             <td class="grid">
-              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-lg p-button-primary mr-2 col" pTooltip="EDITAR OPERADORA"
+              <button pButton pRipple icon="pi pi-pencil" class=" p-button p-button-raised p-button-textp-button p-button-primary mr-2 col" pTooltip="EDITAR OPERADORA"
                 (click)="edit(operadoraTable)"></button>
-                <button pButton pRipple icon="pi pi-clone" class="p-button-rounded p-button-text p-button-lg p-button-success mr-2 col" pTooltip="CLONAR OPERADORA"
+                <button pButton pRipple icon="pi pi-clone" class=" p-button p-button-raised p-button-text p-button p-button-success mr-2 col" pTooltip="CLONAR OPERADORA"
                 (click)="clone(operadoraTable)"></button>
-              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text p-button-lg p-button-danger col" pTooltip="EXCLUIR OPERADORA"
+              <button pButton pRipple icon="pi pi-trash" class=" p-button p-button-raised p-button-text p-button p-button-danger col" pTooltip="EXCLUIR OPERADORA"
                 (click)="deleteOperadora(operadoraTable)"></button>
             </td>
           </tr>
@@ -209,8 +212,8 @@
     </form>
   </ng-template>
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" [disabled]="!form.valid"
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class=" p-button p-button-raised p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class=" p-button p-button-raised p-button-text" [disabled]="!form.valid"
       (click)="manterOperadora()"></button>
   </ng-template>
 

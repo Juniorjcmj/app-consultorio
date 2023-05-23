@@ -184,6 +184,9 @@ export class PageComprovanteComponent implements OnInit {
   }
 
   edit(comprovante: Comprovante) {
+
+    let dtFormatInput = new Date(comprovante.data);
+
     this.form = this.formBuilder.group({
       id: [comprovante.id],
       bancoId: [comprovante.banco.id, Validators.required],
@@ -191,7 +194,7 @@ export class PageComprovanteComponent implements OnInit {
       numeroPedido: [comprovante.numeroPedido, Validators.required],
       nomeCliente: [comprovante.nomeCliente, Validators.required],
       numeroDocumento: [comprovante.numeroDocumento, Validators.required],
-      data: [comprovante.data, Validators.required],
+      data: [ format(dtFormatInput, 'yyyy-MM-dd'), Validators.required],
       valor: [comprovante.valor, Validators.required],
       tipo: [comprovante.tipo, Validators.required],
     });
@@ -246,31 +249,31 @@ export class PageComprovanteComponent implements OnInit {
     this.display = false;
     this.submitted = false;
   }
-  manter() {
-    this.spinner.show();
-    this.dialog = false;
-    this.display = false;
-    this.submitted = true;
-    this.service.manter(this.form.value).subscribe(
-      (success: any) => {
-        this.findAll();
-        this.customMessage.onMessage(
-          'Operação realizada com sucesso! ',
-          'success'
-        );
-      },
-      (error) => {
-        if (error.status == '422') {
-          this.customMessage.onMessage('Comprovante já cadastrado', 'error');
-        } else {
-          this.customMessage.onMessage('Error ao cadastrar', 'error');
-        }
-        this.spinner.hide();
+  // manter() {
+  //   this.spinner.show();
+  //   this.dialog = false;
+  //   this.display = false;
+  //   this.submitted = true;
+  //   this.service.manter(this.form.value).subscribe(
+  //     (success: any) => {
+  //       this.findAll();
+  //       this.customMessage.onMessage(
+  //         'Operação realizada com sucesso! ',
+  //         'success'
+  //       );
+  //     },
+  //     (error) => {
+  //       if (error.status == '422') {
+  //         this.customMessage.onMessage('Comprovante já cadastrado', 'error');
+  //       } else {
+  //         this.customMessage.onMessage('Error ao cadastrar', 'error');
+  //       }
+  //       this.spinner.hide();
 
-        return '';
-      }
-    );
-  }
+  //       return '';
+  //     }
+  //   );
+  // }
 
   //MÉTODOS PARA FILTRO AVANÇADO
 
@@ -337,6 +340,49 @@ export class PageComprovanteComponent implements OnInit {
             'info'
           );
         } else {
+          this.customMessage.onMessage('Error ao cadastrar', 'error');
+        }
+        this.spinner.hide();
+        return '';
+      }
+    );
+  }
+  editComprovante() {
+    this.spinner.show();
+    this.dialogProp = false;
+    this.display = false;
+    this.submitted = true;
+    const formData = new FormData();
+    const formValue = this.form.value;
+
+    formData.append('id', formValue.id.toString());
+    formData.append('nomeCliente', formValue.nomeCliente.toString());
+    formData.append('empresaId', formValue.empresaId.toString());
+    formData.append('bancoId', formValue.bancoId.toString());
+    formData.append('tipo', formValue.tipo.toString());
+    formData.append('data', formValue.data.toString());
+    formData.append('valor', formValue.valor.toString());
+    formData.append('numeroPedido', formValue.numeroPedido.toString());
+    formData.append('numeroDocumento', formValue.numeroDocumento.toString());
+
+    this.service.updateComprovanteProp(formData).subscribe(
+      (success: any) => {
+        this.spinner.hide();
+        this.findAll();
+        this.customMessage.onMessage(
+          'Operação realizada com sucesso! ',
+          'success'
+        );
+      },
+      (error) => {
+        if (error.status == '422') {
+          this.spinner.hide();
+          this.customMessage.onMessage(
+            'Esse comprovante já foi usado!',
+            'info'
+          );
+        } else {
+          this.spinner.hide();
           this.customMessage.onMessage('Error ao cadastrar', 'error');
         }
         this.spinner.hide();
@@ -468,19 +514,34 @@ export class PageComprovanteComponent implements OnInit {
   }
 
   deleteFile(record: any): void {
-    const formData = new FormData();
-    formData.append('idComprovante', record);
-    this.service.deleteFile(formData).subscribe(
-      (data) => {
-        this.customMessage.onMessage('Arquivo excluido com sucesso!', 'success');
-        this.findAll();
-      },
-      (error) => {
 
-        this.customMessage.onMessage(error, 'error');
-        this.findAll();
-      }
-    );
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja excluir o arquivo? ',
+      header: 'Confirmar',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        //codigo para excluir
+        this.spinner.show();
+        const formData = new FormData();
+          formData.append('idComprovante', record);
+          this.service.deleteFile(formData).subscribe(
+            (data) => {
+              this.customMessage.onMessage('Arquivo excluido com sucesso!', 'success');
+              this.findAll();
+            },
+            (error) => {
+
+              this.customMessage.onMessage(error, 'error');
+              this.findAll();
+            }
+          );
+            },
+    });
+
+
+
+
+
   }
 
 

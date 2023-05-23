@@ -43,6 +43,10 @@ export class ComprovanteService {
 
     return this.httpClient.post(`${this.apiUrlResourceServe}/comprovante`, formData);
   }
+  updateComprovanteProp(formData: FormData) {
+
+    return this.httpClient.post(`${this.apiUrlResourceServe}/comprovante-prop`, formData);
+  }
   updateComprovante(formData: FormData) {
 
     return this.httpClient.post(`${this.apiUrlResourceServe}/comprovante-update`, formData);
