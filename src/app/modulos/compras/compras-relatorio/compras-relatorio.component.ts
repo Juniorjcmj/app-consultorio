@@ -161,9 +161,9 @@ resetarFiltro(){
   );
 
 }
-public downloadContasAgrupadasXls(): void {
+public getContasAgrupasdasFornecedorXls(): void {
   this.spinner.show();
-  this.service.getContasAgrupasdasXls(this.formFilterAvancadissimo.value).subscribe(
+  this.service.getContasAgrupasdasFornecedorXls(this.formFilterAvancadissimo.value).subscribe(
     (response: any) => {
       this.spinner.hide();
       const filename = this.getFilenameFromContentDisposition(response.headers.get('Content-Disposition'), "contas-agrupadas");
