@@ -1,6 +1,6 @@
 export class ContasPagarInput{
 id!:number
-dataVencimento!: Date
+dataVencimento!: string
 valorDuplicata!: 	string
 fornecedor!:	string
 nd!:	string

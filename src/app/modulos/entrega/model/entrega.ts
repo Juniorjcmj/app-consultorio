@@ -4,7 +4,7 @@ import { Viatura } from '../../viatura/model/viatura';
 
 export class EntregaInput{
   id!:number
-  dataSaida!: Data;
+  dataSaida!: string;
   horaRetorno!:string;
   horaSaida!:string;
   numeroPedido!:string;
@@ -18,7 +18,7 @@ export class EntregaInput{
   }
   export class Entrega{
     id!:number
-    dataSaida!: Data;
+    dataSaida!: string;
     horaRetorno!:string;
     horaSaida!:string;
     numeroPedido!:string;

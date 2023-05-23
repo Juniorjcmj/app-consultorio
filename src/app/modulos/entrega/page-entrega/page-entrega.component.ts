@@ -15,6 +15,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import * as FileSaver from 'file-saver';
 import { EntregaService } from '../entrega.service';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-page-entrega',
@@ -147,10 +148,11 @@ export class PageEntregaComponent implements OnInit {
   }
 
   edit(entrega: Entrega) {
+    let dtSaidaInput = new Date(entrega.dataSaida);
 
     this.form = this.formBuilder.group({
       id: [entrega.id],
-      dataSaida: [entrega.dataSaida, Validators.required],
+      dataSaida: [format(dtSaidaInput, 'yyyy-MM-dd'), Validators.required],
       horaRetorno: [entrega.horaRetorno],
       horaSaida: [entrega.horaSaida, Validators.required],
       status: [entrega.status, Validators.required],

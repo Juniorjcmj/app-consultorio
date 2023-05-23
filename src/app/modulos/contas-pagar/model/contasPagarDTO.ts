@@ -9,7 +9,7 @@ export class ContasPagarDTO extends ContasPagarInput{
        isAprovado!: boolean;
        nomeEmpresa!: string;
        empresaId!: string;
-       dataPagamento!: Date;
+       dataPagamento!: string;
        parcela!:	string;
        isPedirBoleto!:	boolean;
 

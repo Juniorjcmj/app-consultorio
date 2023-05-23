@@ -251,12 +251,15 @@ export class PageContasPagarComponent implements OnInit {
     this.ContasPagarInputDialog = true;
   }
   edit(contas: ContasPagarDTO) {
+
+    let dtVencInput = new Date(contas.dataVencimento);
+
     this.subclassificacaoDespesa = [];
     this.form = this.formBuilder.group({
       id: [contas.id, Validators.required],
       empresa_id: [contas.empresaId, Validators.required],
       valorDuplicata: [contas.valorDuplicata, Validators.required],
-      dataVencimento: [contas.dataVencimento, Validators.required],
+      dataVencimento: [format(dtVencInput, 'yyyy-MM-dd'), Validators.required],
       formaPagamento: [contas.formaPagamento, Validators.required],
       fornecedor: [contas.fornecedor, Validators.required],
       nd: [contas.nd],

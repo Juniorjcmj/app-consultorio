@@ -2,11 +2,11 @@
 export class ConciliacaoCartao{
 
   id!: number;
-  data!: Date;
-  previsaoRecebimento!:Date;
-  dataRecebimento!: Date;
-  dataCriacao!: Date;
-  dataAtualizacao!: Date;
+  data!: string;
+  previsaoRecebimento!:string;
+  dataRecebimento!: string;
+  dataCriacao!: string;
+  dataAtualizacao!: string;
   numeroPedido!: string;
   isAntecipa!:string;
   isRecebido!: string;
@@ -28,8 +28,8 @@ export class ConciliacaoCartao{
 
 export class ConciliacaoCartaoInput{
   id!: number;
-  data!: Date;
-  dataRecebimento!: Date;
+  data!: string;
+  dataRecebimento!: string;
   numeroPedido!: string;
   tipoOperacao!: string;
   valorPedido!: number;

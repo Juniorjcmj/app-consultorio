@@ -24,6 +24,7 @@ import { UpdateGenericoConciliacao } from '../model/updateGenericoConciliacao';
 
 
 import * as XLSX from 'xlsx';
+import format from 'date-fns/format';
 
 @Component({
   selector: 'app-list',
@@ -176,16 +177,20 @@ export class ListComponent implements OnInit {
   }
 
   editConciliacao(conciliacao: ConciliacaoCartao) {
+
+    let dtFormatInput = new Date(conciliacao.data);
+    let dtRecebimentoInput = new Date(conciliacao.data);
+
     this.form = this.formBuilder.group({
       id: [conciliacao.id],
-      data: [conciliacao.data, Validators.required],
+      data: [format(dtFormatInput, 'yyyy-MM-dd'), Validators.required],
       idEmpresa: [conciliacao.idEmpresa, Validators.required],
       idOperadora: [conciliacao.idOperadora, Validators.required],
       valorPedido: [conciliacao.valorPedido, Validators.required],
       numeroPedido: [conciliacao.numeroPedido, Validators.required],
       aute: [conciliacao.aute, Validators.required],
       tipoOperacao: [conciliacao.tipoOperacao, Validators.required],
-      dataRecebimento: [conciliacao.dataRecebimento],
+      dataRecebimento: [format(dtRecebimentoInput, 'yyyy-MM-dd')],
       quemConferiu:[this.authService.getUser()]
     });
     this.conciliacaoDialog = true;
