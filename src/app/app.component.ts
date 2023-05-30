@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { KeycloakService } from 'keycloak-angular';
+
 import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
@@ -11,10 +11,10 @@ import { PrimeNGConfig } from 'primeng/api';
 export class AppComponent implements OnInit  {
  sideBarOpen = true;
  logado: any;
- constructor(private keycloakService: KeycloakService, private primengConfig: PrimeNGConfig){
+ constructor( private primengConfig: PrimeNGConfig){
 
   //this.logado = this.service.isLoggedIn();
-  this.logado = this.keycloakService.isLoggedIn();
+
  }
   ngOnInit(): void {
     this.primengConfig.ripple = true;
@@ -23,8 +23,5 @@ export class AppComponent implements OnInit  {
  sideBarToggler(){
    this.sideBarOpen = !this.sideBarOpen;
  }
- logout(evento: any){
 
-  return this.keycloakService.logout("http://localhost:4200/");
- }
 }

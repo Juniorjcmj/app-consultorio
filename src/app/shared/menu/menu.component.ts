@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { KeycloakService } from 'keycloak-angular';
+
 import { AuthService } from '../../modulos/auth/auth.service';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Entrega } from './../model/entrega';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgxSpinnerService } from 'ngx-spinner';
+
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { CustomMensagensService } from 'src/app/services/mensagens.service';
 import { AuthService } from '../../auth/auth.service';
@@ -74,17 +74,17 @@ export class PageEntregaComponent implements OnInit {
     private messageService: MessageService,
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService,
+
     private authService: AuthService) {
 
       this.service.getAll().subscribe(
         (data: any) => {
-          this.spinner.hide();
+
           this.pagina = data
           this.entregaXLS = data
         },
         (error) => {
-          this.spinner.hide();
+
           this.authService.getRedirect401(error.status);
         }
       );
@@ -126,7 +126,7 @@ export class PageEntregaComponent implements OnInit {
      }
 
   ngOnInit(): void {
-    this.spinner.show();
+
   }
   openNew() {
     this.form = this.formBuilder.group({
@@ -196,7 +196,7 @@ export class PageEntregaComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         //codigo para excluir
-        this.spinner.show();
+
         this.service.delete(record.id).subscribe(
           (data) => {
             this.messageService.add({
@@ -208,7 +208,7 @@ export class PageEntregaComponent implements OnInit {
             return this.findAll();
           },
           (error) => {
-            this.spinner.hide();
+
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
@@ -224,10 +224,10 @@ export class PageEntregaComponent implements OnInit {
     this.service.getAll().subscribe(
      (data: any)=>{
        this.pagina = data
-       this.spinner.hide();
+
      },
      (error) => {
-       this.spinner.hide();
+
        this.customMessage.onMessage("Erro ", "error")
      }
     )
@@ -238,7 +238,7 @@ export class PageEntregaComponent implements OnInit {
     this.submitted = false;
   }
   manter() {
-    this.spinner.show();
+
     this.dialog = false;
     this.display = false;
     this.formdataChegadaDialog = false;
@@ -249,7 +249,7 @@ export class PageEntregaComponent implements OnInit {
         this.customMessage.onMessage("Operação realizada com sucesso! ", "success")
       },
       (error) => {
-        this.spinner.hide();
+
         this.customMessage.onMessage("Erro ao tentar cadastrar! ", "error")
 
         return '';
@@ -323,14 +323,14 @@ export class PageEntregaComponent implements OnInit {
     this.formFilter.reset()
   }
   filtroAvancadissimo() {
-    this.spinner.show();
+
    this.service.filtroAvancadoAvancado(this.formFilter.value).subscribe(
     (data : Entrega[]) =>{
-      this.spinner.hide();
+
           this.pagina = data
           this.entregaXLS = data
     }, (error: any)=>{
-      this.spinner.hide();
+
      this.customMessage.onMessage("Erro ao realizar pesquisa!", "error")
     }
   );

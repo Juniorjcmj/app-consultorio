@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgxSpinnerService } from 'ngx-spinner';
+
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { AuthService } from '../auth.service';
 import { UsuarioServiceService } from '../usuario-service.service';
@@ -33,7 +33,7 @@ export class ManterUsuarioComponent implements OnInit {
 
   constructor(private service: UsuarioServiceService,
     private formBuilder: FormBuilder,
-    private spinner: NgxSpinnerService,
+
     private authService: AuthService,
     private confirmationService: ConfirmationService,
     private message: CustomMensagensService) {
@@ -65,24 +65,24 @@ export class ManterUsuarioComponent implements OnInit {
 
       }
   ngOnInit(): void {
-    this.spinner.show();
+
   }
   hideDialog() {
     this.usuarioFormDialog = false;
     this.submitted = false;
   }
   manterUsuario(){
-    this.spinner.show();
+
     this.service.manter(this.form.value).subscribe(
       (data: any) => {
         this.usuarioFormDialog = false;
-        this.spinner.hide();
+
         this.message.onMessage("Operação realizada com Sucesso", "info")
         this.pagina = data;
       },
       (error: any) => {
         this.usuarioFormDialog = false;
-        this.spinner.hide();
+
         this.message.onMessage("Ocorreu um erro!", "error")
       }
     );
@@ -128,16 +128,16 @@ export class ManterUsuarioComponent implements OnInit {
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {        //codigo para excluir
-        this.spinner.show();
+
         this.service.delete(usuario.id).subscribe(
           data => {
-            this.spinner.hide();
+
             this.message.onSuccessSmall();
             this.pagina = data;
 
           },
           error =>{
-            this.spinner.hide();
+
             this.message.onMessage("Error ao excluir usuário(a)", "error")
           }
         )
@@ -156,16 +156,16 @@ export class ManterUsuarioComponent implements OnInit {
     }
 
   novaSenha(){
-    this.spinner.show();
+
   this.senhaDialog = false;
     this.service.novaSenha(this.formSenha.value['id'], this.formSenha.value['senha']).subscribe(
       (data: any) => {
-        this.spinner.hide();
+
         this.message.onMessage("Senha alterada com Sucesso", "info")
         this.pagina = data;
       },
       (error: any) => {
-        this.spinner.hide();
+
         this.message.onMessage("Ocorreu um erro!", "error")
       }
     );

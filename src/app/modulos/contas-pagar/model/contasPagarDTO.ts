@@ -12,6 +12,8 @@ export class ContasPagarDTO extends ContasPagarInput{
        dataPagamento!: string;
        parcela!:	string;
        isPedirBoleto!:	boolean;
+       pathComprovante!: string;
+       pathBoleto!:string;
 
 
 

@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ComprasService } from '../compras.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { NgxSpinnerService } from 'ngx-spinner';
+
 import { AuthService } from '../../auth/auth.service';
 import { CustomMensagensService } from 'src/app/services/mensagens.service';
 import html2canvas from 'html2canvas';
@@ -40,12 +40,14 @@ export class PageComprasComponent implements OnInit {
   display: boolean = false;
   pagina!: Credito[];
 
+  public loading = false;
+
   constructor(private service: ComprasService,
     private messageService: MessageService,
     private customMessage: CustomMensagensService,
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService,
+
     private authService: AuthService) {
 
     this.getAll();
@@ -53,13 +55,13 @@ export class PageComprasComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.spinner.show();
+
   }
 
   getAll(){
     this.service.getAll().subscribe(
       (data: any) => {
-        this.spinner.hide();
+
         this.pagina = data;
         this.creditoXLS = this.pagina;
       },
@@ -93,13 +95,13 @@ export class PageComprasComponent implements OnInit {
 
   manterCredito() {
 
-    this.spinner.show();
+
     this.creditoDialog = false;
     this.display = false;
     this.submitted = true;
     this.service.manter(this.form.value).subscribe(
       (success:any) => {
-        this.spinner.hide();
+
        this.customMessage.onSuccessSmall();
         setTimeout(() => {}, 6000);
         this.form.reset();
@@ -107,7 +109,7 @@ export class PageComprasComponent implements OnInit {
         this.getAll();
       },
       (error) => {
-        this.spinner.hide();
+
         this.form.reset();
         this.customMessage.onMessage("Error ao cadastrar", "error")
       }
@@ -120,14 +122,14 @@ export class PageComprasComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         //codigo para excluir
-        this.spinner.show();
+
         this.service.delete(record.id).subscribe(
           (data) => {
              this.customMessage.onMessage("Excluido com sucesso!!", "success")
              this.getAll();
           },
           (error) => {
-            this.spinner.hide();
+
             this.customMessage.onMessage("Erro ao tentar excluir", "error")
           }
         );

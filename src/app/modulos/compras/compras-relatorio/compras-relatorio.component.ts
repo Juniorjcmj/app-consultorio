@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ClassificacaoDespesa, SubClassificacaoDespesa } from '../../classificacao-despesa/classificacao-despesa';
 import { Empresa } from '../../conciliacao-cartao/model/conciliacaoCartao';
-import { NgxSpinnerService } from 'ngx-spinner';
+
+
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CustomMensagensService } from 'src/app/services/mensagens.service';
 import { ClassificacaoDespesaService } from '../../classificacao-despesa/classificacao-despesa.service';
@@ -34,7 +35,7 @@ export class ComprasRelatorioComponent implements OnInit {
 
   constructor( private service: ContasPagarService,
     private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService,
+
     private empresaService: EmpresaService,
     private formBuilder: FormBuilder,
     private classificacaoService: ClassificacaoDespesaService,
@@ -95,10 +96,10 @@ export class ComprasRelatorioComponent implements OnInit {
   ngOnInit(): void {
   }
   filtroAvancadissimo() {
-    this.spinner.show();
+
    this.service.filtroAvancadoAvancado(this.formFilterAvancadissimo.value).subscribe(
     (data : ContasPagarPage) =>{
-      this.spinner.hide();
+
       this.service.setListaContasPagar(data)
       this.subclassificacaoDespesa = []
     }, (error: any)=>{
@@ -107,18 +108,18 @@ export class ComprasRelatorioComponent implements OnInit {
   );
 }
 emitirRelatorio() {
-  this.spinner.show();
+
   this.service.relatorioContabil(this.formFilterAvancadissimo.value).subscribe(
     (data : Blob) =>{
 
-      this.spinner.hide();
+
       this.subclassificacaoDespesa = []
 
 
 
     }, (error: any)=>{
     this.customMessage.onMessage("Preencheu os filtros corretamente?", "error")
-    this.spinner.hide();
+
     }
 );
 }
@@ -145,16 +146,16 @@ resetarFiltro(){
  }
 
  public downloadXls(): void {
-  this.spinner.show();
+
   this.service.getUserXls(this.formFilterAvancadissimo.value).subscribe(
     (response: any) => {
-      this.spinner.hide();
+
       const filename = this.getFilenameFromContentDisposition(response.headers.get('Content-Disposition'), "contabil");
       this.downloadFile(response.body, filename);
     },
     (error: any) => {
       this.customMessage.onMessage("Preencheu os filtros corretamente?", "error")
-      this.spinner.hide();
+
 
     }
 
@@ -162,16 +163,16 @@ resetarFiltro(){
 
 }
 public getContasAgrupasdasFornecedorXls(): void {
-  this.spinner.show();
+
   this.service.getContasAgrupasdasFornecedorXls(this.formFilterAvancadissimo.value).subscribe(
     (response: any) => {
-      this.spinner.hide();
+
       const filename = this.getFilenameFromContentDisposition(response.headers.get('Content-Disposition'), "contas-agrupadas");
       this.downloadFile(response.body, filename);
     },
     (error: any) => {
       this.customMessage.onMessage("Preencheu os filtros corretamente?", "error")
-      this.spinner.hide();
+
     }
   );
 

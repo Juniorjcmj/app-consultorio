@@ -14,7 +14,6 @@ import {RadioButtonModule} from 'primeng/radiobutton';
 import {InputNumberModule} from 'primeng/inputnumber';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextModule } from 'primeng/inputtext';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { CalendarModule } from 'primeng/calendar';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import {InputMaskModule} from 'primeng/inputmask';
@@ -64,7 +63,6 @@ import { ChartModule } from 'primeng/chart';
     InputTextModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxSpinnerModule,
     CalendarModule,
     SelectButtonModule,
     InputMaskModule,

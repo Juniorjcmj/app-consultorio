@@ -4,8 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as FileSaver from 'file-saver';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { KeycloakService } from 'keycloak-angular';
-import { NgxSpinnerService } from 'ngx-spinner';
+
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { Empresa } from '../../conciliacao-cartao/model/conciliacaoCartao';
 import { EmpresaService } from '../service/empresa-service';
@@ -18,6 +17,7 @@ import { AuthService } from '../../auth/auth.service';
   providers: [MessageService, ConfirmationService],
 })
 export class PageEmpresaComponent implements OnInit {
+[x: string]: any;
 
   @ViewChild('htmlData') htmlData!: ElementRef;
   empresaDialog!: boolean;
@@ -41,7 +41,7 @@ export class PageEmpresaComponent implements OnInit {
 
   display: boolean = false;
 
-
+  public loading = false;
 
   // conciliacaoCartoes$: Observable<ConciliacaoCartao[]>;
   pagina!: Empresa[];
@@ -51,25 +51,26 @@ export class PageEmpresaComponent implements OnInit {
     private messageService: MessageService,
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService,
     private authService: AuthService) {
 
 
 
       this.service.getAll().subscribe(
         (data: any) => {
-          this.spinner.hide();
+
           this.pagina = data;
           this.empresaXLS = this.pagina;
+          this.loading = false;
         },
         (error) => {
           this.authService.getRedirect401(error.status);
+          this.loading = false;
         }
       );
      }
 
   ngOnInit(): void {
-    this.spinner.show();
+    this.loading = true;
   }
   openNew() {
     this.form = this.formBuilder.group({
@@ -100,13 +101,13 @@ export class PageEmpresaComponent implements OnInit {
   }
   manterEmpresa() {
 
-    this.spinner.show();
+    this.loading = true;
     this.empresaDialog = false;
     this.display = false;
     this.submitted = true;
     this.service.manter(this.form.value).subscribe(
       (success:any) => {
-        this.spinner.hide();
+        this.loading = false;
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
@@ -118,7 +119,7 @@ export class PageEmpresaComponent implements OnInit {
         this.findAll();
       },
       (error) => {
-        this.spinner.hide();
+        this.loading = false;
         this.form.reset();
         this.messageService.add({
           severity: 'error',
@@ -133,13 +134,14 @@ export class PageEmpresaComponent implements OnInit {
   }
 
    delete(record: Empresa) {
+    this.loading = true;
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja excluir ' + record.nome + '?',
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         //codigo para excluir
-        this.spinner.show();
+
         this.service.delete(record.id).subscribe(
           (data) => {
             this.messageService.add({
@@ -148,10 +150,11 @@ export class PageEmpresaComponent implements OnInit {
               detail: ' Excluido com sucesso',
               life: 2000,
             });
+            this.loading = false;
             return this.findAll();
           },
           (error) => {
-            this.spinner.hide();
+            this.loading = false;
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
@@ -164,13 +167,14 @@ export class PageEmpresaComponent implements OnInit {
     });
   }
   findAll(): void {
+    this.loading = true;
     this.service.getAll().subscribe(
      (data: any)=>{
        this.pagina = data;
-       this.spinner.hide();
+       this.loading = false;
      },
      (error) => {
-       this.spinner.hide();
+      this.loading = false;
        this.messageService.add({
          severity: 'error',
          summary: 'Error',

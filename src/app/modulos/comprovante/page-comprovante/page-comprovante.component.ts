@@ -12,7 +12,7 @@ import {
 import { ComprovanteService } from '../comprovante.service';
 import { BancoService } from '../../banco/banco.service';
 import { EmpresaService } from '../../empresa/service/empresa-service';
-import { NgxSpinnerService } from 'ngx-spinner';
+
 import { CustomMensagensService } from 'src/app/services/mensagens.service';
 import { AuthService } from '../../auth/auth.service';
 import { format } from 'date-fns';
@@ -70,7 +70,7 @@ export class PageComprovanteComponent implements OnInit {
     private messageService: MessageService,
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService,
+
     private authService: AuthService,
     private httpClient: HttpClient,
     private sanitizer: DomSanitizer
@@ -95,12 +95,12 @@ export class PageComprovanteComponent implements OnInit {
   findAll() {
     this.service.filtroAvancado(this.formFilter.value).subscribe(
       (data: any) => {
-        this.spinner.hide();
+
         this.pagina = data;
         console.log(data);
       },
       (error: any) => {
-        this.spinner.hide();
+
         this.authService.getRedirect401(error.status);
       }
     );
@@ -112,7 +112,7 @@ export class PageComprovanteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.spinner.show();
+
 
     this.comprovanteForm = this.formBuilder.group({
       files: ['', Validators.required],
@@ -218,7 +218,7 @@ export class PageComprovanteComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         //codigo para excluir
-        this.spinner.show();
+
         this.service.delete(record.id).subscribe(
           (data) => {
             this.messageService.add({
@@ -230,7 +230,7 @@ export class PageComprovanteComponent implements OnInit {
             return this.findAll();
           },
           (error) => {
-            this.spinner.hide();
+
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
@@ -250,7 +250,7 @@ export class PageComprovanteComponent implements OnInit {
     this.submitted = false;
   }
   // manter() {
-  //   this.spinner.show();
+  //
   //   this.dialog = false;
   //   this.display = false;
   //   this.submitted = true;
@@ -268,7 +268,7 @@ export class PageComprovanteComponent implements OnInit {
   //       } else {
   //         this.customMessage.onMessage('Error ao cadastrar', 'error');
   //       }
-  //       this.spinner.hide();
+  //
 
   //       return '';
   //     }
@@ -281,14 +281,14 @@ export class PageComprovanteComponent implements OnInit {
     this.formFilter.reset();
   }
   filtroAvancado() {
-    this.spinner.show();
+
     this.service.filtroAvancado(this.formFilter.value).subscribe(
       (data: any) => {
-        this.spinner.hide();
+
         this.pagina = data;
       },
       (error: any) => {
-        this.spinner.hide();
+
         this.customMessage.onMessage('Erro ao realizar pesquisa!', 'error');
       }
     );
@@ -305,7 +305,7 @@ export class PageComprovanteComponent implements OnInit {
   }
 
   onUpload() {
-    this.spinner.show();
+
     this.dialog = false;
     this.display = false;
     this.submitted = true;
@@ -342,13 +342,13 @@ export class PageComprovanteComponent implements OnInit {
         } else {
           this.customMessage.onMessage('Error ao cadastrar', 'error');
         }
-        this.spinner.hide();
+
         return '';
       }
     );
   }
   editComprovante() {
-    this.spinner.show();
+
     this.dialogProp = false;
     this.display = false;
     this.submitted = true;
@@ -367,7 +367,7 @@ export class PageComprovanteComponent implements OnInit {
 
     this.service.updateComprovanteProp(formData).subscribe(
       (success: any) => {
-        this.spinner.hide();
+
         this.findAll();
         this.customMessage.onMessage(
           'Operação realizada com sucesso! ',
@@ -376,23 +376,23 @@ export class PageComprovanteComponent implements OnInit {
       },
       (error) => {
         if (error.status == '422') {
-          this.spinner.hide();
+
           this.customMessage.onMessage(
             'Esse comprovante já foi usado!',
             'info'
           );
         } else {
-          this.spinner.hide();
+
           this.customMessage.onMessage('Error ao cadastrar', 'error');
         }
-        this.spinner.hide();
+
         return '';
       }
     );
   }
 
   editFile() {
-    this.spinner.show();
+
     this.dialogFile = false;
     this.display = false;
     this.submitted = true;
@@ -413,7 +413,7 @@ export class PageComprovanteComponent implements OnInit {
       },
       (error) => {
         this.customMessage.onMessage('Error ao atualizar arquivo!', 'error');
-        this.spinner.hide();
+
         return '';
       }
     );
@@ -521,7 +521,7 @@ export class PageComprovanteComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         //codigo para excluir
-        this.spinner.show();
+
         const formData = new FormData();
           formData.append('idComprovante', record);
           this.service.deleteFile(formData).subscribe(
@@ -537,12 +537,8 @@ export class PageComprovanteComponent implements OnInit {
           );
             },
     });
-
-
-
-
-
   }
+
 
 
 }

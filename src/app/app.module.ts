@@ -15,18 +15,17 @@ import { MaterialModule } from './shared/material.module';
 
 
 import { MatIconModule } from '@angular/material/icon';
-import { NgxSpinnerModule } from 'ngx-spinner';
+
 import { NavBarComponent } from './shared/componente/nav-bar/nav-bar.component';
 import { HeaderComponent } from './shared/componente/header/header.component';
 import { DashboardComponent } from './shared/componente/dashboard/dashboard.component';
 
-import { PrimengModule } from './shared/primeng.module';
 import { MenuComponent } from './shared/menu/menu.component';
 import { ConciliacaoCartaoModule } from './modulos/conciliacao-cartao/conciliacao-cartao.module';
 import { EmpresaModule } from './modulos/empresa/empresa.module';
 
 
-import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -54,27 +53,8 @@ import { ComprovanteModule } from './modulos/comprovante/comprovante.module';
 import { AppLayoutModule} from './layout/app.layout.module';
 import { ExamplePdfViewerComponent } from './example-pdf-viewer/example-pdf-viewer.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-
-
-
-
-
-// function initializeKeycloak(keycloak: KeycloakService) {
-//   return () =>
-//     keycloak.init({
-//       config: {
-//         url: 'http://localhost:8180/',
-//         realm: 'auth-server',
-//         clientId: 'api-gestao-client'
-//       },
-//       initOptions: {
-//         onLoad: 'check-sso',
-//         silentCheckSsoRedirectUri:
-//           window.location.origin + '/assets/silent-check-sso.html'
-//       },
-//       loadUserProfileAtStartUp:true
-//     });
-// }
+import { NgxLoadingModule } from 'ngx-loading';
+import { PrimengModule } from './shared/primeng.module';
 
 
 registerLocaleData(ptBr);
@@ -101,26 +81,24 @@ registerLocaleData(ptBr);
     MaterialModule,
     ReactiveFormsModule,
     MatIconModule,
-    NgxSpinnerModule,
     FormsModule,
     PrimengModule,
-    EmpresaModule,
+     EmpresaModule,
     OperadoraCartaoModule,
-    ContasPagarModule,
-    ClassificacaoDespesaModule,
-    ViaturaModule,
-    ColaboradorModule,
-    EntregaModule,
+     ContasPagarModule,
+     ClassificacaoDespesaModule,
+     ViaturaModule,
+     ColaboradorModule,
+     EntregaModule,
     AuthModule,
-    ProdutosModule,
+     ProdutosModule,
     ComprasModule,
-    BancoModule,
-    ComprovanteModule,
-    AppLayoutModule,
-  //novo  sistema-servvico
-  ConciliacaoCartaoModule,
-  KeycloakAngularModule,
-  NgxExtendedPdfViewerModule,
+     BancoModule,
+     ComprovanteModule,
+     AppLayoutModule,
+     ConciliacaoCartaoModule,
+   NgxExtendedPdfViewerModule,
+   NgxLoadingModule.forRoot({}),
   ],
   providers: [
 
@@ -140,7 +118,8 @@ registerLocaleData(ptBr);
 
   ],
   exports:[
-    NotfoundComponent
+    NotfoundComponent,
+
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]

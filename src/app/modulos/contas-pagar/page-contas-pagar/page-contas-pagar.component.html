@@ -2,8 +2,6 @@
   <p-toast></p-toast>
   <div id="htmlData">
     <div class="card">
-
-       <!-- <app-financeiro></app-financeiro> -->
        <app-filtro-avancado></app-filtro-avancado>
 
       <p-toolbar styleClass="mb-4">
@@ -214,10 +212,7 @@
 </p-dialog>
 
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
-<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
 
-  <p style="font-size: 20px; color: white">Carregando...</p>
-</ngx-spinner>
 
 <p-dialog header="" [(visible)]="editarDtPgtoDialog">
   <ng-template pTemplate="content">
@@ -319,12 +314,13 @@
       <p-table [value]="detalheContas">
         <ng-template pTemplate="header">
         <tr>
-          <th>OBSERVAÇÃO</th>
-          <th>JUROS/MULTA</th>
-          <th>DESCONTO</th>
-          <th >LOC PGTO</th>
-          <th >CLASSIFICAÇÃO</th>
-          <th ></th>
+          <th class="text-center-custom">OBSERVAÇÃO</th>
+          <th class="text-center-custom">JUROS/MULTA</th>
+          <th class="text-center-custom">DESCONTO</th>
+          <th class="text-center-custom" >LOC PGTO</th>
+          <th class="text-center-custom" >CLASSIFICAÇÃO</th>
+          <th class="text-center-custom" >BOLETO</th>
+          <th class="text-center-custom" >COMPROVANTE</th>
         </tr>
         </ng-template>
         <ng-template pTemplate="body" let-c>
@@ -338,6 +334,55 @@
           (click)="editarLocalPagamento(c)"></button>
            </td>
            <td>{{c.classificacaoDespesa }} / {{c.subClassificacaoDespesa }}</td>
+
+           <!--arquivo boleto-->
+           <td class="text-center-custom">
+            <span class="p-buttonset">
+              <button  *ngIf="c.pathBoleto != ''"
+              pTooltip="DOWNLOAD BOLETO" pButton pRipple  icon="pi pi-download"
+              class=" pdf  p-button-lg p-button-success p-button-raised  p-button-text "
+              (click)="downloadBoleto(c.id)"
+              ></button>
+              <button
+              pTooltip="UPLOAD BOLETO"  (click)="updateBoleto(c)"
+              class=" p-button-text p-button-lg p-button-help p-button-raised"
+              pButton pRipple  icon="pi pi-upload"></button>
+              <button  *ngIf="c.pathBoleto != ''"
+              pTooltip="EXCLUIR BOLETO"
+              class=" p-button-text p-button-lg p-button-help p-button-raised"
+              pButton pRipple   icon="pi pi-file-excel"
+              class=" pdf  p-button-text p-button-lg p-button-danger p-button-raised"
+              (click)="deleteBoleto(c.id)"
+              ></button>
+          </span>
+          </td>
+
+           <!--fim arquivo-->
+            <!--arquivo comprovante-->
+            <td class="text-center-custom">
+              <span class="p-buttonset">
+                <button  *ngIf="c.pathComprovante != ''"
+                pTooltip="DOWNLOAD COMPROVANTE" pButton pRipple  icon="pi pi-download"
+                class=" pdf  p-button-lg p-button-success p-button-raised  p-button-text "
+                (click)="downloadComprovante(c.id)"
+                ></button>
+                <button
+                pTooltip="UPLOAD COMPROVANTE"  (click)="updateComprovante(c)"
+                class=" p-button-text p-button-lg p-button-help p-button-raised"
+                pButton pRipple  icon="pi pi-upload"></button>
+                <button  *ngIf="c.pathComprovante != ''"
+                pTooltip="EXCLUIR COMPROVANTE"
+                class=" p-button-text p-button-lg p-button-help p-button-raised"
+                pButton pRipple   icon="pi pi-file-excel"
+                class=" pdf  p-button-text p-button-lg p-button-danger p-button-raised"
+                (click)="deleteComprovante(c.id)"
+                ></button>
+            </span>
+
+            </td>
+
+             <!--fim arquivo-->
+
         </tr>
       </ng-template>
       </p-table>
@@ -379,4 +424,59 @@
   </ng-template>
 </p-dialog>
 
+<div class="my-container">
+  <ng-template #customLoadingTemplate>
+    <div class="custom-class">
+      <h3>Loading...</h3>
+    </div>
+  </ng-template>
+
+  <ngx-loading
+    [show]="loading"
+    [config]="{ backdropBorderRadius: '3px' }"
+    [template]="customLoadingTemplate"
+  ></ngx-loading>
+  </div>
+
+  <p-dialog [(visible)]="dialogBoleto" [style]="{width: '450px', heigth:'650px'}" header="Selecione novo arquivo. " [modal]="true"
+  styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <form [formGroup]="form">
+      <div class="grid p-fluid">
+
+      <div class="form-group">
+        <input (change)="onFileSelected($event)" accept="application/pdf" pInputText type="file" formControlName="file"
+          id="file" class="form-control-file p-button-success  p-button-sm" name="file"
+          [ngClass]="aplicaCssErro('file')">
+      </div>
+      </div>
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" [disabled]="!form.valid"
+      (click)="manterBoleto()"></button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="dialogComprovante" [style]="{width: '450px', heigth:'650px'}" header="Selecione novo arquivo. " [modal]="true"
+styleClass="p-fluid">
+<ng-template pTemplate="content">
+  <form [formGroup]="form">
+    <div class="grid p-fluid">
+
+    <div class="form-group">
+      <input (change)="onFileSelected($event)" accept="application/pdf" pInputText type="file" formControlName="file"
+        id="file" class="form-control-file p-button-success  p-button-sm" name="file"
+        [ngClass]="aplicaCssErro('file')">
+    </div>
+    </div>
+  </form>
+</ng-template>
+<ng-template pTemplate="footer">
+  <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+  <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" [disabled]="!form.valid"
+    (click)="manterComprovante()"></button>
+</ng-template>
+</p-dialog>
 

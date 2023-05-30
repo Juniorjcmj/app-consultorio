@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { environment } from 'src/environments/environment';
 import { ConciliacaoCartao, Operadora, ConciliacaoCartaoInput, PageConciliacao } from '../model/conciliacaoCartao';
-import { KeycloakService } from 'keycloak-angular';
+
 import { AuthService } from '../../auth/auth.service';
 import { FiltroConciliacao } from '../model/filtroConciliacao';
 import { CustomLocalStorageService } from '../../../services/custom-local-storage.service';

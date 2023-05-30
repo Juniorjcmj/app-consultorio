@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { KeycloakService } from 'keycloak-angular';
+
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class NavBarComponent implements OnInit {
   //isLogado: boolean;
-  constructor(private keycloakServvice: KeycloakService,private router: Router) {
+  constructor(private router: Router) {
 
    }
 

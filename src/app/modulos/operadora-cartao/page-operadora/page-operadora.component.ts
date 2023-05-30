@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { NgxSpinnerService } from 'ngx-spinner';
+
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { OperadoraCartaoService } from '../operadora-cartao.service';
 import { Operadora } from '../../conciliacao-cartao/model/conciliacaoCartao';
@@ -59,13 +59,13 @@ export class PageOperadoraComponent implements OnInit {
     private messageService: MessageService,
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService,
+
     private authService: AuthService
     ) {
 
       this.service.getAllOperadoraPage(100, 0).subscribe(
         (data: any) => {
-          this.spinner.hide();
+
           this.page = data;
           this.pagina = this.page.content
           this.operadoraXLS = this.page.content;
@@ -88,16 +88,16 @@ export class PageOperadoraComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.spinner.show();
+
   }
   filtroAvancado(){
-    this.spinner.show();
+
     this.service.filtroAvancado(this.formFilter.value, this.page.number).subscribe(
       (res:any)  =>{
         this.page = res;
       this.pagina = this.page.content
       this.formFilter.reset();
-      this.spinner.hide();
+
     }
        );
   }
@@ -163,7 +163,7 @@ export class PageOperadoraComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         //codigo para excluir
-        this.spinner.show();
+
         this.service.delete(record.id).subscribe(
           (data) => {
             this.messageService.add({
@@ -175,7 +175,7 @@ export class PageOperadoraComponent implements OnInit {
             return this.findAll();
           },
           (error) => {
-            this.spinner.hide();
+
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
@@ -192,10 +192,10 @@ export class PageOperadoraComponent implements OnInit {
     (data: any)=>{
       this.page = data;
       this.pagina = this.page.content
-      this.spinner.hide();
+
     },
     (error) => {
-      this.spinner.hide();
+
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
@@ -213,7 +213,7 @@ export class PageOperadoraComponent implements OnInit {
   getAllDesativadas(){
      this.service.getAllOperadoraDesativada(this.page.size,0).subscribe(
     (data: any) => {
-      this.spinner.hide();
+
       this.page = data;
       this.pagina = this.page.content
       this.operadoraXLS = this.page.content;
@@ -224,7 +224,7 @@ export class PageOperadoraComponent implements OnInit {
 
   manterOperadora() {
 
-    this.spinner.show();
+
     this.operadoraDialog = false;
     this.display = false;
     this.submitted = true;
@@ -240,7 +240,7 @@ export class PageOperadoraComponent implements OnInit {
         setTimeout(() => {}, 6000);
       },
       (error) => {
-        this.spinner.hide();
+
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
@@ -307,22 +307,22 @@ export class PageOperadoraComponent implements OnInit {
   nextPage(){
     this.service.getAllOperadoraPage(this.page.size, this.page.number + 1).subscribe(
       (data: any) => {
-        this.spinner.hide();
+
         this.page = data;
        this.pagina = this.page.content
-       console.log(this.page)
+
         this.operadoraXLS = this.page.content;
       },
       (error) => { }
     );
   }
   previousPage(){
-    this.spinner.show()
+
     console.log("chamando  página anterior")
     var number = this.page.number - 1
     this.service.getAllOperadoraPage(this.page.size, number).subscribe(
       (data: any) => {
-        this.spinner.hide();
+
         this.page = data;
         this.pagina = this.page.content
         this.operadoraXLS = this.page.content;
@@ -333,7 +333,7 @@ export class PageOperadoraComponent implements OnInit {
   resetPage(){
     this.service.getAllOperadoraPage(this.page.size, 0).subscribe(
       (data: any) => {
-        this.spinner.hide();
+
         this.page = data;
        this.pagina = this.page.content
         this.operadoraXLS = this.page.content;

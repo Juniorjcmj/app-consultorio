@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as FileSaver from 'file-saver';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { NgxSpinnerService } from 'ngx-spinner';
+
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { CustomMensagensService } from 'src/app/services/mensagens.service';
 import { AuthService } from '../../auth/auth.service';
@@ -63,18 +63,18 @@ export class PageColaboradorComponent implements OnInit {
     private messageService: MessageService,
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService,
+
     private authService: AuthService) {
 
 
       this.service.getAll().subscribe(
         (data: any) => {
-          this.spinner.hide();
+
           this.pagina = data
           this.objXLS = data
         },
         (error) => {
-          this.spinner.hide();
+
           this.authService.getRedirect401(error.status);
         }
       );
@@ -95,7 +95,7 @@ export class PageColaboradorComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.spinner.show();
+
   }
 
   openNew() {
@@ -138,7 +138,7 @@ export class PageColaboradorComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         //codigo para excluir
-        this.spinner.show();
+
         this.service.delete(record.id).subscribe(
           (data) => {
             this.messageService.add({
@@ -150,7 +150,7 @@ export class PageColaboradorComponent implements OnInit {
             return this.findAll();
           },
           (error) => {
-            this.spinner.hide();
+
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
@@ -166,10 +166,10 @@ export class PageColaboradorComponent implements OnInit {
     this.service.getAll().subscribe(
      (data: any)=>{
        this.pagina = data
-       this.spinner.hide();
+
      },
      (error) => {
-       this.spinner.hide();
+
        this.customMessage.onMessage("Erro ao excluir ", "error")
      }
     )
@@ -182,7 +182,7 @@ export class PageColaboradorComponent implements OnInit {
 
   manterColaborador() {
 
-    this.spinner.show();
+
     this.dialog = false;
     this.display = false;
     this.submitted = true;
@@ -192,7 +192,7 @@ export class PageColaboradorComponent implements OnInit {
         this.customMessage.onMessage("Operação realizada com sucesso! ", "success")
       },
       (error) => {
-        this.spinner.hide();
+
         this.customMessage.onMessage("Erro ao tentar cadastrar! ", "error")
 
         return '';

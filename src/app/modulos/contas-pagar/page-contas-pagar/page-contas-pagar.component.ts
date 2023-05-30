@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { NgxSpinnerService } from 'ngx-spinner';
+
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { ContasPagarService } from '../contas-pagar.service';
 import { ContasPagarDTO } from '../model/contasPagarDTO';
@@ -32,6 +32,7 @@ import { CustomLocalStorageService } from '../../../services/custom-local-storag
 
 
 import * as XLSX from 'xlsx';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-page-contas-pagar',
@@ -41,6 +42,10 @@ import * as XLSX from 'xlsx';
 })
 export class PageContasPagarComponent implements OnInit {
   filtro: FiltroAvancado = new FiltroAvancado();
+
+  dialogBoleto!: boolean;
+  dialogComprovante!: boolean;
+
 
   @ViewChild('htmlData') htmlData!: ElementRef;
 
@@ -109,6 +114,9 @@ export class PageContasPagarComponent implements OnInit {
   //Relatório excel
   title = 'Relatorio';
   fileName = 'relatorio.xlsx';
+  public loading = false;
+
+  private sanitizer!: DomSanitizer;
 
   constructor(
     private empresaService: EmpresaService,
@@ -117,7 +125,7 @@ export class PageContasPagarComponent implements OnInit {
     private messageService: MessageService,
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService,
+
     private authService: AuthService,
     private classificacaoService: ClassificacaoDespesaService,
     private customLocalStorageService: CustomLocalStorageService
@@ -171,34 +179,40 @@ export class PageContasPagarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.spinner.show();
+    this.loading = true;
   }
 
   listAtual() {
-    this.spinner.show();
+    this.loading = true;
     this.service.getListaContasPagar().subscribe(
       (data) => {
-        this.spinner.hide();
+
         this.pagina = data;
+        this.loading = false;
       },
       (error: any) => {
         this.authService.getRedirect401(error.status);
+        this.loading = false;
       }
     );
   }
   buscarComFiltroAtual() {
+    this.loading = true;
     const filtro = this.customLocalStorageService.get('filtro');
     this.service.filtroAvancadoAvancado(filtro).subscribe(
       (data: any) => {
-        this.spinner.hide();
+
         this.pagina = data;
         this.subclassificacaoDespesa = [];
+        this.loading = false;
       },
       (error: any) => {
         this.authService.getRedirect401(error.status);
+        this.loading = false;
       }
     );
     this.service.setListaContasPagar(this.pagina);
+
   }
 
   mostraClassificacao(event: any) {
@@ -209,6 +223,7 @@ export class PageContasPagarComponent implements OnInit {
   }
 
   pegandoPrimeiroEUltimoDiaDaSemana() {
+    this.loading = true;
     var data = new Date();
     var primeiro = data.getDate() - data.getDay();
 
@@ -220,12 +235,14 @@ export class PageContasPagarComponent implements OnInit {
 
     this.service.filtroAvancadoAvancado(this.filtro).subscribe(
       (data: any) => {
-        this.spinner.hide();
+
         this.pagina = data;
         this.subclassificacaoDespesa = [];
+        this.loading = false;
       },
       (error: any) => {
         this.authService.getRedirect401(error.status);
+        this.loading = false;
       }
     );
     this.service.setListaContasPagar(this.pagina);
@@ -280,18 +297,20 @@ export class PageContasPagarComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         //codigo para excluir
-        this.spinner.show();
+        this.loading = true;
+
         this.service.delete(record.id).subscribe(
           (data) => {
-            this.spinner.hide();
+            this.loading = false;
             this.customMessage.onMessage(
               'Operação realizada com sucesso!',
               'success'
             );
             this.buscarComFiltroAtual();
+            this.loading = false;
           },
           (error) => {
-            this.spinner.hide();
+
             this.customMessage.onMessage('Operação não realizada!', 'error');
           }
         );
@@ -316,10 +335,10 @@ export class PageContasPagarComponent implements OnInit {
   }
 
   deleteEmLote() {
-    this.spinner.show();
+    this.loading = true;
     this.service.deleteEmLote(this.formDeteleLote.value).subscribe(
       (data) => {
-        this.spinner.hide();
+        this.loading = false;
         this.formDeleteLOteDialog = false;
         this.customMessage.onMessage(
           'Operação realizada com sucesso!',
@@ -328,16 +347,17 @@ export class PageContasPagarComponent implements OnInit {
         this.buscarComFiltroAtual();
       },
       (error) => {
-        this.spinner.hide();
+        this.loading = false;
         this.customMessage.onMessage('Operação não realizada!', 'error');
+
       }
     );
   }
   deleteSituacaoPendente() {
-    this.spinner.show();
+    this.loading = true;
     this.service.deleteSituacaoPendente(this.formDeleteSituacaoPendente.value).subscribe(
       (data) => {
-        this.spinner.hide();
+        this.loading = false;
         this.formDeleteSituacaoPendenteDialog = false;
         this.customMessage.onMessage(
           'Operação realizada com sucesso!',
@@ -346,7 +366,7 @@ export class PageContasPagarComponent implements OnInit {
         this.buscarComFiltroAtual();
       },
       (error) => {
-        this.spinner.hide();
+        this.loading = false;
         this.customMessage.onMessage('Operação não realizada!', 'error');
       }
     );
@@ -357,19 +377,19 @@ export class PageContasPagarComponent implements OnInit {
     this.submitted = false;
   }
   manterContaPagar() {
-    this.spinner.show();
+    this.loading = true;
     this.ContasPagarInputDialog = false;
     this.display = false;
     this.submitted = true;
 
     this.service.manterContasPagar(this.form.value).subscribe(
       (data: any) => {
-        this.spinner.hide();
+        this.loading = false;
         this.pagina = data;
         this.customMessage.onSuccessSmall();
       },
       (error: any) => {
-        this.spinner.hide();
+        this.loading = false;
         this.customMessage.onMessage(
           'Erro ao tentar cadastrar, tente novamente',
           'error'
@@ -394,17 +414,18 @@ export class PageContasPagarComponent implements OnInit {
     this.editarDtPgtoDialog = true;
   }
   manterDataPagamento() {
-    this.spinner.show();
+    this.loading = true;
     this.editarDtPgtoDialog = false;
     this.display = false;
     this.submitted = true;
     this.service.manterDataPagamento(this.editarDataPgtoform.value).subscribe(
       (data: any) => {
-        this.spinner.hide();
+        this.loading = false;
         this.pagina = data;
         this.customMessage.onSuccessSmall();
       },
       (error: any) => {
+        this.loading = false;
         this.customMessage.onMessage(
           'Erro ao tentar cadastrar, tente novamente',
           'error'
@@ -422,17 +443,18 @@ export class PageContasPagarComponent implements OnInit {
     this.editarDtVencDialog = true;
   }
   manterDataVencimento() {
-    this.spinner.show();
+    this.loading = true;
     this.editarDtVencDialog = false;
     this.display = false;
     this.submitted = true;
     this.service.manterDataVencimento(this.editarDataVencform.value).subscribe(
       (data: any) => {
-        this.spinner.hide();
+        this.loading = false;
         this.pagina = data;
         this.customMessage.onSuccessSmall();
       },
       (error: any) => {
+        this.loading = false;
         this.customMessage.onMessage(
           'Erro ao tentar cadastrar, tente novamente',
           'error'
@@ -449,13 +471,13 @@ export class PageContasPagarComponent implements OnInit {
     this.editarLocalPgtoDialog = true;
   }
   manterLocalPgto() {
-    this.spinner.show();
+    this.loading = true;
     this.editarLocalPgtoDialog = false;
     this.display = false;
     this.submitted = true;
     this.service.manterLocalPgto(this.editarLocalPgtoform.value).subscribe(
       (data: any) => {
-        this.spinner.hide();
+        this.loading = false;
         this.pagina = data;
         this.customMessage.onSuccessSmall();
 
@@ -465,6 +487,7 @@ export class PageContasPagarComponent implements OnInit {
 
       },
       (error: any) => {
+        this.loading = false;
         this.customMessage.onMessage(
           'Erro ao tentar cadastrar, tente novamente',
           'error'
@@ -482,13 +505,13 @@ export class PageContasPagarComponent implements OnInit {
     this.editarDescontoDialog = true;
   }
   manterDesconto() {
-    this.spinner.show();
+    this.loading = true;
     this.editarDescontoDialog = false;
     this.display = false;
     this.submitted = true;
     this.service.manterDesconto(this.editarDescontoform.value).subscribe(
       (data: any) => {
-        this.spinner.hide();
+        this.loading = false;
         this.pagina = data;
         this.customMessage.onSuccessSmall();
         //atualizar o side bar com a alteração realizada
@@ -496,6 +519,7 @@ export class PageContasPagarComponent implements OnInit {
         this.detalhamentoSidebar(conta);
       },
       (error: any) => {
+        this.loading = false;
         this.customMessage.onMessage(
           'Erro ao tentar cadastrar, tente novamente',
           'error'
@@ -512,19 +536,19 @@ export class PageContasPagarComponent implements OnInit {
     this.editarValorDuplicataDialog = true;
   }
   manterValorDuplicata() {
-    this.spinner.show();
+    this.loading = true;
     this.editarValorDuplicataDialog = false;
     this.display = false;
     this.submitted = true;
     this.service.manterValorDuplicata(this.editarValorDuplicataform.value).subscribe(
       (data: any) => {
-        this.spinner.hide();
+        this.loading = false;
         this.pagina = data;
         this.customMessage.onSuccessSmall();
 
       },
-      (error: any) => {
-        this.spinner.hide();
+        (error: any) => {
+          this.loading = false;
         this.customMessage.onMessage(
           'Erro ao tentar cadastrar,verifique a formatação Ex: 4.000,95',
           'error'
@@ -542,14 +566,14 @@ export class PageContasPagarComponent implements OnInit {
     this.editarJurosMultaDialog = true;
   }
   manterJurosMulta() {
-    this.spinner.show();
+    this.loading = true;
     this.displaySideBar = false;
     this.editarJurosMultaDialog = false;
     this.display = false;
     this.submitted = true;
     this.service.manterJurosMulta(this.editarJurosMultatoform.value).subscribe(
       (data: any) => {
-        this.spinner.hide();
+        this.loading = false;
         this.pagina = data;
         this.customMessage.onSuccessSmall();
 
@@ -559,6 +583,7 @@ export class PageContasPagarComponent implements OnInit {
 
       },
       (error: any) => {
+        this.loading = false;
         this.customMessage.onMessage(
           'Erro ao tentar cadastrar, tente novamente',
           'error'
@@ -567,6 +592,7 @@ export class PageContasPagarComponent implements OnInit {
     );
   }
   detalhamentoSidebar(conta: any) {
+    console.log(conta)
     this.detalheContas = [];
     this.detalheContas.push(conta);
     this.displaySideBar = true;
@@ -599,9 +625,223 @@ export class PageContasPagarComponent implements OnInit {
 
     /* save to file */
     XLSX.writeFile(wb, this.fileName);
-
   }
 
+  //TRABALHANDO COM ARQUIVOS DE
+  deleteBoleto(record: any){
+
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja excluir o arquivo? ',
+      header: 'Confirmar',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        //codigo para excluir
+        this.displaySideBar = false;
+
+        const formData = new FormData();
+          formData.append('id', record);
+          this.service.deleteBoleto(formData).subscribe(
+            (data) => {
+              this.customMessage.onSuccessSmall();
+              this. atualizarSideberComFiltroAtual(record);
+            },
+            (error) => {
+              this.customMessage.onMessage(error, 'error');
+            }
+          );
+            },
+    });
+
+  }
+  deleteComprovante(record: any) {
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja excluir o arquivo? ',
+      header: 'Confirmar',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        //codigo para excluir
+        this.displaySideBar = false;
+        const formData = new FormData();
+          formData.append('id', record);
+          this.service.deleteComprovante(formData).subscribe(
+            (data) => {
+              this.customMessage.onSuccessSmall();
+              this. atualizarSideberComFiltroAtual(record);
+
+            },
+            (error) => {
+
+              this.customMessage.onMessage(error, 'error');
+
+            }
+          );
+            },
+    });
+  }
+  //faz uma chamada ao servico que se comunica com api para fornecer o arquivo
+  downloadBoleto(record: any): void {
+    const formData = new FormData();
+    formData.append('id', record);
+    this.service.downloadBoleto(formData).subscribe(
+      (data: Blob) => {
+        this.saveFile(data);
+      },
+      (error) => {
+        this.customMessage.onMessage('Error ao baixar arquivo!', 'error');
+      }
+    );
+  }
+  downloadComprovante(record: any): void {
+    const formData = new FormData();
+    formData.append('id', record);
+    this.service.downloadComprovante(formData).subscribe(
+      (data: Blob) => {
+        this.saveFile(data);
+      },
+      (error) => {
+        this.customMessage.onMessage('Error ao baixar arquivo!', 'error');
+      }
+    );
+  }
+  //recebe o arquivo de downloadFile e faz download
+  saveFile(response: Blob) {
+    //criar um objet URL temporário
+    const url = window.URL.createObjectURL(response);
+
+    //Criar um elemento <a> invisível para iniciaro download
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'comprovante.pdf';
+
+    link.click();
+    window.URL.revokeObjectURL(url);
+  }
+
+  selectedFileBLOB!: any;
+  fileChangeEvent(fileInput: any) {
+    if (fileInput.target.files && fileInput.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        let blob = new Blob(fileInput.target.files, {
+          type: fileInput.target.files[0].type,
+        });
+        let url = window.URL.createObjectURL(blob);
+
+        this.selectedFileBLOB = this.sanitizer.bypassSecurityTrustUrl(url);
+      };
+      reader.readAsDataURL(fileInput.target.files[0]);
+    }
+  }
+
+  selectedFile!: File;
+  onFileSelected(event: any) {
+    if (event.target.files[0].type !== 'application/pdf') {
+      alert('Por favor, selecione um arquivo PDF.');
+      return;
+    } else {
+      this.selectedFile = event.target.files[0];
+    }
+  }
+  aplicaCssErro(campo: any) {
+    return {
+      'ng-invalid ng-dirty': this.verificarValidTouched(campo),
+    };
+  }
+  verificarValidTouched(campo: any) {
+    return !this.form.get(campo)!.valid && this.form.get(campo)!.touched;
+  }
+
+  updateBoleto(record: any) {
+    this.form = this.formBuilder.group({
+      id: [record.id],
+      file: [],
+    });
+    this.submitted = false;
+    this.dialogBoleto = true;
+  }
+
+  manterBoleto() {
+
+    this.dialogBoleto = false;
+    this.display = false;
+    this.submitted = true;
+    this.displaySideBar = false;
+    const formData = new FormData();
+    const formValue = this.form.value;
+
+    if (this.selectedFile != undefined) {
+      formData.append('file', this.selectedFile, this.selectedFile.name);
+    }
+    formData.append('id', formValue.id.toString());
+    this.service.salvarBoleto(formData).subscribe(
+      (success: any) => {
+
+        this.customMessage.onSuccessSmall();
+        this. atualizarSideberComFiltroAtual(formValue.id);
+      },
+      (error) => {
+        this.customMessage.onMessage('Error ao atualizar arquivo!', 'error');
+
+        return '';
+      }
+    );
+  }
+
+  updateComprovante(record: any) {
+    this.form = this.formBuilder.group({
+      id: [record.id],
+      file: [],
+    });
+    this.submitted = false;
+    this.dialogComprovante = true;
+  }
+  manterComprovante() {
+
+    this.dialogComprovante = false;
+    this.display = false;
+    this.submitted = true;
+    this.displaySideBar = false;
+    const formData = new FormData();
+    const formValue = this.form.value;
+
+    if (this.selectedFile != undefined) {
+      formData.append('file', this.selectedFile, this.selectedFile.name);
+    }
+    formData.append('id', formValue.id.toString());
+    this.service.salvarComprovante(formData).subscribe(
+      (success: any) => {
+
+        this.customMessage.onSuccessSmall();
+       this. atualizarSideberComFiltroAtual(formValue.id);
+      },
+      (error) => {
+        this.customMessage.onMessage('Error ao atualizar arquivo!', 'error');
+
+        return '';
+      }
+    );
+  }
+
+  //MÉTODO RESPONSAVEL POR ATUALIZAR O SIDBAR QUAL HOUVER ALTERAÇÃO NO BOLETO OU COMPROVANTE
+  atualizarSideberComFiltroAtual(id: any) {
+    this.loading = true;
+    const filtro = this.customLocalStorageService.get('filtro');
+    this.service.filtroAvancadoAvancado(filtro).subscribe(
+      (data: any) => {
+
+        this.pagina = data;
+        this.subclassificacaoDespesa = [];
+        this.loading = false;
+          //atualizar o side bar com a alteração realizada
+          const conta = this.pagina.content.find(conta => conta.id == id )
+          this.detalhamentoSidebar(conta);
+      },
+      (error: any) => {
+        this.authService.getRedirect401(error.status);
+        this.loading = false;
+      }
+    );
 
 
+  }
 }

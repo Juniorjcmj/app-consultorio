@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as FileSaver from 'file-saver';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { KeycloakService } from 'keycloak-angular';
-import { NgxSpinnerService } from 'ngx-spinner';
+
+
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { ClassificacaoDespesa, SubClassificacaoDespesa } from '../classificacao-despesa';
 import { ClassificacaoDespesaService } from '../classificacao-despesa.service';
@@ -53,13 +53,13 @@ export class PageClassificacaoDespesaComponent implements OnInit {
   constructor( private service: ClassificacaoDespesaService,  private messageService: MessageService,
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService,
+
     private customMessage: CustomMensagensService,
     private authService: AuthService) {
 
       this.service.getAllClassificacao().subscribe(
         (data: any) => {
-          this.spinner.hide();
+
           this.pagina = data;
           this.classificacaoXLS = this.pagina;
         },
@@ -71,7 +71,7 @@ export class PageClassificacaoDespesaComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.spinner.show();
+
   }
 
   openNew() {
@@ -93,13 +93,13 @@ export class PageClassificacaoDespesaComponent implements OnInit {
   }
   manterClassificacao() {
 
-    this.spinner.show();
+
     this.classificacaoDialog = false;
     this.display = false;
     this.submitted = true;
     this.service.manterClassificacao(this.form.value).subscribe(
       (success:any) => {
-        this.spinner.hide();
+
         this.customMessage.onMessage("Classificação salva!", "success")
         setTimeout(() => {}, 6000);
         this.form.reset();
@@ -107,7 +107,7 @@ export class PageClassificacaoDespesaComponent implements OnInit {
       },
       (error) => {
         this.authService.getRedirect401(error.status);
-        this.spinner.hide();
+
         this.form.reset();
         this.customMessage.onMessage("Error, "+ error, "error")
 
@@ -123,7 +123,7 @@ export class PageClassificacaoDespesaComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         //codigo para excluir
-        this.spinner.show();
+
         this.service.delete(record.id).subscribe(
           (data) => {
             this.customMessage.onMessage("Operação realizada", "success")
@@ -131,7 +131,7 @@ export class PageClassificacaoDespesaComponent implements OnInit {
           },
           (error) => {
             this.authService.getRedirect401(error.status);
-            this.spinner.hide();
+
             this.customMessage.onMessage("Error, "+ error, "error")
           }
         );
@@ -142,10 +142,10 @@ export class PageClassificacaoDespesaComponent implements OnInit {
     this.service.getAllClassificacao().subscribe(
      (data: any)=>{
        this.pagina = data;
-       this.spinner.hide();
+
      },
      (error) => {
-       this.spinner.hide();
+
        this.authService.getRedirect401(error.status);
        this.customMessage.onMessage("Error, "+ error, "error")
      }
@@ -245,21 +245,21 @@ export class PageClassificacaoDespesaComponent implements OnInit {
   }
   manterSubclassificacao(){
 
-    this.spinner.show();
+
     this.subclassificacaoDialog = false;
     this.displaySub = false;
     this.display = false;
     this.submitted = true;
     this.service.manterSub(this.idClassificacao, this.formSubclassificacao.value).subscribe(
       (success:any) => {
-        this.spinner.hide();
+
         this.customMessage.onMessage("Subclassificação Salva!", "success")
         setTimeout(() => {}, 6000);
         this.formSubclassificacao.reset();
         this.findAll();
       },
       (error) => {
-        this.spinner.hide();
+
         this.authService.getRedirect401(error.status);
         this.formSubclassificacao.reset();
         this.messageService.add({
@@ -282,7 +282,7 @@ export class PageClassificacaoDespesaComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         //codigo para excluir
-        this.spinner.show();
+
         this.service.deleteSub(this.idClassificacao,record.descricao).subscribe(
           (data) => {
             this.customMessage.onMessage("Exclusão realizada com sucesso!", "success")
@@ -291,7 +291,7 @@ export class PageClassificacaoDespesaComponent implements OnInit {
 
           },
           (error) => {
-            this.spinner.hide();
+
             this.messageService.add({
               severity: 'error',
               summary: 'Error',

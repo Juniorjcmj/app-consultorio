@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { KeycloakService } from 'keycloak-angular';
+
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ClassificacaoDespesa, SubClassificacaoDespesa } from './classificacao-despesa';
@@ -15,7 +15,7 @@ export class ClassificacaoDespesaService {
   apiUrlResourceServeSub= environment.apiUrlResourceServer+"V1/api-subclassificacao-despesa";
 
   constructor(private httpClient: HttpClient,private router: Router,
-    private keycloakService: KeycloakService) { }
+) { }
 
 
 

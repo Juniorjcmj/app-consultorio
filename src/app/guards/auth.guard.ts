@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivate } from '@angular/router';
 
-import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
+
 import { Observable } from 'rxjs';
 import { AuthService } from '../modulos/auth/auth.service';
 

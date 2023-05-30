@@ -174,4 +174,26 @@ export class ContasPagarService {
     });
   }
 
+  //TRABALHANDO COM MARQUIVOS
+  salvarBoleto(formData: FormData) {
+
+    return this.httpClient.post(`${this.apiUrlResourceServe}/novo-boleto`, formData);
+  }
+  salvarComprovante(formData: FormData) {
+
+    return this.httpClient.post(`${this.apiUrlResourceServe}/novo-comprovante`, formData);
+  }
+  downloadBoleto(formData: FormData){
+    return this.httpClient.post(`${this.apiUrlResourceServe}/download-boleto`+"?id=",formData, {responseType:'blob'});
+  }
+  deleteBoleto(formData: FormData){
+    return this.httpClient.post(`${this.apiUrlResourceServe}/delete-boleto`+"?id=",formData);
+  }
+  downloadComprovante(formData: FormData){
+    return this.httpClient.post(`${this.apiUrlResourceServe}/download-comprovante`+"?id=",formData, {responseType:'blob'});
+  }
+  deleteComprovante(formData: FormData){
+    return this.httpClient.post(`${this.apiUrlResourceServe}/delete-comprovante`+"?id=",formData);
+  }
+
 }

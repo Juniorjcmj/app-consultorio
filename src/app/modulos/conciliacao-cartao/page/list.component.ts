@@ -12,7 +12,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import * as FileSaver from 'file-saver';
-import { NgxSpinnerService } from 'ngx-spinner';
+
 import { EmpresaService } from '../../empresa/service/empresa-service';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -81,12 +81,12 @@ export class ListComponent implements OnInit {
  title = 'conciliacão';
  fileName= 'conciliacao.xlsx';
 
-
+  loading = false
   constructor(
     private conciliacaoCartaoService: ConciliacaoCartaoService,
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService,
+
     private empresaService: EmpresaService,
     private authService: AuthService,
     private serviceOperadora: OperadoraCartaoService,
@@ -119,7 +119,7 @@ export class ListComponent implements OnInit {
 
     this.serviceOperadora.getAllOperadoraPage(250,0).subscribe(
       (data) => {
-        this.spinner.hide();
+
         this.operadoras = data.content;
       },
       (error) => {
@@ -138,16 +138,17 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.spinner.show();
+      this.loading = true;
   }
 
   filtroAvancado(){
-    this.spinner.show();
+    this.loading = true;
     this.conciliacaoCartaoService.filtroConciliacao(this.formFilter.value).subscribe(
       (data:any)  =>{
+        this.loading = false;
       this.pageConciliacao = data;
       this.pagina = this.pageConciliacao.content
-      this.spinner.hide();
+
     }
        );
   }
@@ -203,11 +204,14 @@ export class ListComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         //codigo para excluir
+        this.loading = true;
         this.conciliacaoCartaoService.delete(record.id).subscribe(
           (data) => {
+            this.loading = false;
            this.customMessage.onMessage("Operação realizada com sucesso!","success")
           },
           (error) => {
+            this.loading = false;
            this.customMessage.onMessage("Operação não realizada!","error")
           }
         );
@@ -222,18 +226,18 @@ export class ListComponent implements OnInit {
   }
 
   manterConciliacao() {
-    this.spinner.show();
+    this.loading = true;
     this.conciliacaoDialog = false;
     this.display = false;
     this.submitted = true;
     this.conciliacaoCartaoService.manterConciliacao(this.form.value).subscribe(
       (success:any) => {
-        this.spinner.hide();
+        this.loading = false;
         this.customMessage.onMessage("Operação realizada com sucesso!","success")
         this. onReload();
               },
       (error) => {
-        this.spinner.hide();
+        this.loading = false;
        this.customMessage.onMessage("Operação não realizada!","error")
 
         return '';
@@ -242,13 +246,15 @@ export class ListComponent implements OnInit {
   }
 
   onReload() {
+    this.loading = true;
     this.conciliacaoCartaoService.filtroConciliacao(this.formFilter.value).subscribe(
       (data: any) => {
-        this.spinner.hide();
+        this.loading = false;
         this.pagina = data.content;
         this.conciliacaoXLS = this.pagina;
       },
       (error:any) => {
+        this.loading = false;
        this.authService.getRedirect401(error.status);
        }
     );
@@ -295,7 +301,7 @@ export class ListComponent implements OnInit {
 
 
   isConferido(conciliacaoInput: ConciliacaoCartao) {
-    this.spinner.show();
+    this.loading = true;
     this.updateUtil.foiConferido = conciliacaoInput.foiConferido == 'SIM' ? "false" : "true";
     this.updateUtil.id = conciliacaoInput.id.toString();
     this.updateUtil.quemConferiu = this.authService.getUser() as string;
@@ -304,18 +310,19 @@ export class ListComponent implements OnInit {
       .subscribe(
         (data: any) => {
           // this.pagina = data
-          this.spinner.hide();
+          this.loading = false;
           this.customMessage.onMessage("Operação realizada com sucesso!","success")
           this.pagina = data.content;
         },
         (error) => {
-          this.spinner.hide();
+          this.loading = false;
           this.customMessage.onMessage("Operação não realizada!","error")
         }
       );
   }
 
   openDialogDataRecebimento(conciliacao: ConciliacaoCartao) {
+
     this.formDataRecebimento = this.formBuilder.group({
       id: [conciliacao.id],
       dataRecebimento: [conciliacao.dataRecebimento, Validators.required],
@@ -326,19 +333,19 @@ export class ListComponent implements OnInit {
   }
 
   manterDataRecebimentoConciliacao() {
-    this.spinner.show();
+    this.loading = true;
     this.display = false;
     this.submitted = true;
     this.conciliacaoCartaoService
       .alterarDataRecebimento(this.formDataRecebimento.value)
       .subscribe(
         (data: any) => {
-          this.spinner.hide();
+          this.loading = false;
           this.customMessage.onMessage("Operação realizada com sucesso!","success")
           this.pagina = data.content;
         },
         (error) => {
-        this.spinner.hide();
+          this.loading = false;
         this.customMessage.onMessage("Operação não realizada!","error")
 
           return '';

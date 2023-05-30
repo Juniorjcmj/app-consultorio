@@ -5,7 +5,7 @@ import { Credito } from '../../compras/model/credito';
 import { Banco } from '../banco';
 import { BancoService } from '../banco.service';
 import { CustomMensagensService } from 'src/app/services/mensagens.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+
 import { AuthService } from '../../auth/auth.service';
 
 @Component({
@@ -44,24 +44,24 @@ export class PageBancoComponent implements OnInit {
     private customMessage: CustomMensagensService,
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService,
+
     private authService: AuthService) {
       this.getAll();
     }
 
   ngOnInit(): void {
-    this.spinner.show();
+
   }
 
 
   getAll(){
     this.service.getAll().subscribe(
       (data: any) => {
-        this.spinner.hide();
+
         this.pagina = data;
       },
       (error) => {
-        this.spinner.hide();
+
         this.authService.getRedirect401(error.status);
       }
     );
@@ -84,20 +84,20 @@ export class PageBancoComponent implements OnInit {
   }
   manter() {
 
-    this.spinner.show();
+
     this.bancoDialog = false;
     this.display = false;
     this.submitted = true;
     this.service.manter(this.form.value).subscribe(
       (success:any) => {
-        this.spinner.hide();
+
         this.customMessage.onSuccessSmall();
         setTimeout(() => {}, 6000);
         this.form.reset();
         this.getAll();
       },
       (error) => {
-        this.spinner.hide();
+
         this.form.reset();
         this.customMessage.onMessage("Error ao cadastrar", "error")
       }
@@ -110,14 +110,14 @@ export class PageBancoComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         //codigo para excluir
-        this.spinner.show();
+
         this.service.delete(record.id).subscribe(
           (data) => {
              this.customMessage.onMessage("Excluido com sucesso!!", "success")
              this.getAll();
           },
           (error) => {
-            this.spinner.hide();
+
             this.customMessage.onMessage("Erro ao tentar excluir", "error")
           }
         );
