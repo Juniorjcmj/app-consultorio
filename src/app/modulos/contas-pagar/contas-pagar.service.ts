@@ -109,6 +109,13 @@ export class ContasPagarService {
       .put(`${this.apiUrlResourceServe}` + '/update-juros-multa', record)
       .pipe();
   }
+  manterFormaPagamento(record: ContasPagarUpdateGenerico) {
+
+    record.filtro = this.customStorage.get("filtro") as FiltroAvancado;
+    return this.httpClient
+      .put(`${this.apiUrlResourceServe}` + '/update-forma-pagamento', record)
+      .pipe();
+  }
 
   //FILTROS
   filtroAvancadoAvancado(filtro: FiltroAvancado): any {
@@ -195,5 +202,6 @@ export class ContasPagarService {
   deleteComprovante(formData: FormData){
     return this.httpClient.post(`${this.apiUrlResourceServe}/delete-comprovante`+"?id=",formData);
   }
+
 
 }

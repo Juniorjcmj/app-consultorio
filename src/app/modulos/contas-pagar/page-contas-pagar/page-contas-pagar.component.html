@@ -81,8 +81,7 @@
             <td  (click)="editarDataVencimento(contasPagarTable)">{{contasPagarTable.dataVencimento | date : 'dd/MM/yyyy'}}</td>
             <td (click)="editarValorDuplicata(contasPagarTable)">{{contasPagarTable.valorDuplicata  | currency}}</td>
             <td>{{contasPagarTable.fornecedor}}</td>
-            <td [ngClass]="{
-              'pedirboleto':contasPagarTable.formaPagamento== 'PEDIR_BOLETO'}">{{contasPagarTable.formaPagamento}}</td>
+            <td [ngClass]="{'pedirboleto':contasPagarTable.formaPagamento== 'PEDIR_BOLETO'}" (click)="alterarFormaPG(contasPagarTable)">{{contasPagarTable.formaPagamento}}</td>
             <td>
               <div class="col-12" style="color:blue" *ngIf="contasPagarTable.dataPagamento">
                 <div class="p-inputgroup">
@@ -480,3 +479,25 @@ styleClass="p-fluid">
 </ng-template>
 </p-dialog>
 
+<p-dialog [(visible)]="editarFormaPGDialog" [style]="{width: '500px'}" header="Alterar Forma de pgto " [modal]="true"
+          styleClass="p-fluid">
+  <ng-template pTemplate="content"  >
+    <form [formGroup]="editarFormaPGform" class="dialog-forma-pagamento">
+
+
+        <div class="col-12 ">
+          <p-dropdown [options]="formasPgtoOptions" formControlName="formaPagamento" id="formaPagamentoAlteracao"
+                      placeholder="FORMA PGTO" optionLabel="label" optionValue="value" name="formaPagamento"></p-dropdown>
+        </div>
+
+
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text p-button-raised" (click)="hideDialog()"></button>
+      <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text p-button-raised" [disabled]="!editarFormaPGform.valid"
+              (click)="onSubmitAlterarFormaPagamento()"></button>
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+
+  </ng-template>
+
+</p-dialog>

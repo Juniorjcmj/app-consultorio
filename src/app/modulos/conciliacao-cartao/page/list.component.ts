@@ -57,8 +57,10 @@ export class ListComponent implements OnInit {
 
   form!: FormGroup;
   formDataRecebimento!: FormGroup;
+  formDataValorReceber!: FormGroup;
 
   display: boolean = false;
+  displayValorRecebido: boolean = false;
 
   pageConciliacao: PageConciliacao = new PageConciliacao();
 
@@ -333,25 +335,60 @@ export class ListComponent implements OnInit {
   }
 
   manterDataRecebimentoConciliacao() {
-    this.loading = true;
+    this.display = true;
     this.display = false;
     this.submitted = true;
     this.conciliacaoCartaoService
       .alterarDataRecebimento(this.formDataRecebimento.value)
       .subscribe(
         (data: any) => {
-          this.loading = false;
+          this.display = false;
           this.customMessage.onMessage("Operação realizada com sucesso!","success")
           this.pagina = data.content;
         },
         (error) => {
-          this.loading = false;
+          this.display = false;
         this.customMessage.onMessage("Operação não realizada!","error")
 
           return '';
         }
       );
   }
+  openDialogValorRecebido(conciliacao: ConciliacaoCartao) {
+
+    this.formDataValorReceber = this.formBuilder.group({
+      id: [conciliacao.id],
+      valorReceber: [conciliacao.valorReceber, Validators.required],
+
+    });
+    this.displayValorRecebido = true;
+  }
+
+  manterValorReceber() {
+    this.loading = true;
+    this.displayValorRecebido = false;
+    this.submitted = true;
+    this.conciliacaoCartaoService
+      .alterarValorRecebido(this.formDataValorReceber.value)
+      .subscribe(
+        (data: any) => {
+          this.displayValorRecebido = false;
+          this.customMessage.onMessage("Operação realizada com sucesso!","success")
+          this.pagina = data.content;
+          this.loading = false;
+        },
+        (error) => {
+          this.loading = false;
+          this.displayValorRecebido = false;
+          this.customMessage.onMessage("Operação não realizada!","error")
+
+          return '';
+        }
+      );
+  }
+
+
+
   exportexcel(): void
   {
     /* pass here the table id */

@@ -26,7 +26,7 @@
             </div>
             <div class="col-12 md:col-3">
               <div>
-                <label for="fornecedor">Nº AUTENTICAÇÃO</label>
+                <label for="fornecedor">CV</label>
                  <input type="text" pInputText placeholder="Ex: 99222388"formControlName="aute" name="aute" inputId="aute" >
               </div>
             </div>
@@ -140,7 +140,7 @@
             </th>
             <th pSortableColumn="dataRecebimento">RESGATE <p-sortIcon field="dataRecebimento"></p-sortIcon>
             </th>
-            <th pSortableColumn="isAntecipa">ANT <p-sortIcon field="isAntecipa"></p-sortIcon>
+            <th pSortableColumn="isAntecipa">CV <p-sortIcon field="isAntecipa"></p-sortIcon>
             </th>
             <th pSortableColumn="isRecebido">R$ REC <p-sortIcon field="isRecebido"></p-sortIcon>
             </th>
@@ -159,7 +159,7 @@
             <td>{{conciliacaoTable.numeroPedido}}</td>
             <td>{{conciliacaoTable.valorPedido | currency }}</td>
             <td>{{conciliacaoTable.tipoOperacao}}</td>
-            <td>{{conciliacaoTable.valorReceber | currency }}</td>
+            <td (click)="openDialogValorRecebido(conciliacaoTable)">{{conciliacaoTable.valorReceber | currency }}</td>
             <td>{{conciliacaoTable.previsaoRecebimento | date : 'dd/MM/yyyy'}}</td>
             <td (click)="openDialogDataRecebimento(conciliacaoTable)">
               {{conciliacaoTable.dataRecebimento | date : 'dd/MM/yyyy'}}
@@ -239,7 +239,7 @@
         </div>
       </div>
       <div class=" col-6">
-        <label for="numeroPedido">AUTENTICAÇÃO</label>
+        <label for="numeroPedido">CV</label>
         <input  pInputText type="text"  id="aute" formControlName="aute" name="aute" placeholder="AUTE" />
       </div>
       <div class=" col-6">
@@ -289,5 +289,26 @@
     [config]="{ backdropBorderRadius: '3px' }"
     [template]="customLoadingTemplate"
   ></ngx-loading>
-  //...
+
   </div>
+
+<p-dialog [(visible)]="displayValorRecebido" [style]="{width: '350px', height:'300px'}" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <form [formGroup]="formDataValorReceber">
+      <div class="col-6">
+        <label for="numeroPedido">VALOR</label>
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon">R$</span>
+          <input pInputText type="text" id="valorReceber" formControlName="valorReceber" name="valorReceber"
+            placeholder="VALOR" />
+        </div>
+      </div>
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="  p-button-raised p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class=" p-button-raised p-button-text"
+      [disabled]="!formDataValorReceber.valid" (click)="manterValorReceber()"></button>
+  </ng-template>
+
+</p-dialog>

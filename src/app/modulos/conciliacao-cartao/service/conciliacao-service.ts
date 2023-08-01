@@ -77,4 +77,9 @@ apiUrlResourceServeOperadora= environment.apiUrlResourceServer+"V1/api-operadora
       return this.httpClient.post<PageConciliacao>(`${this.apiUrlResourceServe}`+ "/filtro-avancado?size="+5000, filtro);
     }
 
+    alterarValorRecebido(record: UpdateGenericoConciliacao){
+      record.filtro = this.serviceStorage.get("filtroConciliacao");
+      return  this.httpClient.put<PageConciliacao>(`${this.apiUrlResourceServe}`+"/alterar-valor-receber", record).pipe();
+    }
+
   }

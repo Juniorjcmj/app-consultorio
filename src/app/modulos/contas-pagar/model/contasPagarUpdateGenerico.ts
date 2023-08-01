@@ -6,6 +6,7 @@ export class ContasPagarUpdateGenerico{
   jurosMulta!: any;
   valorDuplicata!: any;
   desconto!: any;
+  formaPagamento!: any;
   id!:any;
   filtro!: FiltroAvancado;
 

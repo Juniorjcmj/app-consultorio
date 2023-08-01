@@ -6,5 +6,6 @@ export class UpdateGenericoConciliacao{
   dataRecebimento!: string;
   filtro!: FiltroConciliacao;
   quemConferiu!: string;
+  valorReceber!: string;
 
 }

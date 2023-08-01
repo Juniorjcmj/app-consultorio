@@ -107,6 +107,9 @@ export class PageContasPagarComponent implements OnInit {
   editarValorDuplicataDialog: boolean = false;
   editarValorDuplicataform!: FormGroup;
 
+  editarFormaPGDialog: boolean = false;
+  editarFormaPGform!: FormGroup;
+
   //STATISTICA
   valoresPagos!: any;
   valoresApagar!: any;
@@ -137,6 +140,8 @@ export class PageContasPagarComponent implements OnInit {
     this.editarLocalPgtoDialog = false;
     this.editarJurosMultaDialog = false;
     this.editarDescontoDialog = false;
+    this.editarFormaPGDialog = false;
+
 
     this.pegandoPrimeiroEUltimoDiaDaSemana();
     this.listAtual();
@@ -591,6 +596,41 @@ export class PageContasPagarComponent implements OnInit {
       }
     );
   }
+  alterarFormaPG(conta: any){
+
+    this.editarFormaPGDialog = true;
+    this.editarFormaPGform = this.formBuilder.group({
+      id: [conta.id],
+      formaPagamento: [null, Validators.required],
+    });
+  }
+  onSubmitAlterarFormaPagamento(){
+    this.loading = true;
+    this.displaySideBar = false;
+    this.editarFormaPGDialog = false;
+    this.display = false;
+    this.submitted = true;
+
+    this.service.manterFormaPagamento(this.editarFormaPGform.value).subscribe(
+      (data: any) => {
+        this.loading = false;
+        this.pagina = data;
+        this.customMessage.onSuccessSmall();
+
+        //atualizar o side bar com a alteração realizada
+        const conta = this.pagina.content.find(conta => conta.id == this.editarJurosMultatoform.value['id'] )
+        this.detalhamentoSidebar(conta);
+
+      },
+      (error: any) => {
+        this.loading = false;
+        this.customMessage.onMessage(
+          'Erro ao tentar alterar, tente novamente',
+          'error'
+        );
+      }
+    )
+  }
   detalhamentoSidebar(conta: any) {
     console.log(conta)
     this.detalheContas = [];
@@ -841,7 +881,6 @@ export class PageContasPagarComponent implements OnInit {
         this.loading = false;
       }
     );
-
-
   }
+
 }

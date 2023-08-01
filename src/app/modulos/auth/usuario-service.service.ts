@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { UsuarioModel } from './model/usuarioModel';
 import { PermissaoModel } from './model/permissaoModel';
 import { GrupoModel } from './model/grupoModel';
@@ -60,8 +60,8 @@ export class UsuarioServiceService {
 
   novaSenha(id:string, senha: string){
     const url = this.apiUrlResourceServe+"/nova-senha?id="+id+"&senha="+senha
- console.log(url)
-    return this.httpClient.get<any>(`${url}`).pipe();
+    console.log(url);
+    return this.httpClient.get<any>(`${url}`);
   }
 
 }
