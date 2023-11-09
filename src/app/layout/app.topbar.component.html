@@ -32,3 +32,17 @@
       </button>
     </div>
 </div>
+<p-dialog header="" [(visible)]="senhaDialog" header="NOVA SENHA">
+  <ng-template pTemplate="content">
+    <form  [formGroup]="formSenha">
+      <div class="col-12 md:col-12">
+
+        <p-password   formControlName="senha"></p-password>
+        <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"  [disabled]="!formSenha.valid"
+                (click)="novaSenha()"></button>
+
+      </div>
+
+    </form>
+  </ng-template>
+</p-dialog>
